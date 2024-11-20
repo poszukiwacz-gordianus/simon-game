@@ -1,4 +1,4 @@
-import { ButtonProps } from "@/types/types";
+import { type ButtonProps } from "@/types/types";
 import { Link } from "expo-router";
 import { StyleSheet } from "react-native";
 

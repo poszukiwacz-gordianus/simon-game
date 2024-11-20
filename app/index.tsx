@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as NavigationBar from "expo-navigation-bar";
-import { useEffect } from "react";
+
 import { rulesContent } from "@/content/content";
+
 import Rule from "@/components/Rule";
 import Button from "@/components/Button";
 
