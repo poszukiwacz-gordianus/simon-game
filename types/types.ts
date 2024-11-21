@@ -31,14 +31,30 @@ export interface DifficultyState {
   level: number;
 }
 
+/**
+ * The initial state of the game.
+ *
+ * @property difficulty - The selected difficulty, either "easy", "medium", or "hard".
+ * @property difficulties - An object with the number of levels for each difficulty.
+ * @property level - The current level of the game.
+ * @property toGo - The number of sequences to be shown to the user.
+ * @property userGuess - The current guess of the user.
+ * @property hints - The number of hints left for the user.
+ * @property gameInProgress - A boolean indicating if the game is in progress.
+ * @property isPlaying - A boolean indicating if the user is currently playing.
+ * @property levelUp - A boolean indicating if the user has leveled up.
+ * @property gameOver - A boolean indicating if the game is over.
+ * @property tiles - An array of the tiles in the game.
+ * @property sequence - The sequence of tiles to be shown to the user.
+ */
 export interface GameState {
   /**
-   * The game difficulty, or undefined if not set.
+   * The game difficulty level.
    */
   readonly difficulty: "easy" | "medium" | "hard";
 
   /**
-   * The state for each difficulty.
+   * The state configurations for each difficulty level.
    */
   readonly difficulties: {
     easy: DifficultyState;
@@ -47,56 +63,67 @@ export interface GameState {
   };
 
   /**
-   * The current level
+   * The current level the player is on.
    */
   level: number;
 
   /**
-   * The number of levels to go.
+   * The number of levels remaining.
    */
-  togo: number;
+  toGo: number;
 
   /**
-   * Track user guess
+   * The user's current guess in the sequence.
    */
   userGuess: number;
 
   /**
-   * The number of hints remaining.
+   * The number of hints the player can use.
    */
   hints: number;
 
   /**
-   * Whether the game is currently playing.
+   * Indicates if the game is currently being played.
    */
   isPlaying: boolean;
 
   /**
-   * Whether the game is in progress.
+   * Indicates if the game is actively in progress.
    */
   gameInProgress: boolean;
 
   /**
-   * Whether the level has been completed.
+   * Indicates if the player has completed the current level.
    */
   levelUp: boolean;
 
   /**
-   * Whether the game is over.
+   * Indicates if the game is over.
    */
   gameOver: boolean;
 
   /**
-   * The tiles to animate.
+   * The list of tiles available to animate.
    */
   tiles: TileProps[];
 
   /**
-   * The sequence of tiles to track user input.
+   * The sequence of tile indices to track user input.
    */
   sequence: number[];
 }
 
+/**
+ * Hook to access the game state and dispatch function.
+ *
+ * This hook provides the `state` and `dispatch` objects from the
+ * `GameContext` context. This hook must be used within a `GameProvider`
+ * component.
+ *
+ * @throws {Error} If the hook is not used within a `GameProvider` component.
+ *
+ * @returns {GameContextType} The game state and dispatch function.
+ */
 export interface GameContextType {
   /**
    * The current state of the game.
@@ -110,7 +137,24 @@ export interface GameContextType {
 }
 
 /**
- * Props for the GameProvider component.
+ * The reducer function for the game state.
+ *
+ * @param state The current state.
+ * @param action The action to apply.
+ * @returns The new state.
+ */
+export type GameReducer = (state: GameState, action: Action) => GameState;
+
+/**
+ * Provides the game state and dispatch function to all children components.
+ *
+ * This Provider component uses the `useReducer` hook to manage the game state.
+ * It also loads the initial tiles into the state using the `useEffect` hook
+ * when the component mounts.
+ *
+ * @param {GameContextProviderProps} props Component props.
+ * @returns {JSX.Element} The Provider component with the game state and
+ *                        dispatch function as its value.
  */
 export interface GameContextProviderProps {
   /**
@@ -118,6 +162,22 @@ export interface GameContextProviderProps {
    */
   readonly children: ReactNode;
 }
+
+/**
+ * Animates a tile's opacity from 1 to 0.5 and back to 1.
+ *
+ * @param tileOpacity The animated value for the tile's opacity.
+ */
+export type AnimatedTile = (tileOpacity: Animated.Value) => void;
+
+/**
+ * Generates a sequence of tile indices for the current game level.
+ *
+ * @param previousSequence - An optional array representing the previous sequence.
+ *                           If not provided or empty, a new sequence is generated.
+ * @returns An array of numbers representing the sequence of tiles to guess by user.
+ */
+export type GenerateSequence = (previousSequence?: number[]) => number[];
 
 /**
  * An action to set the game difficulty.
@@ -148,10 +208,6 @@ export interface StartLevelAction {
   type: "startLevel";
 }
 
-export interface GameInProgressAction {
-  type: "gameInProgress";
-}
-
 export interface StartPlayAction {
   type: "startPlay";
 }
@@ -180,7 +236,6 @@ export type Action =
   | DifficultyAction
   | LoadTilesAction
   | StartLevelAction
-  | GameInProgressAction
   | SetLevelAction
   | StartPlayAction
   | NextLevelAction

@@ -1,20 +1,16 @@
 import {
   type GameContextType,
-  type Action,
   type GameContextProviderProps,
   type GameState,
+  type GenerateSequence,
+  type AnimatedTile,
+  type GameReducer,
 } from "@/types/types";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { Animated, useAnimatedValue } from "react-native";
 
-/**
- * The context for the game state.
- */
 const GameContext = createContext<GameContextType | null>(null);
 
-/**
- * The initial state of the game.
- */
 const initialState: GameState = {
   difficulty: "easy",
   difficulties: {
@@ -23,7 +19,7 @@ const initialState: GameState = {
     hard: { level: 1 },
   },
   level: 1,
-  togo: 1,
+  toGo: 1,
   userGuess: 0,
   hints: 3,
   gameInProgress: false,
@@ -34,22 +30,15 @@ const initialState: GameState = {
   sequence: [],
 };
 
-/**
- * The reducer function for the game state.
- *
- * @param state The current state.
- * @param action The action to apply.
- * @returns The new state.
- */
-export function reducer(state: GameState, action: Action): GameState {
-  const animateTile = (animatedValue: Animated.Value) => {
+export const reducer: GameReducer = (state, action) => {
+  const animateTile: AnimatedTile = (tileOpacity: Animated.Value) => {
     Animated.sequence([
-      Animated.timing(animatedValue, {
+      Animated.timing(tileOpacity, {
         toValue: 0.5,
         duration: 250,
         useNativeDriver: true,
       }),
-      Animated.timing(animatedValue, {
+      Animated.timing(tileOpacity, {
         toValue: 1,
         duration: 250,
         useNativeDriver: true,
@@ -57,85 +46,67 @@ export function reducer(state: GameState, action: Action): GameState {
     ]).start();
   };
 
-  const showSequence = () => {
-    const sequence: number[] = [];
-    for (let index = 1; index <= state.level; index++) {
-      const random = Math.floor(Math.random() * 4);
-      sequence.push(random);
+  const generateSequence: GenerateSequence = (previousSequence = []) => {
+    const sequenceLength = state.level;
+    const newSequence = previousSequence.length === 0;
+
+    return Array.from({ length: sequenceLength }, (_, index) => {
+      const sequenceItem = newSequence
+        ? Math.floor(Math.random() * 4)
+        : previousSequence[index];
+
       setTimeout(() => {
-        switch (random) {
-          case 0:
-            animateTile(state.tiles[0].opacity);
-            break;
-          case 1:
-            animateTile(state.tiles[1].opacity);
-            break;
-          case 2:
-            animateTile(state.tiles[2].opacity);
-            break;
-          default:
-            animateTile(state.tiles[3].opacity);
-            break;
-        }
-      }, 500 * index);
-    }
-    return sequence;
+        const tileIndex = sequenceItem;
+        animateTile(state.tiles[tileIndex].opacity);
+      }, 500 * (index + 1));
+
+      return sequenceItem;
+    });
   };
 
   switch (action.type) {
     case "loadTiles":
-      return {
-        ...state,
-        tiles: action.payload,
-      };
+      return { ...state, tiles: action.payload };
+
     case "difficulty":
-      return {
-        ...state,
-        difficulty: action.payload,
-      };
+      return { ...state, difficulty: action.payload };
+
     case "setLevel":
       return {
         ...state,
         level: action.payload,
-        togo: action.payload,
+        toGo: action.payload,
         userGuess: 0,
         hints: 3,
         isPlaying: false,
         gameInProgress: false,
         gameOver: false,
       };
+
     case "startLevel":
-      const sequence = showSequence();
-      return {
-        ...state,
-        sequence,
-      };
-    case "gameInProgress":
-      return { ...state, gameInProgress: true };
+      const sequence = generateSequence(state.sequence);
+      return { ...state, sequence };
+
     case "startPlay":
-      return {
-        ...state,
-        isPlaying: true,
-      };
+      return { ...state, gameInProgress: true, isPlaying: true };
+
     case "nextLevel":
-      return {
-        ...state,
-        levelUp: false,
-      };
+      return { ...state, levelUp: false };
+
     case "showHint":
       animateTile(state.tiles[state.sequence[state.userGuess]].opacity);
-      return {
-        ...state,
-        hints: state.hints - 1,
-      };
+      return { ...state, hints: state.hints - 1 };
+
     case "resetLevel":
       return {
         ...state,
         hints: 3,
         userGuess: 0,
-        togo: state.level,
+        toGo: state.level,
         gameInProgress: false,
+        gameOver: false,
       };
+
     case "verifyUserResponse":
       if (
         state.userGuess < state.sequence.length - 1 &&
@@ -143,7 +114,7 @@ export function reducer(state: GameState, action: Action): GameState {
       )
         return {
           ...state,
-          togo: state.togo - 1,
+          toGo: state.toGo - 1,
           userGuess: state.userGuess + 1,
         };
 
@@ -153,7 +124,7 @@ export function reducer(state: GameState, action: Action): GameState {
       )
         return {
           ...state,
-          togo: state.level + 1,
+          toGo: state.level + 1,
           level: state.level + 1,
           userGuess: 0,
           hints: 3,
@@ -169,28 +140,23 @@ export function reducer(state: GameState, action: Action): GameState {
             },
           },
         };
-      return {
-        ...state,
-        gameOver: true,
-      };
+      return { ...state, gameOver: true };
+
     default:
       return state;
   }
-}
+};
 
 function GameProvider({ children }: GameContextProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const blueTile = useAnimatedValue(1);
-  const yellowTile = useAnimatedValue(1);
-  const redTile = useAnimatedValue(1);
-  const whiteTile = useAnimatedValue(1);
+  const opacity = useAnimatedValue(1);
 
   const tiles = [
-    { color: "blue", opacity: blueTile },
-    { color: "yellow", opacity: yellowTile },
-    { color: "red", opacity: redTile },
-    { color: "white", opacity: whiteTile },
+    { color: "blue", opacity },
+    { color: "yellow", opacity },
+    { color: "red", opacity },
+    { color: "white", opacity },
   ];
 
   useEffect(() => {
@@ -204,7 +170,7 @@ function GameProvider({ children }: GameContextProviderProps) {
   );
 }
 
-function useGameContext() {
+function useGameContext(): GameContextType {
   const context = useContext(GameContext);
   if (!context) {
     throw new Error("useGameContext must be used within a GameProvider");

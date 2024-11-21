@@ -3,14 +3,14 @@ import { Button, StyleSheet, Text, View } from "react-native";
 
 export default function GameHeader() {
   const {
-    state: { level, hints, togo, isPlaying },
+    state: { level, hints, toGo, isPlaying },
     dispatch,
   } = useGameContext();
 
   return (
     <View style={{ marginBottom: 20 }}>
       <Text style={styles.header}>Level {level}</Text>
-      <Text style={styles.header}>To go: {togo}</Text>
+      <Text style={styles.header}>To go: {toGo}</Text>
       <Button
         title={hints === 0 ? "No hints left" : `Hint - Remains (${hints})`}
         disabled={!isPlaying}

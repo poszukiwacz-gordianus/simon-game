@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import GameFooter from "@/components/GameFooter";
 import GameHeader from "@/components/GameHeader";
 import TilesContainer from "@/components/TilesContainer";

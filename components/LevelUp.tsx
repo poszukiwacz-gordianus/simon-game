@@ -1,19 +1,18 @@
 import { useGameContext } from "@/context/GameContext";
 import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function LevelUp() {
   const { dispatch } = useGameContext();
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Congratulations 🎉</Text>
-      <Link
-        href="/game"
+      <Pressable
         style={[styles.buttonContainer, styles.nextLevel]}
         onPress={() => dispatch({ type: "nextLevel" })}
       >
         <Text style={styles.button}>Next level</Text>
-      </Link>
+      </Pressable>
       <Link href="/" style={[styles.buttonContainer, styles.home]}>
         <Text style={styles.button}>Home</Text>
       </Link>

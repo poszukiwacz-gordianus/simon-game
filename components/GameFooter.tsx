@@ -3,7 +3,7 @@ import { Button } from "react-native";
 
 export default function GameFooter() {
   const {
-    state: { isPlaying, level, gameInProgress },
+    state: { level, gameInProgress },
     dispatch,
   } = useGameContext();
 
@@ -24,7 +24,6 @@ export default function GameFooter() {
         dispatch({ type: "startLevel" });
         setTimeout(() => {
           dispatch({ type: "startPlay" });
-          dispatch({ type: "gameInProgress" });
         }, level * 600);
       }}
     />
