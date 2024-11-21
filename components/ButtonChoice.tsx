@@ -2,7 +2,7 @@ import { type ButtonProps } from "@/types/types";
 import { Link } from "expo-router";
 import { StyleSheet } from "react-native";
 
-export default function Button({ title, onPress }: ButtonProps) {
+export default function ButtonChoice({ title, onPress }: ButtonProps) {
   return (
     <Link href="/levels" onPress={onPress} style={styles.button}>
       {title}

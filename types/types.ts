@@ -8,20 +8,9 @@ export interface ButtonProps {
   onPress: () => void;
 }
 
-export interface GameFooterProps {
-  showSequence: () => void;
-  isPlaying: boolean;
-}
-
 export interface TileProps {
   color: string;
-  tile: Animated.Value;
-  isPlaying: boolean;
-}
-
-export interface TilesContainerProps {
-  tiles: { color: string; tile: Animated.Value }[];
-  isPlaying: boolean;
+  opacity: Animated.Value;
 }
 
 export interface RuleProps {
@@ -58,9 +47,19 @@ export interface GameState {
   };
 
   /**
+   * The current level
+   */
+  level: number;
+
+  /**
    * The number of levels to go.
    */
   togo: number;
+
+  /**
+   * Track user guess
+   */
+  userGuess: number;
 
   /**
    * The number of hints remaining.
@@ -71,6 +70,31 @@ export interface GameState {
    * Whether the game is currently playing.
    */
   isPlaying: boolean;
+
+  /**
+   * Whether the game is in progress.
+   */
+  gameInProgress: boolean;
+
+  /**
+   * Whether the level has been completed.
+   */
+  levelUp: boolean;
+
+  /**
+   * Whether the game is over.
+   */
+  gameOver: boolean;
+
+  /**
+   * The tiles to animate.
+   */
+  tiles: TileProps[];
+
+  /**
+   * The sequence of tiles to track user input.
+   */
+  sequence: number[];
 }
 
 export interface GameContextType {
@@ -110,7 +134,56 @@ export interface DifficultyAction {
   readonly payload: "easy" | "medium" | "hard";
 }
 
+export interface LoadTilesAction {
+  type: "loadTiles";
+  payload: TileProps[];
+}
+
+export interface SetLevelAction {
+  type: "setLevel";
+  payload: number;
+}
+
+export interface StartLevelAction {
+  type: "startLevel";
+}
+
+export interface GameInProgressAction {
+  type: "gameInProgress";
+}
+
+export interface StartPlayAction {
+  type: "startPlay";
+}
+
+export interface NextLevelAction {
+  type: "nextLevel";
+}
+
+export interface ShowHintAction {
+  type: "showHint";
+}
+
+export interface ResetLevelAction {
+  type: "resetLevel";
+}
+
+export interface VerifyUserResponseAction {
+  type: "verifyUserResponse";
+  payload: number;
+}
+
 /**
  * The type of all possible actions.
  */
-export type Action = DifficultyAction;
+export type Action =
+  | DifficultyAction
+  | LoadTilesAction
+  | StartLevelAction
+  | GameInProgressAction
+  | SetLevelAction
+  | StartPlayAction
+  | NextLevelAction
+  | ShowHintAction
+  | ResetLevelAction
+  | VerifyUserResponseAction;

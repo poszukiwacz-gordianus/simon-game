@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 export default function ShowLevels() {
   const {
     state: { difficulty, difficulties },
+    dispatch,
   } = useGameContext();
 
   const unblockedLevels = difficulties[difficulty]?.level ?? 0;
@@ -36,6 +37,9 @@ export default function ShowLevels() {
                   backgroundColor: isBlocked ? "#373837" : "#1a8412",
                 },
               ]}
+              onPressOut={() =>
+                dispatch({ type: "setLevel", payload: index + 1 })
+              }
             >
               <Text style={{ color: "#FEF2BF", textAlign: "center" }}>
                 {index + 1}

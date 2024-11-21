@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import Button from "./Button";
+import Button from "./ButtonChoice";
 import { useGameContext } from "@/context/GameContext";
 
 export default function DifficultyChoice() {
