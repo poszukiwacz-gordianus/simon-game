@@ -10,16 +10,16 @@ export default function Game() {
   const level = Number(params.get("level"));
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const blueSquare = useAnimatedValue(1);
-  const yellowSquare = useAnimatedValue(1);
-  const redSquare = useAnimatedValue(1);
-  const whiteSquare = useAnimatedValue(1);
+  const blueTile = useAnimatedValue(1);
+  const yellowTile = useAnimatedValue(1);
+  const redTile = useAnimatedValue(1);
+  const whiteTile = useAnimatedValue(1);
 
   const tiles = [
-    { color: "blue", square: blueSquare },
-    { color: "yellow", square: yellowSquare },
-    { color: "red", square: redSquare },
-    { color: "white", square: whiteSquare },
+    { color: "blue", tile: blueTile },
+    { color: "yellow", tile: yellowTile },
+    { color: "red", tile: redTile },
+    { color: "white", tile: whiteTile },
   ];
 
   const animateTile = (animatedValue: Animated.Value) => {
@@ -43,16 +43,16 @@ export default function Game() {
         const randomIndex = Math.floor(Math.random() * 4);
         switch (randomIndex) {
           case 0:
-            animateTile(blueSquare);
+            animateTile(blueTile);
             break;
           case 1:
-            animateTile(yellowSquare);
+            animateTile(yellowTile);
             break;
           case 2:
-            animateTile(redSquare);
+            animateTile(redTile);
             break;
           default:
-            animateTile(whiteSquare);
+            animateTile(whiteTile);
             break;
         }
       }, 500 * index);
