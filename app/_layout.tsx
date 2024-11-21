@@ -1,9 +1,10 @@
+import { GameProvider } from "@/context/GameContext";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
 export default function RootLayout() {
   return (
-    <>
+    <GameProvider>
       <StatusBar hidden={true} />
       <Stack screenOptions={{ animation: "slide_from_right" }}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
@@ -17,6 +18,6 @@ export default function RootLayout() {
           }}
         />
       </Stack>
-    </>
+    </GameProvider>
   );
 }
