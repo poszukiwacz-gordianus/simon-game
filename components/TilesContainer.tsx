@@ -9,8 +9,8 @@ export default function TilesContainer({
 }: TilesContainerProps) {
   return (
     <View style={styles.tilesContainer}>
-      {tiles.map(({ color, square }, index) => (
-        <Tile key={index} color={color} square={square} isPlaying={isPlaying} />
+      {tiles.map(({ color, tile }, index) => (
+        <Tile key={index} color={color} tile={tile} isPlaying={isPlaying} />
       ))}
     </View>
   );

@@ -1,11 +1,9 @@
 import { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import * as NavigationBar from "expo-navigation-bar";
 
-import { rulesContent } from "@/content/content";
-
-import Rule from "@/components/Rule";
-import Button from "@/components/Button";
+import DifficultyChoice from "@/components/DifficultyChoice";
+import Rules from "@/components/Rules";
 
 export default function Index() {
   useEffect(() => {
@@ -15,17 +13,8 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.rulesContainer}>
-        <Text style={styles.header}>Rules</Text>
-        {rulesContent.map((rule, index) => (
-          <Rule rule={rule} index={index} key={rule} />
-        ))}
-      </View>
-      <View style={styles.buttons}>
-        <Button title="Easy" onPress={() => console.log("Easy")} />
-        <Button title="Medium" onPress={() => console.log("Medium")} />
-        <Button title="Hard" onPress={() => console.log("Hard")} />
-      </View>
+      <Rules />
+      <DifficultyChoice />
     </View>
   );
 }
@@ -36,18 +25,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#437214",
-  },
-  rulesContainer: {
-    width: "100%",
-    padding: 40,
-  },
-  header: {
-    color: "#FEF2BF",
-    fontSize: 30,
-    textAlign: "center",
-  },
-  buttons: {
-    alignItems: "flex-start",
-    flexDirection: "row",
   },
 });

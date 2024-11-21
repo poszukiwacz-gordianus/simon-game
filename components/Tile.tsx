@@ -1,23 +1,23 @@
 import { type TileProps } from "@/types/types";
 import { Animated, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function Tile({ color, square, isPlaying }: TileProps) {
+export default function Tile({ color, tile, isPlaying }: TileProps) {
   return (
-    <TouchableOpacity style={styles.square} disabled={!isPlaying}>
+    <TouchableOpacity style={styles.tileContainer} disabled={!isPlaying}>
       <Animated.View
-        style={[styles.tile, { backgroundColor: color, opacity: square }]}
+        style={[styles.tile, { backgroundColor: color, opacity: tile }]}
       />
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
+  tileContainer: {
+    width: "50%",
+    height: "50%",
+  },
   tile: {
     width: "100%",
     height: "100%",
-  },
-  square: {
-    width: "50%",
-    height: "50%",
   },
 });
