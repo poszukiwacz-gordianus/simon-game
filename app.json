@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "simon-game",
+    "name": "Simon Game",
     "slug": "simon-game",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -33,7 +33,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-audio"
     ],
     "experiments": {
       "typedRoutes": true
