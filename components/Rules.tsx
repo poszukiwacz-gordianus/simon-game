@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 import { rulesContent } from "@/content/content";
-import Rule from "./Rule";
+import { Rule } from "@/components/Components";
 
-export default function Rules() {
+export default function RulesS() {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Rules</Text>
-      {rulesContent.map((rule, index) => (
-        <Rule rule={rule} index={index} key={rule} />
+      {rulesContent.map((ruleText, index) => (
+        <Rule key={ruleText} rule={ruleText} index={index} />
       ))}
     </View>
   );

@@ -1,3 +1,6 @@
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { Animated, useAnimatedValue } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   ANIMATION_PACE_DEFAULT,
   ANIMATION_PACE_HARD,
@@ -14,9 +17,6 @@ import {
   type AnimatedTile,
   type GameReducer,
 } from "@/types/types";
-import { createContext, useContext, useEffect, useReducer } from "react";
-import { Animated, useAnimatedValue } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const GameContext = createContext<GameContextType | null>(null);
 

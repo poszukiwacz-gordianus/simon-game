@@ -1,5 +1,5 @@
-import { type RuleProps } from "@/types/types";
 import { Text } from "react-native";
+import { type RuleProps } from "@/types/types";
 
 export default function Rule({ rule, index }: RuleProps) {
   return (

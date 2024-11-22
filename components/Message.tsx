@@ -1,19 +1,28 @@
-import { useGameContext } from "@/context/GameContext";
 import { Link } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { type MessageProps } from "@/types/types";
 
-export default function LevelUp() {
-  const { dispatch } = useGameContext();
+export default function Message({
+  messageText,
+  onPressHandler,
+  buttonText,
+  backgroundColor,
+  primaryColor,
+  secondaryColor,
+}: MessageProps) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Game over 😥</Text>
+    <View style={[styles.container, { backgroundColor }]}>
+      <Text style={styles.text}>{messageText}</Text>
       <Pressable
-        style={[styles.buttonContainer, styles.nextLevel]}
-        onPress={() => dispatch({ type: "resetLevel" })}
+        style={[styles.buttonContainer, { backgroundColor: primaryColor }]}
+        onPress={onPressHandler}
       >
-        <Text style={styles.button}>Try again</Text>
+        <Text style={styles.button}>{buttonText}</Text>
       </Pressable>
-      <Link href="/" style={[styles.buttonContainer, styles.home]}>
+      <Link
+        href="/"
+        style={[styles.buttonContainer, { backgroundColor: secondaryColor }]}
+      >
         <Text style={styles.button}>Home</Text>
       </Link>
     </View>
@@ -23,7 +32,6 @@ export default function LevelUp() {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -42,11 +50,5 @@ export const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     padding: 10,
-  },
-  nextLevel: {
-    backgroundColor: "#23d14c",
-  },
-  home: {
-    backgroundColor: "#251055",
   },
 });

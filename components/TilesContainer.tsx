@@ -1,7 +1,6 @@
 import { StyleSheet, View } from "react-native";
-
-import Tile from "./Tile";
 import { useGameContext } from "@/context/GameContext";
+import { Tile } from "@/components/Components";
 
 export default function TilesContainer() {
   const {
@@ -10,8 +9,8 @@ export default function TilesContainer() {
 
   return (
     <View style={styles.tilesContainer}>
-      {tiles.map(({ color, opacity }, index) => (
-        <Tile key={index} color={color} opacity={opacity} />
+      {tiles.map((tile, index) => (
+        <Tile key={index} {...tile} />
       ))}
     </View>
   );

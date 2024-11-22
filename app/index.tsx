@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import * as NavigationBar from "expo-navigation-bar";
 
-import DifficultyChoice from "@/components/DifficultyChoice";
-import Rules from "@/components/Rules";
+import { DifficultyChoice, Rules } from "@/components/Components";
 
 export default function Index() {
   useEffect(() => {

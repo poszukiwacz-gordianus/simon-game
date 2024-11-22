@@ -3,31 +3,24 @@ import { Button } from "react-native";
 
 export default function GameFooter() {
   const {
-    state: { level, gameInProgress, animationPace },
+    state: { gameInProgress, level, animationPace },
     dispatch,
   } = useGameContext();
 
-  const delay = 800;
-
-  if (gameInProgress)
-    return (
-      <Button
-        title="Reset level"
-        onPress={() => {
-          dispatch({ type: "resetLevel" });
-        }}
-      />
+  const handlePress = () => {
+    dispatch({ type: "startLevel" });
+    setTimeout(
+      () => dispatch({ type: "startPlay" }),
+      level * animationPace + 800
     );
+  };
 
   return (
     <Button
-      title="Start"
-      onPress={() => {
-        dispatch({ type: "startLevel" });
-        setTimeout(() => {
-          dispatch({ type: "startPlay" });
-        }, level * animationPace + delay);
-      }}
+      title={gameInProgress ? "Reset level" : "Start"}
+      onPress={
+        gameInProgress ? () => dispatch({ type: "resetLevel" }) : handlePress
+      }
     />
   );
 }

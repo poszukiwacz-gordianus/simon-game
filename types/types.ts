@@ -18,6 +18,15 @@ export interface RuleProps {
   index: number;
 }
 
+export interface MessageProps {
+  messageText: string;
+  onPressHandler: () => void;
+  buttonText: string;
+  backgroundColor: string;
+  primaryColor: string;
+  secondaryColor: string;
+}
+
 // GameContext types
 /**
  * The shape of the game state.

@@ -1,21 +1,21 @@
 import { StyleSheet, View } from "react-native";
-import Button from "./ButtonChoice";
 import { useGameContext } from "@/context/GameContext";
+import { LinkButton } from "@/components/Components";
 
 export default function DifficultyChoice() {
   const { dispatch } = useGameContext();
 
   return (
     <View style={styles.container}>
-      <Button
+      <LinkButton
         title="Easy"
         onPress={() => dispatch({ type: "difficulty", payload: "easy" })}
       />
-      <Button
+      <LinkButton
         title="Medium"
         onPress={() => dispatch({ type: "difficulty", payload: "medium" })}
       />
-      <Button
+      <LinkButton
         title="Hard"
         onPress={() => dispatch({ type: "difficulty", payload: "hard" })}
       />
