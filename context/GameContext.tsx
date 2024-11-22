@@ -4,6 +4,7 @@ import {
   ANIMATION_PACE_MEDIUM,
   DEFAULT_DIFFICULTY,
   HINTS,
+  LEVELS,
 } from "@/config";
 import {
   type GameContextType,
@@ -15,6 +16,7 @@ import {
 } from "@/types/types";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { Animated, useAnimatedValue } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const GameContext = createContext<GameContextType | null>(null);
 
@@ -36,6 +38,14 @@ const initialState: GameState = {
   tiles: [],
   sequence: [],
   animationPace: ANIMATION_PACE_DEFAULT,
+};
+
+const saveToStorage = async (state: any) => {
+  try {
+    await AsyncStorage.setItem("gameState", JSON.stringify(state));
+  } catch (e) {
+    console.error("Failed to save game state", e);
+  }
 };
 
 export const reducer: GameReducer = (state, action) => {
@@ -72,6 +82,10 @@ export const reducer: GameReducer = (state, action) => {
   };
 
   switch (action.type) {
+    case "loadGameState":
+      if (action.payload === null) return { ...state };
+      return { ...state, difficulties: action.payload };
+
     case "loadTiles":
       return { ...state, tiles: action.payload };
 
@@ -148,10 +162,24 @@ export const reducer: GameReducer = (state, action) => {
         state.userGuess === state.sequence.length - 1 &&
         action.payload === state.sequence.at(state.userGuess)
       ) {
+        // Save the updated difficulties here
+        saveToStorage({
+          ...state.difficulties,
+          [state.difficulty]: {
+            ...state.difficulties[state.difficulty],
+            level:
+              state.level === LEVELS
+                ? state.level
+                : state.difficulties[state.difficulty].level > state.level + 1
+                ? state.difficulties[state.difficulty].level
+                : state.level + 1,
+          },
+        });
+
         return {
           ...state,
-          toGo: state.level + 1,
-          level: state.level + 1,
+          toGo: state.level === LEVELS ? state.level : state.level + 1,
+          level: state.level === LEVELS ? state.level : state.level + 1,
           userGuess: 0,
           hints: 3,
           sequence: [],
@@ -162,7 +190,12 @@ export const reducer: GameReducer = (state, action) => {
             ...state.difficulties,
             [state.difficulty]: {
               ...state.difficulties[state.difficulty],
-              level: state.level + 1,
+              level:
+                state.level === LEVELS
+                  ? state.level
+                  : state.difficulties[state.difficulty].level > state.level + 1
+                  ? state.difficulties[state.difficulty].level
+                  : state.level + 1,
             },
           },
         };
@@ -189,6 +222,20 @@ function GameProvider({ children }: GameContextProviderProps) {
 
   useEffect(() => {
     dispatch({ type: "loadTiles", payload: tiles });
+    const loadGameState = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("gameState");
+        dispatch({
+          type: "loadGameState",
+          payload: jsonValue != null ? JSON.parse(jsonValue) : null,
+        });
+      } catch (e) {
+        // Error handling if needed
+        console.error("Failed to load game state", e);
+      }
+    };
+
+    loadGameState();
   }, []);
 
   return (

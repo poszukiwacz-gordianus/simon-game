@@ -235,6 +235,11 @@ export interface VerifyUserResponseAction {
   payload: number;
 }
 
+export interface LoadGameState {
+  type: "loadGameState";
+  payload: GameState["difficulties"] | null;
+}
+
 /**
  * The type of all possible actions.
  */
@@ -247,4 +252,5 @@ export type Action =
   | NextLevelAction
   | ShowHintAction
   | ResetLevelAction
+  | LoadGameState
   | VerifyUserResponseAction;

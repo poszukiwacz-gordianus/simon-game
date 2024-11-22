@@ -7,6 +7,8 @@ export default function GameFooter() {
     dispatch,
   } = useGameContext();
 
+  const delay = 800;
+
   if (gameInProgress)
     return (
       <Button
@@ -24,7 +26,7 @@ export default function GameFooter() {
         dispatch({ type: "startLevel" });
         setTimeout(() => {
           dispatch({ type: "startPlay" });
-        }, level * animationPace);
+        }, level * animationPace + delay);
       }}
     />
   );
