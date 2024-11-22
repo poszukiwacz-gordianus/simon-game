@@ -1,4 +1,11 @@
 import {
+  ANIMATION_PACE_DEFAULT,
+  ANIMATION_PACE_HARD,
+  ANIMATION_PACE_MEDIUM,
+  DEFAULT_DIFFICULTY,
+  HINTS,
+} from "@/config";
+import {
   type GameContextType,
   type GameContextProviderProps,
   type GameState,
@@ -12,35 +19,36 @@ import { Animated, useAnimatedValue } from "react-native";
 const GameContext = createContext<GameContextType | null>(null);
 
 const initialState: GameState = {
-  difficulty: "easy",
+  difficulty: DEFAULT_DIFFICULTY,
   difficulties: {
-    easy: { level: 10 },
-    medium: { level: 5 },
+    easy: { level: 1 },
+    medium: { level: 1 },
     hard: { level: 1 },
   },
   level: 1,
   toGo: 1,
   userGuess: 0,
-  hints: 3,
+  hints: HINTS,
   gameInProgress: false,
   isPlaying: false,
   levelUp: false,
   gameOver: false,
   tiles: [],
   sequence: [],
+  animationPace: ANIMATION_PACE_DEFAULT,
 };
 
 export const reducer: GameReducer = (state, action) => {
-  const animateTile: AnimatedTile = (tileOpacity: Animated.Value) => {
+  const animateTile: AnimatedTile = (tileOpacity) => {
     Animated.sequence([
       Animated.timing(tileOpacity, {
         toValue: 0.5,
-        duration: 250,
+        duration: state.animationPace / 2,
         useNativeDriver: true,
       }),
       Animated.timing(tileOpacity, {
         toValue: 1,
-        duration: 250,
+        duration: state.animationPace / 2,
         useNativeDriver: true,
       }),
     ]).start();
@@ -58,7 +66,7 @@ export const reducer: GameReducer = (state, action) => {
       setTimeout(() => {
         const tileIndex = sequenceItem;
         animateTile(state.tiles[tileIndex].opacity);
-      }, 500 * (index + 1));
+      }, state.animationPace * (index + 1));
 
       return sequenceItem;
     });
@@ -69,7 +77,23 @@ export const reducer: GameReducer = (state, action) => {
       return { ...state, tiles: action.payload };
 
     case "difficulty":
-      return { ...state, difficulty: action.payload };
+      const difficulty = action.payload;
+      const pace =
+        difficulty === "medium"
+          ? ANIMATION_PACE_MEDIUM
+          : difficulty === "hard"
+          ? ANIMATION_PACE_HARD
+          : ANIMATION_PACE_DEFAULT;
+
+      return {
+        ...state,
+        difficulty: action.payload,
+        animationPace: pace,
+        isPlaying: false,
+        levelUp: false,
+        gameInProgress: false,
+        gameOver: false,
+      };
 
     case "setLevel":
       return {
@@ -79,8 +103,10 @@ export const reducer: GameReducer = (state, action) => {
         userGuess: 0,
         hints: 3,
         isPlaying: false,
+        levelUp: false,
         gameInProgress: false,
         gameOver: false,
+        sequence: [],
       };
 
     case "startLevel":
@@ -150,13 +176,11 @@ export const reducer: GameReducer = (state, action) => {
 function GameProvider({ children }: GameContextProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const opacity = useAnimatedValue(1);
-
   const tiles = [
-    { color: "blue", opacity },
-    { color: "yellow", opacity },
-    { color: "red", opacity },
-    { color: "white", opacity },
+    { color: "blue", opacity: useAnimatedValue(1) },
+    { color: "yellow", opacity: useAnimatedValue(1) },
+    { color: "red", opacity: useAnimatedValue(1) },
+    { color: "white", opacity: useAnimatedValue(1) },
   ];
 
   useEffect(() => {

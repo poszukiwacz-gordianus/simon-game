@@ -1,3 +1,4 @@
+import { LEVELS } from "@/config";
 import { useGameContext } from "@/context/GameContext";
 import { Link } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
@@ -23,7 +24,7 @@ export default function ShowLevels() {
           justifyContent: "center",
         }}
       >
-        {Array.from({ length: 40 }, (_, index) => {
+        {Array.from({ length: LEVELS }, (_, index) => {
           const isBlocked = index + 1 > unblockedLevels;
 
           return (

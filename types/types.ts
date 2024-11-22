@@ -46,6 +46,7 @@ export interface DifficultyState {
  * @property gameOver - A boolean indicating if the game is over.
  * @property tiles - An array of the tiles in the game.
  * @property sequence - The sequence of tiles to be shown to the user.
+ * @property animationPace - The pace of animations to controll the speed of the game by difficulty.
  */
 export interface GameState {
   /**
@@ -111,6 +112,11 @@ export interface GameState {
    * The sequence of tile indices to track user input.
    */
   sequence: number[];
+
+  /**
+   * The pace of animations to controll the speed of the game by difficulty.
+   */
+  animationPace: number;
 }
 
 /**
