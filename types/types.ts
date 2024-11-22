@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Animated } from "react-native";
-import { Audio } from "expo-av";
 
 export type RulesContent = Array<string>;
 
@@ -12,7 +11,6 @@ export interface ButtonProps {
 export interface TileProps {
   color: string;
   opacity: Animated.Value;
-  sound: () => void;
 }
 
 export interface RuleProps {
@@ -119,10 +117,6 @@ export interface GameState {
    * The pace of animations to controll the speed of the game by difficulty.
    */
   animationPace: number;
-
-  playTileSound: (tileIndex: number) => void;
-
-  sounds?: Audio.Sound[];
 }
 
 /**

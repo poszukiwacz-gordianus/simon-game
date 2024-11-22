@@ -5,7 +5,6 @@ import {
   DEFAULT_DIFFICULTY,
   HINTS,
 } from "@/config";
-import useSounds from "@/hooks/useSounds";
 import {
   type GameContextType,
   type GameContextProviderProps,
@@ -16,7 +15,6 @@ import {
 } from "@/types/types";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { Animated, useAnimatedValue } from "react-native";
-import { useAudioPlayer } from "expo-audio";
 
 const GameContext = createContext<GameContextType | null>(null);
 
@@ -38,15 +36,6 @@ const initialState: GameState = {
   tiles: [],
   sequence: [],
   animationPace: ANIMATION_PACE_DEFAULT,
-  playTileSound(index: number) {
-    const tile = this.tiles[index];
-    if (tile && this.sounds!.length) {
-      // Ensure sounds are loaded
-      requestAnimationFrame(() => {
-        tile.sound();
-      });
-    }
-  },
 };
 
 export const reducer: GameReducer = (state, action) => {
@@ -75,11 +64,7 @@ export const reducer: GameReducer = (state, action) => {
         : previousSequence[index];
 
       setTimeout(() => {
-        requestAnimationFrame(() => {
-          const tileIndex = sequenceItem;
-          state.playTileSound(tileIndex);
-          animateTile(state.tiles[tileIndex].opacity);
-        });
+        animateTile(state.tiles[sequenceItem].opacity);
       }, state.animationPace * (index + 1));
 
       return sequenceItem;
@@ -134,7 +119,6 @@ export const reducer: GameReducer = (state, action) => {
       return { ...state, levelUp: false };
 
     case "showHint":
-      state.playTileSound(state.sequence[state.userGuess]);
       animateTile(state.tiles[state.sequence[state.userGuess]].opacity);
       return { ...state, hints: state.hints - 1 };
 
@@ -153,7 +137,6 @@ export const reducer: GameReducer = (state, action) => {
         state.userGuess < state.sequence.length - 1 &&
         action.payload === state.sequence.at(state.userGuess)
       ) {
-        state.playTileSound(state.sequence[state.userGuess]);
         return {
           ...state,
           toGo: state.toGo - 1,
@@ -165,7 +148,6 @@ export const reducer: GameReducer = (state, action) => {
         state.userGuess === state.sequence.length - 1 &&
         action.payload === state.sequence.at(state.userGuess)
       ) {
-        state.playTileSound(state.sequence[state.userGuess]);
         return {
           ...state,
           toGo: state.level + 1,
@@ -194,24 +176,18 @@ export const reducer: GameReducer = (state, action) => {
 
 function GameProvider({ children }: GameContextProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { sounds, playSound } = useSounds();
-
-  const player = useAudioPlayer("@/assets/sounds/wrong.mp3");
-  player.play();
 
   const tiles = [
-    { color: "blue", opacity: useAnimatedValue(1), sound: () => playSound(0) },
+    { color: "blue", opacity: useAnimatedValue(1) },
     {
       color: "yellow",
       opacity: useAnimatedValue(1),
-      sound: () => playSound(1),
     },
-    { color: "red", opacity: useAnimatedValue(1), sound: () => playSound(2) },
-    { color: "white", opacity: useAnimatedValue(1), sound: () => playSound(3) },
+    { color: "red", opacity: useAnimatedValue(1) },
+    { color: "white", opacity: useAnimatedValue(1) },
   ];
 
   useEffect(() => {
-    state.sounds = sounds;
     dispatch({ type: "loadTiles", payload: tiles });
   }, []);
 
