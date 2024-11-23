@@ -1,5 +1,6 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text } from "react-native";
 import { useGameContext } from "@/context/GameContext";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function GameHeader() {
   const {
@@ -14,7 +15,7 @@ export default function GameHeader() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Level {level}</Text>
       <Text style={styles.subHeader}>Remaining: {toGo}</Text>
       <Button
@@ -22,7 +23,7 @@ export default function GameHeader() {
         disabled={!isPlaying}
         onPress={handleHintPress}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

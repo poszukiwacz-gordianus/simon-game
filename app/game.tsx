@@ -1,4 +1,5 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useGameContext } from "@/context/GameContext";
 import {
   GameFooter,
@@ -38,11 +39,11 @@ export default function Game() {
     );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <GameHeader />
       <TilesContainer />
       <GameFooter />
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet } from "react-native";
 import * as NavigationBar from "expo-navigation-bar";
 
 import { DifficultyChoice, Rules } from "@/components/Components";
@@ -11,10 +12,10 @@ export default function Index() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Rules />
       <DifficultyChoice />
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -1,4 +1,5 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useGameContext } from "@/context/GameContext";
 import Tile from "./Tile";
 
@@ -8,11 +9,11 @@ export default function TilesContainer() {
   } = useGameContext();
 
   return (
-    <View style={styles.tilesContainer}>
+    <SafeAreaView style={styles.tilesContainer}>
       {tiles.map((tile, index) => (
         <Tile key={index} {...tile} />
       ))}
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -1,14 +1,15 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import { Level } from "@/components/Components";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ShowLevels() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Choose Level</Text>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Level />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

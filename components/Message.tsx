@@ -1,5 +1,6 @@
 import { Link } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { type MessageProps } from "@/types/types";
 
 export default function Message({
@@ -11,7 +12,7 @@ export default function Message({
   secondaryColor,
 }: MessageProps) {
   return (
-    <View style={[styles.container, { backgroundColor }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor }]}>
       <Text style={styles.text}>{messageText}</Text>
       <Pressable
         style={[styles.buttonContainer, { backgroundColor: primaryColor }]}
@@ -25,7 +26,7 @@ export default function Message({
       >
         <Text style={styles.button}>Home</Text>
       </Link>
-    </View>
+    </SafeAreaView>
   );
 }
 

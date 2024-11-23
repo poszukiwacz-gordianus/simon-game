@@ -1,4 +1,5 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useGameContext } from "@/context/GameContext";
 import LinkButton from "./LinkButton";
 
@@ -6,7 +7,7 @@ export default function DifficultyChoice() {
   const { dispatch } = useGameContext();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <LinkButton
         title="Easy"
         onPress={() => dispatch({ type: "difficulty", payload: "easy" })}
@@ -19,7 +20,7 @@ export default function DifficultyChoice() {
         title="Hard"
         onPress={() => dispatch({ type: "difficulty", payload: "hard" })}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
