@@ -65,12 +65,13 @@ export const reducer: GameReducer = (state, action) => {
 
   const generateSequence: GenerateSequence = (previousSequence = []) => {
     const sequenceLength = state.level;
-    const newSequence = previousSequence.length === 0;
+    const newSequence = previousSequence.length;
 
     return Array.from({ length: sequenceLength }, (_, index) => {
-      const sequenceItem = newSequence
-        ? Math.floor(Math.random() * 4)
-        : previousSequence[index];
+      const sequenceItem =
+        index === newSequence
+          ? Math.floor(Math.random() * 4)
+          : previousSequence[index];
 
       setTimeout(() => {
         animateTile(state.tiles[sequenceItem].opacity);
@@ -104,6 +105,7 @@ export const reducer: GameReducer = (state, action) => {
         isPlaying: false,
         gameInProgress: false,
         gameOver: false,
+        sequence: [],
       };
 
     case "setLevel":
@@ -116,7 +118,6 @@ export const reducer: GameReducer = (state, action) => {
         isPlaying: false,
         gameInProgress: false,
         gameOver: false,
-        sequence: [],
       };
 
     case "startLevel":
@@ -177,7 +178,6 @@ export const reducer: GameReducer = (state, action) => {
           level: state.level === LEVELS ? state.level : state.level + 1,
           userGuess: 0,
           hints: 3,
-          sequence: [],
           isPlaying: false,
           gameInProgress: false,
           difficulties: {

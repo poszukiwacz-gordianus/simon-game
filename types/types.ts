@@ -173,11 +173,10 @@ export type AnimatedTile = (tileOpacity: Animated.Value) => void;
 /**
  * Generates a sequence of tile indices for the current game level.
  *
- * @param previousSequence - An optional array representing the previous sequence.
- *                           If not provided or empty, a new sequence is generated.
+ * @param previousSequence - An array representing the previous sequence.
  * @returns An array of numbers representing the sequence of tiles to guess by user.
  */
-export type GenerateSequence = (previousSequence?: number[]) => number[];
+export type GenerateSequence = (previousSequence: number[]) => number[];
 
 /**
  * An action to set the game difficulty.
