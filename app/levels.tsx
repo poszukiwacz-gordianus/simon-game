@@ -1,11 +1,12 @@
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Level } from "@/components/Components";
 import { SafeAreaView } from "react-native-safe-area-context";
+import FontText from "@/components/FontText";
 
 export default function ShowLevels() {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Choose Level</Text>
+      <FontText style={styles.header}>Choose Level</FontText>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Level />
       </ScrollView>
@@ -16,19 +17,17 @@ export default function ShowLevels() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#437214",
+    backgroundColor: "#c2a664",
     alignItems: "center",
   },
   header: {
-    fontSize: 24,
-    color: "#FEF2BF",
+    fontSize: 30,
   },
   scrollViewContent: {
-    flexGrow: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     padding: 10,
-    paddingBottom: 80,
     justifyContent: "center",
+    alignContent: "center",
   },
 });

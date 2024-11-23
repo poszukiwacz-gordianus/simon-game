@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   tileContainer: {
     width: "50%",
     height: "50%",
+    padding: 5,
   },
   tile: {
     width: "100%",

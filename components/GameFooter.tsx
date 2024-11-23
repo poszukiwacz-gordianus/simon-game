@@ -1,9 +1,12 @@
+import { Button, StyleSheet, View } from "react-native";
+import { router } from "expo-router";
+import { AntDesign } from "@expo/vector-icons";
 import { useGameContext } from "@/context/GameContext";
-import { Button } from "react-native";
+import IconButton from "./IconButton";
 
 export default function GameFooter() {
   const {
-    state: { gameInProgress, level, animationPace },
+    state: { gameInProgress, level, animationPace, isPlaying, hints },
     dispatch,
   } = useGameContext();
 
@@ -16,11 +19,35 @@ export default function GameFooter() {
   };
 
   return (
-    <Button
-      title={gameInProgress ? "Reset level" : "Start"}
-      onPress={
-        gameInProgress ? () => dispatch({ type: "resetLevel" }) : handlePress
-      }
-    />
+    <View style={styles.container}>
+      <Button
+        title={gameInProgress ? "Reset level" : "Start"}
+        onPress={
+          gameInProgress ? () => dispatch({ type: "resetLevel" }) : handlePress
+        }
+      />
+      <IconButton onPress={() => router.back()}>
+        <AntDesign name="back" size={48} color="#FCFCF7" />
+      </IconButton>
+      <IconButton onPress={() => dispatch({ type: "resetLevel" })}>
+        <AntDesign name="reload1" size={48} color="#FCFCF7" />
+      </IconButton>
+      <IconButton
+        disabled={!isPlaying}
+        onPress={hints > 0 ? () => dispatch({ type: "showHint" }) : null}
+      >
+        <AntDesign
+          name="bulb1"
+          size={48}
+          color={hints > 0 ? "#FCFCF7" : "#755224"}
+        />
+      </IconButton>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+  },
+});

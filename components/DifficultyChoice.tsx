@@ -26,7 +26,7 @@ export default function DifficultyChoice() {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "flex-start",
-    flexDirection: "row",
+    flex: 10,
+    justifyContent: "center",
   },
 });

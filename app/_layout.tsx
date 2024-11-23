@@ -8,15 +8,22 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <GameProvider>
         <StatusBar hidden />
-        <Stack screenOptions={{ animation: "slide_from_right" }}>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="game" options={{ headerShown: false }} />
+        <Stack>
+          <Stack.Screen
+            name="index"
+            options={{ headerShown: false, animation: "slide_from_left" }}
+          />
+          <Stack.Screen
+            name="game"
+            options={{ headerShown: false, animation: "slide_from_right" }}
+          />
           <Stack.Screen
             name="levels"
             options={{
-              title: "Home",
-              headerStyle: { backgroundColor: "#2f4913" },
-              headerTintColor: "#FEF2BF",
+              title: "Back",
+              headerStyle: { backgroundColor: "#c2a664" },
+              headerTintColor: "#000",
+              animation: "slide_from_right",
             }}
           />
         </Stack>

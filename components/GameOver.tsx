@@ -1,27 +1,30 @@
-import { Link } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import Animated, { BounceIn } from "react-native-reanimated";
+import { router } from "expo-router";
+import { StyleSheet, View } from "react-native";
+import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
+import { AntDesign } from "@expo/vector-icons";
 import { useGameContext } from "@/context/GameContext";
+import FontText from "./FontText";
+import IconButton from "./IconButton";
 
 export default function GameOver() {
   const { dispatch } = useGameContext();
 
   return (
-    <Animated.View entering={BounceIn} style={styles.centeredView}>
+    <Animated.View
+      entering={BounceIn}
+      exiting={BounceOut}
+      style={styles.centeredView}
+    >
       <View style={styles.modalView}>
-        <Text style={styles.text}>"Game over 😥"</Text>
-        <Pressable
-          style={[styles.buttonContainer, { backgroundColor: "#23d14c" }]}
-          onPress={() => dispatch({ type: "resetLevel" })}
-        >
-          <Text style={styles.button}>"Try again"</Text>
-        </Pressable>
-        <Link
-          href="/"
-          style={[styles.buttonContainer, { backgroundColor: "#251055" }]}
-        >
-          <Text style={styles.button}>Home</Text>
-        </Link>
+        <FontText style={styles.text}>Game over</FontText>
+        <View style={{ flexDirection: "row" }}>
+          <IconButton onPress={() => dispatch({ type: "resetLevel" })}>
+            <AntDesign name="reload1" size={48} color="#FCFCF7" />
+          </IconButton>
+          <IconButton onPress={() => router.navigate("/")}>
+            <AntDesign name="home" size={48} color="#FCFCF7" />
+          </IconButton>
+        </View>
       </View>
     </Animated.View>
   );
@@ -40,10 +43,8 @@ export const styles = StyleSheet.create({
     zIndex: 10, // Ensure it overlays other elements
   },
   modalView: {
-    margin: 20,
-    backgroundColor: "#ea2e2e",
-    borderRadius: 20,
-    padding: 35,
+    backgroundColor: "#c2a664",
+    padding: 20,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -55,19 +56,7 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   text: {
-    color: "white",
-    fontSize: 30,
-    marginBottom: 40,
-  },
-  buttonContainer: {
-    padding: 20,
-    width: 200,
-    marginBottom: 10,
-  },
-  button: {
-    fontSize: 20,
-    color: "white",
-    textAlign: "center",
-    padding: 10,
+    fontSize: 40,
+    marginBottom: 20,
   },
 });

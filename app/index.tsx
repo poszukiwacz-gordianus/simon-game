@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
 import * as NavigationBar from "expo-navigation-bar";
-
 import { DifficultyChoice, Rules } from "@/components/Components";
 
 export default function Index() {
@@ -13,8 +12,8 @@ export default function Index() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Rules />
       <DifficultyChoice />
+      <Rules />
     </SafeAreaView>
   );
 }
@@ -22,8 +21,9 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: "relative",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#437214",
+    backgroundColor: "#c2a664",
   },
 });

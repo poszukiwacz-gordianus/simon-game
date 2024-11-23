@@ -51,7 +51,7 @@ export const reducer: GameReducer = (state, action) => {
   const animateTile: AnimatedTile = (tileOpacity) => {
     Animated.sequence([
       Animated.timing(tileOpacity, {
-        toValue: 0.5,
+        toValue: 0.1,
         duration: state.animationPace / 2,
         useNativeDriver: true,
       }),

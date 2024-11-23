@@ -1,6 +1,7 @@
 import { Link } from "expo-router";
 import { StyleSheet } from "react-native";
 import { type ButtonProps } from "@/types/types";
+import FontText from "./FontText";
 
 export default function LinkButton({
   title: buttonText,
@@ -8,19 +9,18 @@ export default function LinkButton({
 }: ButtonProps) {
   return (
     <Link href="/levels" onPress={handlePress} style={styles.button}>
-      {buttonText}
+      <FontText>{buttonText}</FontText>
     </Link>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    fontSize: 20,
+    textAlign: "center",
+    fontSize: 30,
     padding: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
     margin: 10,
-    borderRadius: 9999,
+    paddingHorizontal: 20,
     backgroundColor: "#FEF2BF",
   },
 });

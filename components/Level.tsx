@@ -2,6 +2,7 @@ import { StyleSheet, Text } from "react-native";
 import { Link } from "expo-router";
 import { LEVELS } from "@/config";
 import { useGameContext } from "@/context/GameContext";
+import FontText from "./FontText";
 
 export default function Level() {
   const {
@@ -23,12 +24,12 @@ export default function Level() {
         style={[
           styles.container,
           {
-            backgroundColor: isLocked ? "#373837" : "#1a8412",
+            backgroundColor: isLocked ? "#AD8F51" : "#FEF2BF",
           },
         ]}
         onPressOut={() => dispatch({ type: "setLevel", payload: levelNumber })}
       >
-        <Text style={styles.text}>{levelNumber}</Text>
+        <FontText style={styles.text}>{levelNumber}</FontText>
       </Link>
     );
   });
@@ -36,11 +37,10 @@ export default function Level() {
 
 const styles = StyleSheet.create({
   container: {
-    width: "40%",
+    width: "20%",
     padding: 10,
-    paddingTop: 20,
-    paddingBottom: 20,
+    paddingVertical: 20,
     margin: 5,
   },
-  text: { color: "#FEF2BF", textAlign: "center" },
+  text: { textAlign: "center", fontSize: 20 },
 });
