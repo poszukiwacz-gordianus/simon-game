@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { rulesContent } from "@/content/content";
-import { Rule } from "@/components/Components";
+import Rule from "./Rule";
 
 export default function RulesS() {
   return (

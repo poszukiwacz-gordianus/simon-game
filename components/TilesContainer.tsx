@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { useGameContext } from "@/context/GameContext";
-import { Tile } from "@/components/Components";
+import Tile from "./Tile";
 
 export default function TilesContainer() {
   const {

@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { useGameContext } from "@/context/GameContext";
-import { LinkButton } from "@/components/Components";
+import LinkButton from "./LinkButton";
 
 export default function DifficultyChoice() {
   const { dispatch } = useGameContext();
