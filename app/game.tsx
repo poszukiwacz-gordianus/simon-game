@@ -4,42 +4,19 @@ import { useGameContext } from "@/context/GameContext";
 import {
   GameFooter,
   GameHeader,
-  Message,
+  GameOver,
   TilesContainer,
 } from "@/components/Components";
 
 export default function Game() {
   const {
-    state: { gameOver, levelUp },
-    dispatch,
+    state: { gameOver },
   } = useGameContext();
-
-  if (levelUp)
-    return (
-      <Message
-        messageText="Congratulations 🎉"
-        onPressHandler={() => dispatch({ type: "nextLevel" })}
-        buttonText="Next level"
-        backgroundColor="#23d14c"
-        primaryColor="#ea2e2e"
-        secondaryColor="#251055"
-      />
-    );
-
-  if (gameOver)
-    return (
-      <Message
-        messageText="Game over 😥"
-        onPressHandler={() => dispatch({ type: "resetLevel" })}
-        buttonText="Try again"
-        backgroundColor="#ea2e2e"
-        primaryColor="#23d14c"
-        secondaryColor="#251055"
-      />
-    );
 
   return (
     <SafeAreaView style={styles.container}>
+      {gameOver && <GameOver />}
+
       <GameHeader />
       <TilesContainer />
       <GameFooter />
@@ -50,7 +27,10 @@ export default function Game() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: "relative",
     padding: 50,
     backgroundColor: "#437214",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

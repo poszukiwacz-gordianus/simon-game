@@ -2,7 +2,7 @@ import LinkButton from "./LinkButton";
 import DifficultyChoice from "./DifficultyChoice";
 import GameFooter from "./GameFooter";
 import GameHeader from "./GameHeader";
-import Message from "./Message";
+import GameOver from "./GameOver";
 import Level from "./Level";
 import Rule from "./Rule";
 import Rules from "./Rules";
@@ -14,7 +14,7 @@ export {
   DifficultyChoice,
   GameFooter,
   GameHeader,
-  Message,
+  GameOver,
   Level,
   Rules,
   Rule,

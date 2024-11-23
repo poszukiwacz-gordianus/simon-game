@@ -33,7 +33,6 @@ const initialState: GameState = {
   hints: HINTS,
   gameInProgress: false,
   isPlaying: false,
-  levelUp: false,
   gameOver: false,
   tiles: [],
   sequence: [],
@@ -103,7 +102,6 @@ export const reducer: GameReducer = (state, action) => {
         difficulty: action.payload,
         animationPace: pace,
         isPlaying: false,
-        levelUp: false,
         gameInProgress: false,
         gameOver: false,
       };
@@ -116,7 +114,6 @@ export const reducer: GameReducer = (state, action) => {
         userGuess: 0,
         hints: 3,
         isPlaying: false,
-        levelUp: false,
         gameInProgress: false,
         gameOver: false,
         sequence: [],
@@ -128,9 +125,6 @@ export const reducer: GameReducer = (state, action) => {
 
     case "startPlay":
       return { ...state, gameInProgress: true, isPlaying: true };
-
-    case "nextLevel":
-      return { ...state, levelUp: false };
 
     case "showHint":
       animateTile(state.tiles[state.sequence[state.userGuess]].opacity);
@@ -144,6 +138,7 @@ export const reducer: GameReducer = (state, action) => {
         toGo: state.level,
         gameInProgress: false,
         gameOver: false,
+        isPlaying: false,
       };
 
     case "verifyUserResponse":
@@ -184,7 +179,6 @@ export const reducer: GameReducer = (state, action) => {
           hints: 3,
           sequence: [],
           isPlaying: false,
-          levelUp: true,
           gameInProgress: false,
           difficulties: {
             ...state.difficulties,
@@ -200,7 +194,7 @@ export const reducer: GameReducer = (state, action) => {
           },
         };
       }
-      return { ...state, gameOver: true };
+      return { ...state, gameOver: true, isPlaying: false };
 
     default:
       return state;

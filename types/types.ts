@@ -18,15 +18,6 @@ export interface RuleProps {
   index: number;
 }
 
-export interface MessageProps {
-  messageText: string;
-  onPressHandler: () => void;
-  buttonText: string;
-  backgroundColor: string;
-  primaryColor: string;
-  secondaryColor: string;
-}
-
 // GameContext types
 /**
  * The shape of the game state.
@@ -51,7 +42,6 @@ export interface DifficultyState {
  * @property hints - The number of hints left for the user.
  * @property gameInProgress - A boolean indicating if the game is in progress.
  * @property isPlaying - A boolean indicating if the user is currently playing.
- * @property levelUp - A boolean indicating if the user has leveled up.
  * @property gameOver - A boolean indicating if the game is over.
  * @property tiles - An array of the tiles in the game.
  * @property sequence - The sequence of tiles to be shown to the user.
@@ -101,11 +91,6 @@ export interface GameState {
    * Indicates if the game is actively in progress.
    */
   gameInProgress: boolean;
-
-  /**
-   * Indicates if the player has completed the current level.
-   */
-  levelUp: boolean;
 
   /**
    * Indicates if the game is over.
