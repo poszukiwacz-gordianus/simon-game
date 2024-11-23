@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 24,
     color: "#FEF2BF",
-    marginVertical: 20,
   },
   scrollViewContent: {
     flexGrow: 1,

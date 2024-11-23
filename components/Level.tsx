@@ -36,7 +36,7 @@ export default function Level() {
 
 const styles = StyleSheet.create({
   container: {
-    width: "20%",
+    width: "40%",
     padding: 10,
     paddingTop: 20,
     paddingBottom: 20,
