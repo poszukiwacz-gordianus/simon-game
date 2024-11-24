@@ -1,19 +1,20 @@
 import { StyleSheet } from "react-native";
 import { Link } from "expo-router";
-import { LEVELS } from "@/config";
+import { DEFAULT_MAX_LEVELS } from "@/config";
 import { useGameContext } from "@/context/GameContext";
-import { startLevel } from "@/utils/helpers";
+import { useInitializeLevelSequence } from "@/hooks/useHooks";
 import FontText from "./FontText";
 
 export default function Level() {
   const {
-    state: { difficulty, difficulties, animationPace },
-    dispatch,
+    state: { difficulty, difficulties },
   } = useGameContext();
+
+  const { initializeLevelSequence } = useInitializeLevelSequence();
 
   const currentLevel = difficulties[difficulty]?.level ?? 0;
 
-  return Array.from({ length: LEVELS }, (_, index) => {
+  return Array.from({ length: DEFAULT_MAX_LEVELS }, (_, index) => {
     const levelNumber = index + 1;
     const isLocked = levelNumber > currentLevel;
 
@@ -28,7 +29,7 @@ export default function Level() {
             backgroundColor: isLocked ? "#AD8F51" : "#FEF2BF",
           },
         ]}
-        onPress={() => startLevel(levelNumber, animationPace, dispatch)}
+        onPress={() => initializeLevelSequence(levelNumber)}
       >
         <FontText style={styles.text}>{levelNumber}</FontText>
       </Link>

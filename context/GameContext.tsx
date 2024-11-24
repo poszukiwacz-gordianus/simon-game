@@ -1,243 +1,182 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
-import { Animated, useAnimatedValue } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createContext, useContext, useReducer, useRef } from "react";
 import {
-  ANIMATION_PACE_DEFAULT,
-  ANIMATION_PACE_HARD,
-  ANIMATION_PACE_MEDIUM,
+  DEFAULT_ANIMATION_PACE,
+  DEFAULT_ANIMATION_PACE_HARD,
+  DEFAULT_ANIMATION_PACE_MEDIUM,
+  DEFAULT_DIFFICULTIES,
   DEFAULT_DIFFICULTY,
-  HINTS,
-  LEVELS,
+  DEFAULT_HINTS,
+  DEFAULT_MAX_LEVELS,
 } from "@/config";
 import {
   type GameContextType,
   type GameContextProviderProps,
   type GameState,
-  type GenerateSequence,
-  type AnimatedTile,
   type GameReducer,
-} from "@/types/types";
-import useStartLevel from "@/hooks/useStartLevel";
+} from "@/types";
+import {
+  animateTile,
+  saveGameStateToStorage,
+  stopTilesAnimation,
+} from "@/utils/helpers";
 
 const GameContext = createContext<GameContextType | null>(null);
 
+// Initial game state
 const initialState: GameState = {
   difficulty: DEFAULT_DIFFICULTY,
-  difficulties: {
-    easy: { level: 1 },
-    medium: { level: 1 },
-    hard: { level: 1 },
-  },
+  difficulties: DEFAULT_DIFFICULTIES,
   level: 1,
-  toGo: 1,
+  tilesRemaining: 1,
   userGuess: 0,
-  hints: HINTS,
+  hints: DEFAULT_HINTS,
   isPlaying: false,
   levelUp: false,
   gameOver: false,
   tiles: [],
   sequence: [],
-  animationPace: ANIMATION_PACE_DEFAULT,
+  animationPace: DEFAULT_ANIMATION_PACE,
 };
 
-const saveToStorage = async (state: any) => {
-  try {
-    await AsyncStorage.setItem("gameState", JSON.stringify(state));
-  } catch (e) {
-    console.error("Failed to save game state", e);
-  }
-};
-
-export const reducer: GameReducer = (state, action) => {
-  const animateTile: AnimatedTile = (tileOpacity) => {
-    Animated.sequence([
-      Animated.timing(tileOpacity, {
-        toValue: 0.1,
-        duration: state.animationPace / 2,
-        useNativeDriver: true,
-      }),
-      Animated.timing(tileOpacity, {
-        toValue: 1,
-        duration: state.animationPace / 2,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
-
-  const generateSequence: GenerateSequence = (length) => {
-    return Array.from({ length }, (_, index) => {
-      // If the index is greater or equal to the length of the sequence, generate a random number
-      const sequenceItem =
-        index >= state.sequence.length
-          ? Math.floor(Math.random() * 4)
-          : state.sequence[index];
-
-      setTimeout(() => {
-        animateTile(state.tiles[sequenceItem].opacity);
-      }, state.animationPace * (index + 1));
-
-      return sequenceItem;
-    });
-  };
-
+const gameReducer: GameReducer = (state, action) => {
   switch (action.type) {
-    case "loadGameState":
-      // If in storage is stored previous game state then load it if not return initial state
-      if (action.payload === null) return { ...state };
+    case "LOAD_GAME_STATE":
+      // Load game state difficulties
       return { ...state, difficulties: action.payload };
 
-    case "loadTiles":
+    case "LOAD_TILES":
       // Load tiles
       return { ...state, tiles: action.payload };
 
-    case "difficulty":
+    case "SET_DIFFICULTY":
+      // Set difficulty choosen by user
       const difficulty = action.payload;
 
-      // Set animation pace
+      // Set animation pace based on difficulty
       const pace =
         difficulty === "medium"
-          ? ANIMATION_PACE_MEDIUM
+          ? DEFAULT_ANIMATION_PACE_MEDIUM
           : difficulty === "hard"
-          ? ANIMATION_PACE_HARD
-          : ANIMATION_PACE_DEFAULT;
+          ? DEFAULT_ANIMATION_PACE_HARD
+          : DEFAULT_ANIMATION_PACE;
 
       return {
         ...state,
         difficulty: action.payload,
         animationPace: pace,
-        isPlaying: false,
-        gameOver: false,
         sequence: [],
       };
 
-    case "startLevel":
-      // Generate a new sequence
-      const newSequence = generateSequence(action.payload);
+    case "INITIALIZE_LEVEL":
+      // Initialize level
+      return {
+        ...state,
+        level: action.payload,
+        tilesRemaining: action.payload,
+        isPlaying: false,
+        gameOver: false,
+        levelUp: false,
+        userGuess: 0,
+        hints: DEFAULT_HINTS,
+      };
 
-      // Return state for start level
+    case "SHOW_SEQUENCE":
+      // Generate a new sequence
+      const newSequence = action.payload(
+        state.level,
+        state.sequence,
+        state.tiles,
+        state.animationPace
+      );
+
+      // Return state with new sequence
       return {
         ...state,
         sequence: newSequence,
-        level: action.payload,
-        toGo: action.payload,
-        userGuess: 0,
-        hints: 3,
-        isPlaying: false,
-        levelUp: false,
-        gameOver: false,
       };
 
-    case "startPlay":
-      // Enabled user response
+    case "ENABLE_USER_RESPONSE":
       return { ...state, isPlaying: true };
 
-    case "showHint":
+    case "SHOW_HINT":
       // Animate current tile to click by user
-      animateTile(state.tiles[state.sequence[state.userGuess]].opacity);
+      animateTile(
+        state.tiles[state.sequence[state.userGuess]].opacity,
+        state.animationPace
+      );
       return { ...state, hints: state.hints - 1 };
 
-    case "verifyUserResponse":
+    case "VERIFY_USER_RESPONSE":
       const userResponse = action.payload;
-      const sequence = state.sequence;
-      const correct = sequence[state.userGuess] === userResponse;
+      const isCorrect = state.sequence[state.userGuess] === userResponse;
 
-      // If user response is correct
-      if (correct) {
-        // If the user has guessed all the tiles
-        if (state.userGuess === sequence.length - 1) {
-          console.log(
-            state.difficulties[state.difficulty].level,
-            state.level + 1,
-            state.difficulties[state.difficulty].level < state.level + 1
-          );
-          const storageLevel =
-            state.level === LEVELS
-              ? state.level
-              : state.difficulties[state.difficulty].level > state.level + 1
-              ? state.difficulties[state.difficulty].level
-              : state.level + 1;
+      // If user response is isCorrect
+      if (isCorrect) {
+        const isLevelCompleted = state.userGuess === state.sequence.length - 1;
 
-          const newLevel =
-            state.level === LEVELS ? state.level : state.level + 1;
+        // Handle level completion logic
+        if (isLevelCompleted) {
+          const newLevel = state.level + 1;
+          // Check if the new level is greater than current max difficulty level
+          const isMaxLevelExceeded =
+            state.difficulties[state.difficulty].level < newLevel &&
+            state.level < DEFAULT_MAX_LEVELS;
 
-          // Save to storage
-          saveToStorage({
-            ...state.difficulties,
-            [state.difficulty]: {
-              ...state.difficulties[state.difficulty],
-              level: storageLevel,
-            },
-          });
+          // Save to storage if new level is greater than current max difficulty level
+          if (isMaxLevelExceeded) {
+            saveGameStateToStorage("gameState", {
+              ...state.difficulties,
+              [state.difficulty]: {
+                ...state.difficulties[state.difficulty],
+                level: newLevel,
+              },
+            });
+          }
 
           return {
             ...state,
-            toGo: newLevel,
-            level: newLevel,
-            userGuess: 0,
-            hints: 3,
-            isPlaying: false,
             levelUp: true,
             difficulties: {
               ...state.difficulties,
               [state.difficulty]: {
                 ...state.difficulties[state.difficulty],
-                level: storageLevel,
+                level: isMaxLevelExceeded
+                  ? newLevel
+                  : state.difficulties[state.difficulty].level,
               },
             },
           };
         }
 
-        // If user quessed the tile
+        // Handle correct tile guess
         return {
           ...state,
-          toGo: state.toGo - 1,
+          tilesRemaining: state.tilesRemaining - 1,
           userGuess: state.userGuess + 1,
         };
       }
 
-      // If user response is incorrect
-      return { ...state, gameOver: true, isPlaying: false };
+      // Handle incorrect guess
+      return {
+        ...state,
+        gameOver: true,
+      };
 
     default:
       return state;
   }
 };
 
-function GameProvider({ children }: GameContextProviderProps) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export default function GameProvider({ children }: GameContextProviderProps) {
+  const [state, dispatch] = useReducer(gameReducer, initialState);
+  const timeoutRefs = useRef<number[]>([]); // Shared timeout refs
 
-  const tiles = [
-    { color: "blue", opacity: useAnimatedValue(1) },
-    {
-      color: "yellow",
-      opacity: useAnimatedValue(1),
-    },
-    { color: "red", opacity: useAnimatedValue(1) },
-    { color: "white", opacity: useAnimatedValue(1) },
-  ];
-
-  useEffect(() => {
-    dispatch({ type: "loadTiles", payload: tiles });
-    const loadGameState = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem("gameState");
-        dispatch({
-          type: "loadGameState",
-          payload: jsonValue != null ? JSON.parse(jsonValue) : null,
-        });
-      } catch (e) {
-        // Error handling if needed
-        console.error("Failed to load game state", e);
-      }
-    };
-
-    loadGameState();
-  }, []);
-
-  useStartLevel(state.level, state.levelUp, state.animationPace, dispatch);
+  const stopAnimation = () => stopTilesAnimation(timeoutRefs, state.tiles);
 
   return (
-    <GameContext.Provider value={{ state, dispatch }}>
+    <GameContext.Provider
+      value={{ state, dispatch, timeoutRefs, stopAnimation }}
+    >
       {children}
     </GameContext.Provider>
   );

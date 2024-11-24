@@ -1,14 +1,10 @@
-import { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
-import * as NavigationBar from "expo-navigation-bar";
 import { DifficultyChoice, Rules } from "@/components/Components";
+import { useLoadOnAppStart } from "@/hooks/useHooks";
 
 export default function Index() {
-  useEffect(() => {
-    // Hide the navigation bar
-    NavigationBar.setVisibilityAsync("hidden");
-  }, []);
+  useLoadOnAppStart();
 
   return (
     <SafeAreaView style={styles.container}>

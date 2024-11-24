@@ -4,13 +4,13 @@ import FontText from "./FontText";
 
 export default function GameHeader() {
   const {
-    state: { level, toGo },
+    state: { level, tilesRemaining },
   } = useGameContext();
 
   return (
     <View style={styles.container}>
       <FontText style={styles.header}>Level {level}</FontText>
-      <FontText style={styles.subHeader}>Remaining: {toGo}</FontText>
+      <FontText style={styles.subHeader}>Remaining: {tilesRemaining}</FontText>
     </View>
   );
 }

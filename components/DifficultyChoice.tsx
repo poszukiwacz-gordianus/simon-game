@@ -10,15 +10,15 @@ export default function DifficultyChoice() {
     <SafeAreaView style={styles.container}>
       <LinkButton
         title="Easy"
-        onPress={() => dispatch({ type: "difficulty", payload: "easy" })}
+        onPress={() => dispatch({ type: "SET_DIFFICULTY", payload: "easy" })}
       />
       <LinkButton
         title="Medium"
-        onPress={() => dispatch({ type: "difficulty", payload: "medium" })}
+        onPress={() => dispatch({ type: "SET_DIFFICULTY", payload: "medium" })}
       />
       <LinkButton
         title="Hard"
-        onPress={() => dispatch({ type: "difficulty", payload: "hard" })}
+        onPress={() => dispatch({ type: "SET_DIFFICULTY", payload: "hard" })}
       />
     </SafeAreaView>
   );

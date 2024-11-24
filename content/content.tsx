@@ -1,4 +1,4 @@
-import { type RulesContent } from "@/types/types";
+import { type RulesContent } from "@/types";
 
 export const rulesContent: RulesContent = [
   "The game consists of multiple levels. The objective is to repeat the sequence of buttons played in each level.",

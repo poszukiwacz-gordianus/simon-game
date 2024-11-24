@@ -2,23 +2,31 @@ import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import { useGameContext } from "@/context/GameContext";
-import { startLevel } from "@/utils/helpers";
+import { useInitializeLevelSequence } from "@/hooks/useHooks";
 import IconButton from "./IconButton";
 
 export default function GameFooter() {
   const {
-    state: { isPlaying, hints, level, animationPace },
+    state: { isPlaying, hints, level },
     dispatch,
+    stopAnimation,
   } = useGameContext();
+
+  const { initializeLevelSequence } = useInitializeLevelSequence();
 
   return (
     <View style={styles.container}>
-      <IconButton onPress={() => router.back()}>
+      <IconButton
+        onPress={() => {
+          stopAnimation();
+          router.back();
+        }}
+      >
         <AntDesign name="back" size={48} color="#FCFCF7" />
       </IconButton>
       <IconButton
         disabled={!isPlaying}
-        onPress={() => startLevel(level, animationPace, dispatch)}
+        onPress={() => initializeLevelSequence(level)}
       >
         <AntDesign
           name="reload1"
@@ -28,7 +36,7 @@ export default function GameFooter() {
       </IconButton>
       <IconButton
         disabled={!isPlaying}
-        onPress={hints > 0 ? () => dispatch({ type: "showHint" }) : null}
+        onPress={hints > 0 ? () => dispatch({ type: "SHOW_HINT" }) : null}
       >
         <AntDesign
           name="bulb1"
