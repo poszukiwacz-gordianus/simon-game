@@ -5,9 +5,13 @@ import { AntDesign } from "@expo/vector-icons";
 import { useGameContext } from "@/context/GameContext";
 import FontText from "./FontText";
 import IconButton from "./IconButton";
+import { startLevel } from "@/utils/helpers";
 
 export default function GameOver() {
-  const { dispatch } = useGameContext();
+  const {
+    state: { level, animationPace },
+    dispatch,
+  } = useGameContext();
 
   return (
     <Animated.View
@@ -18,7 +22,9 @@ export default function GameOver() {
       <View style={styles.modalView}>
         <FontText style={styles.text}>Game over</FontText>
         <View style={{ flexDirection: "row" }}>
-          <IconButton onPress={() => dispatch({ type: "resetLevel" })}>
+          <IconButton
+            onPress={() => startLevel(level, animationPace, dispatch)}
+          >
             <AntDesign name="reload1" size={48} color="#FCFCF7" />
           </IconButton>
           <IconButton onPress={() => router.navigate("/")}>

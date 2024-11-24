@@ -1,12 +1,13 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { Link } from "expo-router";
 import { LEVELS } from "@/config";
 import { useGameContext } from "@/context/GameContext";
+import { startLevel } from "@/utils/helpers";
 import FontText from "./FontText";
 
 export default function Level() {
   const {
-    state: { difficulty, difficulties },
+    state: { difficulty, difficulties, animationPace },
     dispatch,
   } = useGameContext();
 
@@ -19,7 +20,7 @@ export default function Level() {
     return (
       <Link
         key={index}
-        href={{ pathname: "/game", params: { level: levelNumber } }}
+        href={"/game"}
         disabled={isLocked}
         style={[
           styles.container,
@@ -27,7 +28,7 @@ export default function Level() {
             backgroundColor: isLocked ? "#AD8F51" : "#FEF2BF",
           },
         ]}
-        onPressOut={() => dispatch({ type: "setLevel", payload: levelNumber })}
+        onPress={() => startLevel(levelNumber, animationPace, dispatch)}
       >
         <FontText style={styles.text}>{levelNumber}</FontText>
       </Link>

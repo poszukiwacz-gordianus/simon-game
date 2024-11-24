@@ -40,7 +40,6 @@ export interface DifficultyState {
  * @property toGo - The number of sequences to be shown to the user.
  * @property userGuess - The current guess of the user.
  * @property hints - The number of hints left for the user.
- * @property gameInProgress - A boolean indicating if the game is in progress.
  * @property isPlaying - A boolean indicating if the user is currently playing.
  * @property gameOver - A boolean indicating if the game is over.
  * @property tiles - An array of the tiles in the game.
@@ -88,9 +87,9 @@ export interface GameState {
   isPlaying: boolean;
 
   /**
-   * Indicates if the game is actively in progress.
+   * Indicates if the game should advance to the next level.
    */
-  gameInProgress: boolean;
+  levelUp: boolean;
 
   /**
    * Indicates if the game is over.
@@ -173,10 +172,10 @@ export type AnimatedTile = (tileOpacity: Animated.Value) => void;
 /**
  * Generates a sequence of tile indices for the current game level.
  *
- * @param previousSequence - An array representing the previous sequence.
+ * @param length - A number representing the current level.
  * @returns An array of numbers representing the sequence of tiles to guess by user.
  */
-export type GenerateSequence = (previousSequence: number[]) => number[];
+export type GenerateSequence = (length: number) => number[];
 
 /**
  * An action to set the game difficulty.
@@ -198,13 +197,9 @@ export interface LoadTilesAction {
   payload: TileProps[];
 }
 
-export interface SetLevelAction {
-  type: "setLevel";
-  payload: number;
-}
-
 export interface StartLevelAction {
   type: "startLevel";
+  payload: number;
 }
 
 export interface StartPlayAction {
@@ -217,10 +212,6 @@ export interface NextLevelAction {
 
 export interface ShowHintAction {
   type: "showHint";
-}
-
-export interface ResetLevelAction {
-  type: "resetLevel";
 }
 
 export interface VerifyUserResponseAction {
@@ -240,10 +231,8 @@ export type Action =
   | DifficultyAction
   | LoadTilesAction
   | StartLevelAction
-  | SetLevelAction
   | StartPlayAction
   | NextLevelAction
   | ShowHintAction
-  | ResetLevelAction
   | LoadGameState
   | VerifyUserResponseAction;
