@@ -7,7 +7,7 @@ export function startLevel(
   dispatch: React.Dispatch<Action>
 ) {
   // Dispatch the startLevel action
-  dispatch({ type: "startLevel", payload: level });
+  setTimeout(() => dispatch({ type: "startLevel", payload: level }), 600);
 
   // Schedule the startPlay action
   setTimeout(
