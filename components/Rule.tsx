@@ -1,4 +1,4 @@
-import { type RuleProps } from "@/types";
+import { type RuleProps } from "@/types/types";
 import FontText from "./FontText";
 
 export default function Rule({ rule, index }: RuleProps) {

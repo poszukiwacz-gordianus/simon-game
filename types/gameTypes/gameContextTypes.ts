@@ -1,6 +1,5 @@
 import { type ReactNode } from "react";
-import { type Action } from "./actionTypes";
-import { type GameState } from "./gameStateTypes";
+import { type Action, type GameState } from "@/types/types";
 
 /**
  * Hook to access the game state and dispatch function.

@@ -1,6 +1,6 @@
 import { animateTile } from "@/utils/helpers";
 import { useGameContext } from "@/context/GameContext";
-import { GenerateTileSequenceProps, type AnimatedTile } from "@/types";
+import { GenerateTileSequenceProps, type AnimatedTile } from "@/types/types";
 
 /**
  * Custom hook to generate a sequence of tile indices for the current game level.

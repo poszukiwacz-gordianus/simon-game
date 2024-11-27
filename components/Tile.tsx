@@ -1,6 +1,6 @@
 import { Animated, StyleSheet, TouchableOpacity } from "react-native";
 import { useGameContext } from "@/context/GameContext";
-import { type AnimatedTile } from "@/types";
+import { type AnimatedTile } from "@/types/types";
 
 export default function Tile({ color, opacity }: AnimatedTile) {
   const {

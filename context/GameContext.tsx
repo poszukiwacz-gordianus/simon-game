@@ -13,7 +13,7 @@ import {
   type GameContextProviderProps,
   type GameState,
   type GameReducer,
-} from "@/types";
+} from "@/types/types";
 import {
   animateTile,
   saveGameStateToStorage,

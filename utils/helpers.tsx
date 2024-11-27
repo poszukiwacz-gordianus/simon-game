@@ -7,7 +7,7 @@ import {
   type AnimatedTileProps,
   type GenerateTileSequenceProps,
   type StopTilesAnimationProps,
-} from "@/types";
+} from "@/types/types";
 
 export const animateTile: AnimatedTileProps = (tileOpacity, pace) => {
   // Animate tile opacity

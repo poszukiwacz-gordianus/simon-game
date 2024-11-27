@@ -1,7 +1,9 @@
 import { type Animated } from "react-native";
-import { type Action } from "./actionTypes";
-import { type AnimatedTile } from "./componentProps";
-import { type Difficulties } from "./gameStateTypes";
+import {
+  type Action,
+  type AnimatedTile,
+  type Difficulties,
+} from "@/types/types";
 
 /**
  * Animates a tile's opacity from 1 to 0.1 and back to 1.

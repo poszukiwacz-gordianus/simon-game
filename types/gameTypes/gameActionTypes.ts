@@ -1,6 +1,8 @@
-import { type AnimatedTile } from "./componentProps";
-import { type Difficulties } from "./gameStateTypes";
-import { GenerateTileSequenceProps } from "./utilityTypes";
+import {
+  type AnimatedTile,
+  type Difficulties,
+  type GenerateTileSequenceProps,
+} from "@/types/types";
 
 export type Action =
   | { type: "LOAD_GAME_STATE"; payload: Difficulties }
