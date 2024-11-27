@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
-import { type Action, type GameState } from "@/types/types";
+import { type GameState } from "./gameStateTypes";
+import { type GameActionType } from "./gameActionTypes";
 
 /**
  * Hook to access the game state and dispatch function.
@@ -21,7 +22,7 @@ export interface GameContextType {
   /**
    * The function to dispatch an action to the reducer.
    */
-  readonly dispatch: React.Dispatch<Action>;
+  readonly dispatch: React.Dispatch<GameActionType>;
 
   timeoutRefs: React.MutableRefObject<number[]>;
 
@@ -53,4 +54,7 @@ export interface GameContextProviderProps {
  * @param action The action to apply.
  * @returns The new state.
  */
-export type GameReducer = (state: GameState, action: Action) => GameState;
+export type GameReducer = (
+  state: GameState,
+  action: GameActionType
+) => GameState;

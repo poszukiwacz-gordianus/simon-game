@@ -1,6 +1,6 @@
 import { type Animated } from "react-native";
 import {
-  type Action,
+  type GameActionType,
   type AnimatedTile,
   type Difficulties,
 } from "@/types/types";
@@ -31,32 +31,18 @@ export type SaveGameStateToStorageProps = (
 ) => void;
 
 /**
- * Generates a sequence of tile indices for the current game level.
- *
- * @param length - A number representing the current level.
- * @returns An array of numbers representing the sequence of tiles to guess by user.
- */
-export type GenerateTileSequenceProps = (
-  level: number,
-  prevSequence: number[],
-  tiles: AnimatedTile[],
-  animationPace: number,
-  tileSound: () => void
-) => number[];
-
-/**
  * Loads the game state from storage and dispatches the initial state of the game.
  *
  * If the load fails, the default state will be used.
  *
  * @param {string} key - The key used to store and load the game state.
- * @param {React.Dispatch<Action>} dispatch - The dispatch function from the
+ * @param {React.Dispatch<GameActionType>} dispatch - The dispatch function from the
  *                                            `GameContext` context.
  * @param {Difficulties} defaultState - The default state to use if the load fails.
  */
 export type LoadGameStateFromStorageProps = (
   key: string,
-  dispatch: React.Dispatch<Action>,
+  dispatch: React.Dispatch<GameActionType>,
   defaultState: Difficulties
 ) => void;
 

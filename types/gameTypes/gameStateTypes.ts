@@ -1,4 +1,4 @@
-import { type AnimatedTile } from "@/types/types";
+import { AnimatedTile } from "../componentTypes";
 
 /**
  * The shape of the game state.
