@@ -1,6 +1,6 @@
 import { animateTile } from "@/utils/helpers";
 import { useGameContext } from "@/context/GameContext";
-import { type AnimatedTile } from "@/types";
+import { GenerateTileSequenceProps, type AnimatedTile } from "@/types";
 
 /**
  * Custom hook to generate a sequence of tile indices for the current game level.
@@ -28,12 +28,13 @@ export default function useGenerateTileSequence() {
    * @param animationPace - The pace at which the tiles should animate.
    * @returns An array of numbers representing the sequence of tile indices.
    */
-  const generateTileSequence = (
-    length: number,
-    prevSequence: number[],
-    tiles: AnimatedTile[],
-    animationPace: number
-  ): number[] => {
+  const generateTileSequence: GenerateTileSequenceProps = (
+    length,
+    prevSequence,
+    tiles,
+    animationPace,
+    tileSound
+  ) => {
     return Array.from({ length }, (_, index) => {
       const sequenceItem =
         index >= prevSequence.length
@@ -42,6 +43,7 @@ export default function useGenerateTileSequence() {
 
       // Set the timeout and store its ID
       const timeoutId = window.setTimeout(() => {
+        tileSound();
         animateTile(tiles[sequenceItem].opacity, animationPace);
       }, animationPace * (index + 1));
 

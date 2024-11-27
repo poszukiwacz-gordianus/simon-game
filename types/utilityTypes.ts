@@ -38,7 +38,8 @@ export type GenerateTileSequenceProps = (
   level: number,
   prevSequence: number[],
   tiles: AnimatedTile[],
-  animationPace: number
+  animationPace: number,
+  tileSound: () => void
 ) => number[];
 
 /**

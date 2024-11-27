@@ -4,7 +4,14 @@ import { GenerateTileSequenceProps } from "./utilityTypes";
 
 export type Action =
   | { type: "LOAD_GAME_STATE"; payload: Difficulties }
-  | { type: "LOAD_TILES"; payload: AnimatedTile[] }
+  | {
+      type: "LOAD_DEFAULT_CONTENT";
+      payload: {
+        tiles: AnimatedTile[];
+        tileSound: () => void;
+        gameOverSound: () => void;
+      };
+    }
   | { type: "SET_DIFFICULTY"; payload: "easy" | "medium" | "hard" }
   | { type: "INITIALIZE_LEVEL"; payload: number }
   | { type: "SHOW_SEQUENCE"; payload: GenerateTileSequenceProps }

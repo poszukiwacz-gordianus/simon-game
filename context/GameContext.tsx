@@ -36,6 +36,8 @@ const initialState: GameState = {
   tiles: [],
   sequence: [],
   animationPace: DEFAULT_ANIMATION_PACE,
+  tileSound: () => {},
+  gameOverSound: () => {},
 };
 
 const gameReducer: GameReducer = (state, action) => {
@@ -44,9 +46,15 @@ const gameReducer: GameReducer = (state, action) => {
       // Load game state difficulties
       return { ...state, difficulties: action.payload };
 
-    case "LOAD_TILES":
-      // Load tiles
-      return { ...state, tiles: action.payload };
+    case "LOAD_DEFAULT_CONTENT":
+      // Load tiles, tile sound, and game over sound
+      const load = action.payload;
+      return {
+        ...state,
+        tiles: load.tiles,
+        tileSound: load.tileSound,
+        gameOverSound: load.gameOverSound,
+      };
 
     case "SET_DIFFICULTY":
       // Set difficulty choosen by user
@@ -86,7 +94,8 @@ const gameReducer: GameReducer = (state, action) => {
         state.level,
         state.sequence,
         state.tiles,
-        state.animationPace
+        state.animationPace,
+        state.tileSound
       );
 
       // Return state with new sequence
@@ -100,6 +109,7 @@ const gameReducer: GameReducer = (state, action) => {
 
     case "SHOW_HINT":
       // Animate current tile to click by user
+      state.tileSound();
       animateTile(
         state.tiles[state.sequence[state.userGuess]].opacity,
         state.animationPace
@@ -112,6 +122,7 @@ const gameReducer: GameReducer = (state, action) => {
 
       // If user response is isCorrect
       if (isCorrect) {
+        state.tileSound();
         const isLevelCompleted = state.userGuess === state.sequence.length - 1;
 
         // Handle level completion logic
@@ -157,6 +168,7 @@ const gameReducer: GameReducer = (state, action) => {
       }
 
       // Handle incorrect guess
+      state.gameOverSound();
       return {
         ...state,
         gameOver: true,
@@ -169,7 +181,7 @@ const gameReducer: GameReducer = (state, action) => {
 
 export default function GameProvider({ children }: GameContextProviderProps) {
   const [state, dispatch] = useReducer(gameReducer, initialState);
-  const timeoutRefs = useRef<number[]>([]); // Shared timeout refs
+  const timeoutRefs = useRef<number[]>([]); // Shared timeout refs for all tiles
 
   const stopAnimation = () => stopTilesAnimation(timeoutRefs, state.tiles);
 

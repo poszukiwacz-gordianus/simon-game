@@ -92,4 +92,8 @@ export interface GameState {
    * The pace of animations to controll the speed of the game by difficulty.
    */
   animationPace: number;
+
+  tileSound: () => void;
+
+  gameOverSound: () => void;
 }
