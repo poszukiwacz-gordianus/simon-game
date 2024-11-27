@@ -6,6 +6,7 @@ import {
   GameHeader,
   GameOver,
   TilesContainer,
+  Sound,
 } from "@/components/Components";
 
 export default function Game() {
@@ -20,6 +21,7 @@ export default function Game() {
       <GameHeader />
       <TilesContainer />
       <GameFooter />
+      <Sound />
     </SafeAreaView>
   );
 }

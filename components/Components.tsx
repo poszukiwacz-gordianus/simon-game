@@ -8,6 +8,7 @@ import Rule from "./Rule";
 import Rules from "./Rules";
 import Tile from "./Tile";
 import TilesContainer from "./TilesContainer";
+import Sound from "./Sound";
 
 export {
   LinkButton,
@@ -20,4 +21,5 @@ export {
   Rule,
   Tile,
   TilesContainer,
+  Sound,
 };

@@ -2,7 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
 import { DifficultyChoice, Rules } from "@/components/Components";
 import { useLoadOnAppStart } from "@/hooks/useHooks";
-import Sound from "@/components/Sound";
+import Settings from "@/components/Settings";
 
 export default function Index() {
   useLoadOnAppStart();
@@ -11,7 +11,7 @@ export default function Index() {
     <SafeAreaView style={styles.container}>
       <DifficultyChoice />
       <Rules />
-      <Sound />
+      <Settings />
     </SafeAreaView>
   );
 }

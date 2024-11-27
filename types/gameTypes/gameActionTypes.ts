@@ -1,7 +1,4 @@
-import {
-  type AnimatedTile,
-  type GenerateTileSequenceProps,
-} from "../componentTypes";
+import { type AnimatedTile } from "../componentTypes";
 import { type Difficulties } from "./gameStateTypes";
 
 export type GameActionType =
@@ -16,8 +13,9 @@ export type GameActionType =
     }
   | { type: "TOGGLE_SOUND" }
   | { type: "SET_DIFFICULTY"; payload: "easy" | "medium" | "hard" }
+  | { type: "SET_SOUND_INDEX"; payload: number }
   | { type: "INITIALIZE_LEVEL"; payload: number }
-  | { type: "SHOW_SEQUENCE"; payload: GenerateTileSequenceProps }
+  | { type: "SHOW_SEQUENCE"; payload: (length: number) => number[] }
   | { type: "ENABLE_USER_RESPONSE" }
   | { type: "SHOW_HINT" }
   | { type: "VERIFY_USER_RESPONSE"; payload: number };

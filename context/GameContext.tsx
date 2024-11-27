@@ -7,6 +7,8 @@ import {
   DEFAULT_DIFFICULTY,
   DEFAULT_HINTS,
   DEFAULT_MAX_LEVELS,
+  DEFAULT_TILE_SOUND_INDEX,
+  GAME_OVER_SOUND,
 } from "@/config";
 import {
   type GameContextType,
@@ -30,6 +32,7 @@ const initialState: GameState = {
   tilesRemaining: 1,
   userGuess: 0,
   hints: DEFAULT_HINTS,
+  tileSoundIndex: DEFAULT_TILE_SOUND_INDEX,
   isPlaying: false,
   isSoundOn: true,
   levelUp: false,
@@ -76,6 +79,12 @@ const gameReducer: GameReducer = (state, action) => {
         sequence: [],
       };
 
+    case "SET_SOUND_INDEX":
+      return {
+        ...state,
+        tileSoundIndex: action.payload,
+      };
+
     case "TOGGLE_SOUND":
       return {
         ...state,
@@ -97,14 +106,7 @@ const gameReducer: GameReducer = (state, action) => {
 
     case "SHOW_SEQUENCE":
       // Generate a new sequence
-      const newSequence = action.payload(
-        state.level,
-        state.sequence,
-        state.tiles,
-        state.animationPace,
-        state.tileSound,
-        state.isSoundOn
-      );
+      const newSequence = action.payload(state.level);
 
       // Return state with new sequence
       return {
@@ -116,8 +118,8 @@ const gameReducer: GameReducer = (state, action) => {
       return { ...state, isPlaying: true };
 
     case "SHOW_HINT":
-      // Animate current tile to click by user
-      if (state.isSoundOn) state.tileSound();
+      // Animate and play sound for current tile
+      if (state.isSoundOn) state.tileSound(state.tileSoundIndex);
       animateTile(
         state.tiles[state.sequence[state.userGuess]].opacity,
         state.animationPace
@@ -130,7 +132,8 @@ const gameReducer: GameReducer = (state, action) => {
 
       // If user response is isCorrect
       if (isCorrect) {
-        if (state.isSoundOn) state.tileSound();
+        // Play tile sound
+        if (state.isSoundOn) state.tileSound(state.tileSoundIndex);
         const isLevelCompleted = state.userGuess === state.sequence.length - 1;
 
         // Handle level completion logic
@@ -176,7 +179,8 @@ const gameReducer: GameReducer = (state, action) => {
       }
 
       // Handle incorrect guess
-      if (state.isSoundOn) state.gameOverSound();
+      // Play game over sound
+      if (state.isSoundOn) state.gameOverSound(GAME_OVER_SOUND);
       return {
         ...state,
         gameOver: true,

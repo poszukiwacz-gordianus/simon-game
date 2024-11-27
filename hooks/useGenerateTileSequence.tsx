@@ -1,6 +1,5 @@
 import { animateTile } from "@/utils/helpers";
 import { useGameContext } from "@/context/GameContext";
-import { GenerateTileSequenceProps, type AnimatedTile } from "@/types/types";
 
 /**
  * Custom hook to generate a sequence of tile indices for the current game level.
@@ -13,7 +12,17 @@ import { GenerateTileSequenceProps, type AnimatedTile } from "@/types/types";
  * @returns An object containing the `generateTileSequence` function.
  */
 export default function useGenerateTileSequence() {
-  const { timeoutRefs } = useGameContext();
+  const {
+    timeoutRefs,
+    state: {
+      sequence: prevSequence,
+      tiles,
+      animationPace,
+      tileSound,
+      tileSoundIndex,
+      isSoundOn,
+    },
+  } = useGameContext();
 
   /**
    * Generates a sequence of tile indices for the current game level and animates them.
@@ -22,20 +31,9 @@ export default function useGenerateTileSequence() {
    * or generating new indices. It animates the tiles in the sequence with a delay determined
    * by the animation pace.
    *
-   * @param length - The desired length of the sequence.
-   * @param prevSequence - The previously generated sequence of tile indices.
-   * @param tiles - An array of animated tiles.
-   * @param animationPace - The pace at which the tiles should animate.
    * @returns An array of numbers representing the sequence of tile indices.
    */
-  const generateTileSequence: GenerateTileSequenceProps = (
-    length,
-    prevSequence,
-    tiles,
-    animationPace,
-    tileSound,
-    isSoundOn
-  ) => {
+  const generateTileSequence = (length: number) => {
     return Array.from({ length }, (_, index) => {
       const sequenceItem =
         index >= prevSequence.length
@@ -44,7 +42,7 @@ export default function useGenerateTileSequence() {
 
       // Set the timeout and store its ID
       const timeoutId = window.setTimeout(() => {
-        if (isSoundOn) tileSound();
+        if (isSoundOn) tileSound(tileSoundIndex);
         animateTile(tiles[sequenceItem].opacity, animationPace);
       }, animationPace * (index + 1));
 

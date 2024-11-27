@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Audio } from "expo-av";
-import { DEFAULT_TILE_SOUND } from "@/config";
+import { DEFAULT_TILE_SOUND_INDEX } from "@/config";
 
 const soundMap: { [key: number]: any } = {
   0: require("@/assets/sounds/sound0.mp3"),
@@ -13,7 +13,7 @@ const soundMap: { [key: number]: any } = {
 export default function useSound() {
   const soundRef = useRef<Audio.Sound | null>(null);
 
-  async function playSound(tile: number = DEFAULT_TILE_SOUND) {
+  async function playSound(tile: number = DEFAULT_TILE_SOUND_INDEX) {
     const soundAsset = soundMap[tile];
 
     if (!soundAsset) {
