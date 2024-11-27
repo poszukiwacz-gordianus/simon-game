@@ -28,5 +28,6 @@ export type GenerateTileSequenceProps = (
   prevSequence: number[],
   tiles: AnimatedTile[],
   animationPace: number,
-  tileSound: () => void
+  tileSound: () => void,
+  isSoundOn: boolean
 ) => number[];

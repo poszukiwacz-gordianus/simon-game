@@ -14,6 +14,7 @@ export type GameActionType =
         gameOverSound: () => void;
       };
     }
+  | { type: "TOGGLE_SOUND" }
   | { type: "SET_DIFFICULTY"; payload: "easy" | "medium" | "hard" }
   | { type: "INITIALIZE_LEVEL"; payload: number }
   | { type: "SHOW_SEQUENCE"; payload: GenerateTileSequenceProps }

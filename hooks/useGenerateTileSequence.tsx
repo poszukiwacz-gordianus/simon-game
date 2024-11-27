@@ -33,7 +33,8 @@ export default function useGenerateTileSequence() {
     prevSequence,
     tiles,
     animationPace,
-    tileSound
+    tileSound,
+    isSoundOn
   ) => {
     return Array.from({ length }, (_, index) => {
       const sequenceItem =
@@ -43,7 +44,7 @@ export default function useGenerateTileSequence() {
 
       // Set the timeout and store its ID
       const timeoutId = window.setTimeout(() => {
-        tileSound();
+        if (isSoundOn) tileSound();
         animateTile(tiles[sequenceItem].opacity, animationPace);
       }, animationPace * (index + 1));
 

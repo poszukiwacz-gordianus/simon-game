@@ -27,6 +27,8 @@ export interface Difficulties {
  * @property userGuess - The current guess of the user.
  * @property hints - The number of hints left for the user.
  * @property isPlaying - A boolean indicating if the user is currently playing.
+ * @property isSoundOn - A boolean indicating if the sound is on or off.
+ * @property levelUp - A boolean indicating if the game should advance to the next level.
  * @property gameOver - A boolean indicating if the game is over.
  * @property tiles - An array of the tiles in the game.
  * @property sequence - The sequence of tiles to be shown to the user.
@@ -67,6 +69,11 @@ export interface GameState {
    * Indicates if the game is currently being played.
    */
   isPlaying: boolean;
+
+  /**
+   * Indicates if the sound is on or off.
+   */
+  isSoundOn: boolean;
 
   /**
    * Indicates if the game should advance to the next level.

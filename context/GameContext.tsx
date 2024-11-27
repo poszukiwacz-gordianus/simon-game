@@ -31,6 +31,7 @@ const initialState: GameState = {
   userGuess: 0,
   hints: DEFAULT_HINTS,
   isPlaying: false,
+  isSoundOn: true,
   levelUp: false,
   gameOver: false,
   tiles: [],
@@ -75,6 +76,12 @@ const gameReducer: GameReducer = (state, action) => {
         sequence: [],
       };
 
+    case "TOGGLE_SOUND":
+      return {
+        ...state,
+        isSoundOn: !state.isSoundOn,
+      };
+
     case "INITIALIZE_LEVEL":
       // Initialize level
       return {
@@ -95,7 +102,8 @@ const gameReducer: GameReducer = (state, action) => {
         state.sequence,
         state.tiles,
         state.animationPace,
-        state.tileSound
+        state.tileSound,
+        state.isSoundOn
       );
 
       // Return state with new sequence
@@ -109,7 +117,7 @@ const gameReducer: GameReducer = (state, action) => {
 
     case "SHOW_HINT":
       // Animate current tile to click by user
-      state.tileSound();
+      if (state.isSoundOn) state.tileSound();
       animateTile(
         state.tiles[state.sequence[state.userGuess]].opacity,
         state.animationPace
@@ -122,7 +130,7 @@ const gameReducer: GameReducer = (state, action) => {
 
       // If user response is isCorrect
       if (isCorrect) {
-        state.tileSound();
+        if (state.isSoundOn) state.tileSound();
         const isLevelCompleted = state.userGuess === state.sequence.length - 1;
 
         // Handle level completion logic
@@ -168,7 +176,7 @@ const gameReducer: GameReducer = (state, action) => {
       }
 
       // Handle incorrect guess
-      state.gameOverSound();
+      if (state.isSoundOn) state.gameOverSound();
       return {
         ...state,
         gameOver: true,

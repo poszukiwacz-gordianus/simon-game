@@ -1,4 +1,4 @@
-import { useSettingsContext } from "@/context/SettingsContext";
+import { useGameContext } from "@/context/GameContext";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet } from "react-native";
 
@@ -6,7 +6,7 @@ export default function Sound() {
   const {
     state: { isSoundOn },
     dispatch,
-  } = useSettingsContext();
+  } = useGameContext();
 
   return (
     <Pressable
