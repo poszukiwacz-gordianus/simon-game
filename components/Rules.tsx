@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import { rulesContent } from "@/content/content";
 import FontText from "./FontText";
 import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
