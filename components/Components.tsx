@@ -9,6 +9,7 @@ import Rules from "./Rules";
 import Tile from "./Tile";
 import TilesContainer from "./TilesContainer";
 import Sound from "./Sound";
+import Modal from "./Modal";
 
 export {
   LinkButton,
@@ -22,4 +23,5 @@ export {
   Tile,
   TilesContainer,
   Sound,
+  Modal,
 };

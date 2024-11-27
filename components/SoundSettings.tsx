@@ -1,9 +1,9 @@
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Pressable, StyleSheet, View } from "react-native";
-import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
+import { useGameContext } from "@/context/GameContext";
 import FontText from "./FontText";
 import Checkbox from "./Checkbox";
-import { useGameContext } from "@/context/GameContext";
+import Modal from "./Modal";
 
 const checkboxes = [
   { sound: 0, label: "cartoon" },
@@ -19,51 +19,41 @@ export default function SoundSettings({ onClose }: { onClose: () => void }) {
   } = useGameContext();
 
   return (
-    <Pressable style={styles.centeredView} onPress={onClose}>
-      <Animated.View
-        entering={BounceIn}
-        exiting={BounceOut}
-        style={styles.centeredView}
+    <Modal onClose={onClose}>
+      <FontText style={styles.header}>Settings</FontText>
+      <View
+        style={{
+          gap: 5,
+        }}
       >
-        <Pressable
-          style={styles.modalView}
-          onPress={(e) => e.stopPropagation()}
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "center",
+            gap: 10,
+          }}
         >
-          <FontText style={styles.header}>Settings</FontText>
-          <View
-            style={{
-              gap: 5,
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-                alignItems: "center",
-              }}
-            >
-              <FontText style={styles.subHeader}>Sound</FontText>
-              <Pressable onPress={() => dispatch({ type: "TOGGLE_SOUND" })}>
-                {isSoundOn ? (
-                  <FontAwesome5 name="toggle-on" size={32} color="#000" />
-                ) : (
-                  <FontAwesome5 name="toggle-off" size={32} color="#000" />
-                )}
-              </Pressable>
-            </View>
-            <View>
-              {checkboxes.map((checkbox) => (
-                <Checkbox
-                  key={checkbox.label}
-                  label={checkbox.label}
-                  sound={checkbox.sound}
-                />
-              ))}
-            </View>
-          </View>
-        </Pressable>
-      </Animated.View>
-    </Pressable>
+          <FontText style={styles.subHeader}>Sound</FontText>
+          <Pressable onPress={() => dispatch({ type: "TOGGLE_SOUND" })}>
+            {isSoundOn ? (
+              <FontAwesome5 name="toggle-on" size={32} color="#000" />
+            ) : (
+              <FontAwesome5 name="toggle-off" size={32} color="#000" />
+            )}
+          </Pressable>
+        </View>
+        <View>
+          {checkboxes.map((checkbox) => (
+            <Checkbox
+              key={checkbox.label}
+              label={checkbox.label}
+              sound={checkbox.sound}
+            />
+          ))}
+        </View>
+      </View>
+    </Modal>
   );
 }
 
@@ -77,28 +67,6 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-  },
-  centeredView: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 10,
-  },
-  modalView: {
-    backgroundColor: "#FEF2BF",
-    padding: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
   header: {
     fontSize: 48,
