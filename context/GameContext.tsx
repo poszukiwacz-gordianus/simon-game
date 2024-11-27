@@ -179,7 +179,7 @@ const gameReducer: GameReducer = (state, action) => {
   }
 };
 
-export default function GameProvider({ children }: GameContextProviderProps) {
+function GameProvider({ children }: GameContextProviderProps) {
   const [state, dispatch] = useReducer(gameReducer, initialState);
   const timeoutRefs = useRef<number[]>([]); // Shared timeout refs for all tiles
 
