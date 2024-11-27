@@ -11,5 +11,5 @@ export const DEFAULT_DIFFICULTIES = {
 };
 export const START_LEVEL_DELAY = 500;
 export const USER_RESPONSE_DELAY = 1000;
-export const DEFAULT_TILE_SOUND = 0;
+export const DEFAULT_TILE_SOUND_INDEX = 0;
 export const GAME_OVER_SOUND = 4;
