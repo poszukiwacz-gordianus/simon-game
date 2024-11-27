@@ -1,17 +1,30 @@
+import { useSettingsContext } from "@/context/SettingsContext";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet } from "react-native";
 
 export default function Sound() {
+  const {
+    state: { isSoundOn },
+    dispatch,
+  } = useSettingsContext();
+
   return (
-    <Pressable style={styles.sound}>
-      <Ionicons name="volume-medium" size={24} color="black" />
+    <Pressable
+      style={styles.sound}
+      onPress={() => dispatch({ type: "TOGGLE_SOUND" })}
+    >
+      {isSoundOn ? (
+        <Ionicons name="volume-high" size={24} color="black" />
+      ) : (
+        <Ionicons name="volume-mute" size={24} color="black" />
+      )}
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   sound: {
-    position: "absolute", // Position the info button
+    position: "absolute",
     bottom: 20,
     right: 20,
     backgroundColor: "#FEF2BF",

@@ -23,9 +23,7 @@ const settingsReducer: SettingsReducer = (state, action) => {
   }
 };
 
-export default function SettingsProvider({
-  children,
-}: SettingsContextProviderProps) {
+function SettingsProvider({ children }: SettingsContextProviderProps) {
   const [state, dispatch] = useReducer(settingsReducer, initialState);
   return (
     <SettingsContext.Provider value={{ state, dispatch }}>
