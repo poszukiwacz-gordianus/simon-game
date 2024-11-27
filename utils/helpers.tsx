@@ -5,7 +5,6 @@ import {
   type SaveGameStateToStorageProps,
   type LoadGameStateFromStorageProps,
   type AnimatedTileProps,
-  type GenerateTileSequenceProps,
   type StopTilesAnimationProps,
 } from "@/types/types";
 
@@ -23,27 +22,6 @@ export const animateTile: AnimatedTileProps = (tileOpacity, pace) => {
       useNativeDriver: true,
     }),
   ]).start();
-};
-
-export const generateTileSequence: GenerateTileSequenceProps = (
-  length,
-  prevSequence,
-  tiles,
-  animationPace
-) => {
-  return Array.from({ length }, (_, index) => {
-    const sequenceItem =
-      index >= prevSequence.length
-        ? Math.floor(Math.random() * 4)
-        : prevSequence[index];
-
-    // Set the timeout and store its ID
-    setTimeout(() => {
-      animateTile(tiles[sequenceItem].opacity, animationPace);
-    }, animationPace * (index + 1));
-
-    return sequenceItem;
-  });
 };
 
 export const saveGameStateToStorage: SaveGameStateToStorageProps = async (
