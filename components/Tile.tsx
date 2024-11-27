@@ -1,6 +1,6 @@
 import { Animated, StyleSheet, TouchableOpacity } from "react-native";
 import { useGameContext } from "@/context/GameContext";
-import { AnimatedTile } from "@/types";
+import { type AnimatedTile } from "@/types";
 
 export default function Tile({ color, opacity }: AnimatedTile) {
   const {
@@ -14,9 +14,9 @@ export default function Tile({ color, opacity }: AnimatedTile) {
     <TouchableOpacity
       style={styles.tileContainer}
       disabled={!isPlaying}
-      onPress={() =>
-        dispatch({ type: "VERIFY_USER_RESPONSE", payload: tileIndex })
-      }
+      onPress={() => {
+        dispatch({ type: "VERIFY_USER_RESPONSE", payload: tileIndex });
+      }}
     >
       <Animated.View
         style={[styles.tile, { backgroundColor: color, opacity }]}
