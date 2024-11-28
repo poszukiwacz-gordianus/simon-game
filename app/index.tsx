@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
-import { Play, InfiniteMode, Rules } from "@/components/Components";
+import { Play, InfiniteMode, Rules, ScoreBoard } from "@/components/Components";
 import { useLoadOnAppStart } from "@/hooks/useHooks";
 import { Settings, BackButton } from "@/components/Components";
 
@@ -21,6 +21,7 @@ export default function Index() {
           left: 20,
         }}
       />
+      <ScoreBoard />
     </SafeAreaView>
   );
 }

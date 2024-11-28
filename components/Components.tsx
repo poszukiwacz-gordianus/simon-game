@@ -16,6 +16,7 @@ import GameMode from "./GameMode";
 import BackButton from "./BackButton";
 import FontText from "./FontText";
 import Settings from "./Settings";
+import ScoreBoard from "./ScoreBoard";
 
 export {
   BackButton,
@@ -32,6 +33,7 @@ export {
   Tile,
   TilesContainer,
   Settings,
+  ScoreBoard,
   Sound,
   Modal,
   InfiniteMode,

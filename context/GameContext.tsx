@@ -40,6 +40,7 @@ const initialState: GameState = {
   levelUp: false,
   gameOver: false,
   isInfiniteMode: false,
+  isNewBestScore: false,
   tiles: [],
   sequence: [],
   animationPace: DEFAULT_ANIMATION_PACE,
@@ -113,6 +114,7 @@ const gameReducer: GameReducer = (state, action) => {
         isPlaying: false,
         gameOver: false,
         levelUp: false,
+        isNewBestScore: false,
         userGuess: 0,
         hints: DEFAULT_HINTS,
       };
@@ -142,6 +144,8 @@ const gameReducer: GameReducer = (state, action) => {
     case "VERIFY_USER_RESPONSE":
       const userResponse = action.payload;
       const isCorrect = state.sequence[state.userGuess] === userResponse;
+      const isNewBestScore =
+        state.isInfiniteMode && state.level > state.bestScore;
 
       // If user response is isCorrect
       if (isCorrect) {
@@ -159,6 +163,7 @@ const gameReducer: GameReducer = (state, action) => {
             isMaxLevelExceeded && state.isInfiniteMode
               ? state.difficulties[state.difficulty].level
               : state.level + 1;
+          const bestScore = isNewBestScore ? state.level : state.bestScore;
 
           // Save to storage if new level is greater than current max difficulty level
           if (isMaxLevelExceeded) {
@@ -170,10 +175,7 @@ const gameReducer: GameReducer = (state, action) => {
                   level: newLevel,
                 },
               },
-              bestScore:
-                state.isInfiniteMode && state.level > state.bestScore
-                  ? state.level
-                  : state.bestScore,
+              bestScore,
             });
           }
 
@@ -187,6 +189,7 @@ const gameReducer: GameReducer = (state, action) => {
                 level: newLevel,
               },
             },
+            bestScore,
           };
         }
 
@@ -204,10 +207,7 @@ const gameReducer: GameReducer = (state, action) => {
       return {
         ...state,
         gameOver: true,
-        bestScore:
-          state.isInfiniteMode && state.level > state.bestScore
-            ? state.level - 1
-            : state.bestScore,
+        isNewBestScore,
       };
 
     case "RESET_APP_STATE":

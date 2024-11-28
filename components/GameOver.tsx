@@ -9,23 +9,21 @@ import Modal from "./Modal";
 
 export default function GameOver() {
   const {
-    state: { level, bestScore, isInfiniteMode },
+    state: { level, bestScore, isInfiniteMode, isNewBestScore },
   } = useGameContext();
   const { initializeLevelSequence } = useInitializeLevelSequence();
-  const currentScore = level - 1;
-  const newBestScore = currentScore === bestScore;
 
   if (isInfiniteMode)
     return (
       <Modal>
         <FontText style={styles.header}>
-          {newBestScore ? "New best!" : "Game over"}
+          {isNewBestScore ? "New best!" : "Game over"}
         </FontText>
-        {newBestScore ? (
+        {isNewBestScore ? (
           <FontText style={styles.best}>{bestScore}</FontText>
         ) : (
           <>
-            <FontText style={styles.text}>Your score: {currentScore}</FontText>
+            <FontText style={styles.text}>Your score: {level - 1}</FontText>
             <FontText style={styles.text}>Best score: {bestScore}</FontText>
           </>
         )}

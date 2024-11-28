@@ -40,6 +40,7 @@ export interface LoadGameState {
  * @property levelUp - A boolean indicating if the game should advance to the next level.
  * @property gameOver - A boolean indicating if the game is over.
  * @property isInfiniteMode - A boolean indicating if the game is in infinite mode.
+ * @property isNewBestScore - A boolean indicating if is a new best score.
  * @property tiles - An array of the tiles in the game.
  * @property sequence - The sequence of tiles to be shown to the user.
  * @property animationPace - The pace of animations to controll the speed of the game by difficulty.
@@ -47,7 +48,7 @@ export interface LoadGameState {
  * @property gameOverSound - The function to play the game over sound.
  */
 export interface GameState {
-  readonly difficulty: "easy" | "medium" | "hard";
+  readonly difficulty: Difficulty;
   readonly difficulties: Difficulties;
   level: number;
   tilesRemaining: number;
@@ -60,6 +61,7 @@ export interface GameState {
   levelUp: boolean;
   gameOver: boolean;
   isInfiniteMode: boolean;
+  isNewBestScore: boolean;
   tiles: AnimatedTile[];
   sequence: number[];
   animationPace: number;
