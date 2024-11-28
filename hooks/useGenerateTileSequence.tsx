@@ -21,6 +21,7 @@ export default function useGenerateTileSequence() {
       tileSound,
       tileSoundIndex,
       isSoundOn,
+      isInfiniteMode,
     },
   } = useGameContext();
 
@@ -36,7 +37,7 @@ export default function useGenerateTileSequence() {
   const generateTileSequence = (length: number) => {
     return Array.from({ length }, (_, index) => {
       const sequenceItem =
-        index >= prevSequence.length
+        index >= prevSequence.length || isInfiniteMode
           ? Math.floor(Math.random() * tiles.length) // Ensure valid index range
           : prevSequence[index];
 

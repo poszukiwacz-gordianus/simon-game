@@ -1,32 +1,35 @@
-import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useGameContext } from "@/context/GameContext";
 import LinkButton from "./LinkButton";
+import Modal from "./Modal";
+import { type Difficulty } from "@/types/types";
+import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
 
-export default function DifficultyChoice() {
-  const { dispatch } = useGameContext();
+const choices: { text: string; payload: Difficulty }[] = [
+  { text: "Easy", payload: "easy" },
+  { text: "Medium", payload: "medium" },
+  { text: "Hard", payload: "hard" },
+];
+
+export default function DifficultyChoice({ onClose }: { onClose: () => void }) {
+  const {
+    state: { isInfiniteMode },
+    dispatch,
+  } = useGameContext();
+  const { initializeLevelSequence } = useInitializeLevelSequence();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <LinkButton
-        title="Easy"
-        onPress={() => dispatch({ type: "SET_DIFFICULTY", payload: "easy" })}
-      />
-      <LinkButton
-        title="Medium"
-        onPress={() => dispatch({ type: "SET_DIFFICULTY", payload: "medium" })}
-      />
-      <LinkButton
-        title="Hard"
-        onPress={() => dispatch({ type: "SET_DIFFICULTY", payload: "hard" })}
-      />
-    </SafeAreaView>
+    <Modal onClose={onClose}>
+      {choices.map((choice) => (
+        <LinkButton
+          key={choice.payload}
+          href={isInfiniteMode ? "/game" : "/levels"}
+          buttonText={choice.text}
+          onPress={() => {
+            dispatch({ type: "SET_DIFFICULTY", payload: choice.payload });
+            isInfiniteMode && initializeLevelSequence(1);
+          }}
+        />
+      ))}
+    </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 10,
-    justifyContent: "center",
-  },
-});

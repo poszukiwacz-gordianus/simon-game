@@ -37,6 +37,7 @@ const initialState: GameState = {
   isSoundOn: true,
   levelUp: false,
   gameOver: false,
+  isInfiniteMode: false,
   tiles: [],
   sequence: [],
   animationPace: DEFAULT_ANIMATION_PACE,
@@ -83,6 +84,12 @@ const gameReducer: GameReducer = (state, action) => {
       return {
         ...state,
         tileSoundIndex: action.payload,
+      };
+
+    case "SET_INFINITE_MODE":
+      return {
+        ...state,
+        isInfiniteMode: action.payload,
       };
 
     case "TOGGLE_SOUND":

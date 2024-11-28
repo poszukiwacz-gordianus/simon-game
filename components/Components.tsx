@@ -10,12 +10,16 @@ import Tile from "./Tile";
 import TilesContainer from "./TilesContainer";
 import Sound from "./Sound";
 import Modal from "./Modal";
+import InfiniteMode from "./InfiniteMode";
+import Play from "./Play";
+import GameMode from "./GameMode";
 
 export {
   LinkButton,
   DifficultyChoice,
   GameFooter,
   GameHeader,
+  GameMode,
   GameOver,
   Level,
   Rules,
@@ -24,4 +28,6 @@ export {
   TilesContainer,
   Sound,
   Modal,
+  InfiniteMode,
+  Play,
 };

@@ -11,6 +11,8 @@ export interface DifficultyState {
   level: number;
 }
 
+export type Difficulty = "easy" | "medium" | "hard";
+
 export interface Difficulties {
   easy: DifficultyState;
   medium: DifficultyState;
@@ -31,6 +33,7 @@ export interface Difficulties {
  * @property isSoundOn - A boolean indicating if the sound is on or off.
  * @property levelUp - A boolean indicating if the game should advance to the next level.
  * @property gameOver - A boolean indicating if the game is over.
+ * @property isInfiniteMode - A boolean indicating if the game is in infinite mode.
  * @property tiles - An array of the tiles in the game.
  * @property sequence - The sequence of tiles to be shown to the user.
  * @property animationPace - The pace of animations to controll the speed of the game by difficulty.
@@ -49,6 +52,7 @@ export interface GameState {
   isSoundOn: boolean;
   levelUp: boolean;
   gameOver: boolean;
+  isInfiniteMode: boolean;
   tiles: AnimatedTile[];
   sequence: number[];
   animationPace: number;

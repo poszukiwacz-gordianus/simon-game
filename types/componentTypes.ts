@@ -1,9 +1,11 @@
+import { LinkProps } from "expo-router";
 import { type Animated } from "react-native";
 
 export type RulesContent = Array<string>;
 
 export interface ButtonProps {
-  title: string;
+  buttonText: string;
+  href: LinkProps["href"];
   onPress: () => void;
 }
 

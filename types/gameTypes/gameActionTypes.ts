@@ -1,5 +1,5 @@
 import { type AnimatedTile } from "../componentTypes";
-import { type Difficulties } from "./gameStateTypes";
+import { type Difficulty, type Difficulties } from "./gameStateTypes";
 
 export type GameActionType =
   | { type: "LOAD_GAME_STATE"; payload: Difficulties }
@@ -12,8 +12,9 @@ export type GameActionType =
       };
     }
   | { type: "TOGGLE_SOUND" }
-  | { type: "SET_DIFFICULTY"; payload: "easy" | "medium" | "hard" }
+  | { type: "SET_DIFFICULTY"; payload: Difficulty }
   | { type: "SET_SOUND_INDEX"; payload: number }
+  | { type: "SET_INFINITE_MODE"; payload: boolean }
   | { type: "INITIALIZE_LEVEL"; payload: number }
   | { type: "SHOW_SEQUENCE"; payload: (length: number) => number[] }
   | { type: "ENABLE_USER_RESPONSE" }

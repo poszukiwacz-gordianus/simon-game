@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
-import { DifficultyChoice, Rules } from "@/components/Components";
+import { Play, InfiniteMode, Rules } from "@/components/Components";
 import { useLoadOnAppStart } from "@/hooks/useHooks";
 import Settings from "@/components/Settings";
 
@@ -9,7 +9,8 @@ export default function Index() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <DifficultyChoice />
+      <Play />
+      <InfiniteMode />
       <Rules />
       <Settings />
     </SafeAreaView>
@@ -19,6 +20,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    gap: 40,
     position: "relative",
     justifyContent: "center",
     alignItems: "center",

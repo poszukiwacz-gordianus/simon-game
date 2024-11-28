@@ -9,7 +9,7 @@ import Modal from "./Modal";
 
 export default function GameOver() {
   const {
-    state: { level },
+    state: { level, isInfiniteMode },
   } = useGameContext();
   const { initializeLevelSequence } = useInitializeLevelSequence();
 
@@ -17,7 +17,9 @@ export default function GameOver() {
     <Modal>
       <FontText style={styles.text}>Game over</FontText>
       <View style={{ flexDirection: "row" }}>
-        <IconButton onPress={() => initializeLevelSequence(level)}>
+        <IconButton
+          onPress={() => initializeLevelSequence(isInfiniteMode ? 1 : level)}
+        >
           <AntDesign name="reload1" size={48} color="#FCFCF7" />
         </IconButton>
         <IconButton onPress={() => router.navigate("/")}>
