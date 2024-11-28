@@ -37,7 +37,7 @@ export default function useGenerateTileSequence() {
   const generateTileSequence = (length: number) => {
     return Array.from({ length }, (_, index) => {
       const sequenceItem =
-        index >= prevSequence.length || isInfiniteMode
+        index >= prevSequence.length || (isInfiniteMode && length === 1)
           ? Math.floor(Math.random() * tiles.length) // Ensure valid index range
           : prevSequence[index];
 

@@ -3,6 +3,7 @@ import {
   type GameActionType,
   type AnimatedTile,
   type Difficulties,
+  type LoadGameState,
 } from "@/types/types";
 
 /**
@@ -27,7 +28,7 @@ export type AnimatedTileProps = (
  */
 export type SaveGameStateToStorageProps = (
   key: string,
-  difficulties: Difficulties
+  gameState: { difficulties: Difficulties; bestScore: number }
 ) => void;
 
 /**
@@ -43,7 +44,7 @@ export type SaveGameStateToStorageProps = (
 export type LoadGameStateFromStorageProps = (
   key: string,
   dispatch: React.Dispatch<GameActionType>,
-  defaultState: Difficulties
+  defaultState: LoadGameState
 ) => void;
 
 /**

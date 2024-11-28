@@ -4,8 +4,15 @@ import FontText from "./FontText";
 
 export default function GameHeader() {
   const {
-    state: { level, tilesRemaining },
+    state: { level, tilesRemaining, isInfiniteMode },
   } = useGameContext();
+
+  if (isInfiniteMode)
+    return (
+      <View style={styles.container}>
+        <FontText style={styles.infiniteHeader}>{level - 1}</FontText>
+      </View>
+    );
 
   return (
     <View style={styles.container}>
@@ -26,5 +33,8 @@ const styles = StyleSheet.create({
   subHeader: {
     fontSize: 15,
     textAlign: "center",
+  },
+  infiniteHeader: {
+    fontSize: 60,
   },
 });

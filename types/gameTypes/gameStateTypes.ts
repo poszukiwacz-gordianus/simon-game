@@ -19,6 +19,11 @@ export interface Difficulties {
   hard: DifficultyState;
 }
 
+export interface LoadGameState {
+  difficulties: Difficulties;
+  bestScore: number;
+}
+
 /**
  * The initial state of the game.
  *
@@ -29,6 +34,7 @@ export interface Difficulties {
  * @property userGuess - The current guess of the user.
  * @property hints - The number of hints left for the user.
  * @property tileSoundIndex - The index of the tile sound to play.
+ * @property bestScore - The best score achieved by the user in infinite mode.
  * @property isPlaying - A boolean indicating if the user is currently playing.
  * @property isSoundOn - A boolean indicating if the sound is on or off.
  * @property levelUp - A boolean indicating if the game should advance to the next level.
@@ -48,6 +54,7 @@ export interface GameState {
   userGuess: number;
   hints: number;
   tileSoundIndex: number;
+  bestScore: number;
   isPlaying: boolean;
   isSoundOn: boolean;
   levelUp: boolean;

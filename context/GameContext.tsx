@@ -3,6 +3,7 @@ import {
   DEFAULT_ANIMATION_PACE,
   DEFAULT_ANIMATION_PACE_HARD,
   DEFAULT_ANIMATION_PACE_MEDIUM,
+  DEFAULT_BEST_SCORE,
   DEFAULT_DIFFICULTIES,
   DEFAULT_DIFFICULTY,
   DEFAULT_HINTS,
@@ -33,6 +34,7 @@ const initialState: GameState = {
   userGuess: 0,
   hints: DEFAULT_HINTS,
   tileSoundIndex: DEFAULT_TILE_SOUND_INDEX,
+  bestScore: DEFAULT_BEST_SCORE,
   isPlaying: false,
   isSoundOn: true,
   levelUp: false,
@@ -48,8 +50,12 @@ const initialState: GameState = {
 const gameReducer: GameReducer = (state, action) => {
   switch (action.type) {
     case "LOAD_GAME_STATE":
-      // Load game state difficulties
-      return { ...state, difficulties: action.payload };
+      // Load saved game state
+      return {
+        ...state,
+        difficulties: action.payload.difficulties,
+        bestScore: action.payload.bestScore,
+      };
 
     case "LOAD_DEFAULT_CONTENT":
       // Load tiles, tile sound, and game over sound
@@ -145,20 +151,29 @@ const gameReducer: GameReducer = (state, action) => {
 
         // Handle level completion logic
         if (isLevelCompleted) {
-          const newLevel = state.level + 1;
           // Check if the new level is greater than current max difficulty level
           const isMaxLevelExceeded =
-            state.difficulties[state.difficulty].level < newLevel &&
+            state.difficulties[state.difficulty].level < state.level + 1 &&
             state.level < DEFAULT_MAX_LEVELS;
+          const newLevel =
+            isMaxLevelExceeded && state.isInfiniteMode
+              ? state.difficulties[state.difficulty].level
+              : state.level + 1;
 
           // Save to storage if new level is greater than current max difficulty level
           if (isMaxLevelExceeded) {
             saveGameStateToStorage("gameState", {
-              ...state.difficulties,
-              [state.difficulty]: {
-                ...state.difficulties[state.difficulty],
-                level: newLevel,
+              difficulties: {
+                ...state.difficulties,
+                [state.difficulty]: {
+                  ...state.difficulties[state.difficulty],
+                  level: newLevel,
+                },
               },
+              bestScore:
+                state.isInfiniteMode && state.level > state.bestScore
+                  ? state.level
+                  : state.bestScore,
             });
           }
 
@@ -169,9 +184,7 @@ const gameReducer: GameReducer = (state, action) => {
               ...state.difficulties,
               [state.difficulty]: {
                 ...state.difficulties[state.difficulty],
-                level: isMaxLevelExceeded
-                  ? newLevel
-                  : state.difficulties[state.difficulty].level,
+                level: newLevel,
               },
             },
           };
@@ -191,6 +204,10 @@ const gameReducer: GameReducer = (state, action) => {
       return {
         ...state,
         gameOver: true,
+        bestScore:
+          state.isInfiniteMode && state.level > state.bestScore
+            ? state.level - 1
+            : state.bestScore,
       };
 
     default:

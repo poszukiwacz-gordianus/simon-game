@@ -1,8 +1,11 @@
 import { type AnimatedTile } from "../componentTypes";
-import { type Difficulty, type Difficulties } from "./gameStateTypes";
+import { type Difficulty, type LoadGameState } from "./gameStateTypes";
 
 export type GameActionType =
-  | { type: "LOAD_GAME_STATE"; payload: Difficulties }
+  | {
+      type: "LOAD_GAME_STATE";
+      payload: LoadGameState;
+    }
   | {
       type: "LOAD_DEFAULT_CONTENT";
       payload: {

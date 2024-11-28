@@ -7,7 +7,7 @@ import IconButton from "./IconButton";
 
 export default function GameFooter() {
   const {
-    state: { isPlaying, hints, level },
+    state: { isPlaying, hints, level, isInfiniteMode },
     dispatch,
     stopAnimation,
   } = useGameContext();
@@ -24,16 +24,18 @@ export default function GameFooter() {
       >
         <AntDesign name="back" size={48} color="#FCFCF7" />
       </IconButton>
-      <IconButton
-        disabled={!isPlaying}
-        onPress={() => initializeLevelSequence(level)}
-      >
-        <AntDesign
-          name="reload1"
-          size={48}
-          color={isPlaying ? "#FCFCF7" : "#755224"}
-        />
-      </IconButton>
+      {!isInfiniteMode && (
+        <IconButton
+          disabled={!isPlaying}
+          onPress={() => initializeLevelSequence(level)}
+        >
+          <AntDesign
+            name="reload1"
+            size={48}
+            color={isPlaying ? "#FCFCF7" : "#755224"}
+          />
+        </IconButton>
+      )}
       <IconButton
         disabled={!isPlaying}
         onPress={hints > 0 ? () => dispatch({ type: "SHOW_HINT" }) : null}
@@ -51,5 +53,7 @@ export default function GameFooter() {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
   },
 });

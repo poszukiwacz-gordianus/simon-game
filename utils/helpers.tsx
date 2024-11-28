@@ -6,6 +6,7 @@ import {
   type LoadGameStateFromStorageProps,
   type AnimatedTileProps,
   type StopTilesAnimationProps,
+  LoadGameState,
 } from "@/types/types";
 
 export const animateTile: AnimatedTileProps = (tileOpacity, pace) => {
@@ -26,11 +27,11 @@ export const animateTile: AnimatedTileProps = (tileOpacity, pace) => {
 
 export const saveGameStateToStorage: SaveGameStateToStorageProps = async (
   key,
-  difficulties
+  gameState
 ) => {
   // Save game state
   try {
-    await AsyncStorage.setItem(key, JSON.stringify(difficulties));
+    await AsyncStorage.setItem(key, JSON.stringify(gameState));
   } catch (e) {
     console.error("Failed to save game state", e);
   }
@@ -44,13 +45,13 @@ export const loadGameStateFromStorage: LoadGameStateFromStorageProps = async (
   // Load game state from storage
   try {
     const jsonValue = await AsyncStorage.getItem(key);
-    const loadedDifficulties: Difficulties = jsonValue
+    const loadGameState: LoadGameState = jsonValue
       ? JSON.parse(jsonValue)
       : defaultState;
 
     dispatch({
       type: "LOAD_GAME_STATE",
-      payload: loadedDifficulties,
+      payload: loadGameState,
     });
   } catch (e) {
     console.error("Failed to load game state", e);

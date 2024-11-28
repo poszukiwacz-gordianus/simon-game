@@ -11,7 +11,7 @@ import Animated, {
 import { Ionicons } from "@expo/vector-icons";
 import GameMode from "./GameMode";
 
-const duration = 1200;
+const duration = 1500;
 
 export default function Play() {
   const scale = useSharedValue<number>(1);
@@ -19,7 +19,7 @@ export default function Play() {
   useEffect(() => {
     // Animate scale from 1 to 1.5 and repeat
     scale.value = withRepeat(
-      withTiming(1.5, { duration, easing: Easing.ease }), // Scale up
+      withTiming(1.1, { duration, easing: Easing.ease }), // Scale up
       -1, // Infinite repeat
       true // Alternate between 1 and 1.5
     );
@@ -31,12 +31,10 @@ export default function Play() {
 
   return (
     <GameMode isInfiniteMode={false}>
-      <Animated.View
-        entering={BounceIn}
-        exiting={BounceOut}
-        style={animatedStyle}
-      >
-        <Ionicons name="play-sharp" size={120} color="#FEF2BF" />
+      <Animated.View entering={BounceIn} exiting={BounceOut}>
+        <Animated.View style={animatedStyle}>
+          <Ionicons name="play-sharp" size={300} color="#FEF2BF" />
+        </Animated.View>
       </Animated.View>
     </GameMode>
   );

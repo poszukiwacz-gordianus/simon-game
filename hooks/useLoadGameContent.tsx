@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useAnimatedValue } from "react-native";
-import { DEFAULT_DIFFICULTIES, GAME_OVER_SOUND } from "@/config";
+import {
+  DEFAULT_BEST_SCORE,
+  DEFAULT_DIFFICULTIES,
+  GAME_OVER_SOUND,
+} from "@/config";
 import { useGameContext } from "@/context/GameContext";
 import { loadGameStateFromStorage } from "@/utils/helpers";
 import useSound from "./useSound";
@@ -35,6 +39,9 @@ export default function useLoadGameContent() {
         gameOverSound: () => playSound(GAME_OVER_SOUND),
       },
     }),
-      loadGameStateFromStorage("gameState", dispatch, DEFAULT_DIFFICULTIES);
+      loadGameStateFromStorage("gameState", dispatch, {
+        bestScore: DEFAULT_BEST_SCORE,
+        difficulties: DEFAULT_DIFFICULTIES,
+      });
   }, []);
 }
