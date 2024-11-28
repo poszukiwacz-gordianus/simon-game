@@ -210,6 +210,20 @@ const gameReducer: GameReducer = (state, action) => {
             : state.bestScore,
       };
 
+    case "RESET_APP_STATE":
+      saveGameStateToStorage("gameState", {
+        difficulties: DEFAULT_DIFFICULTIES,
+        bestScore: DEFAULT_BEST_SCORE,
+      });
+
+      return {
+        ...state,
+        difficulties: DEFAULT_DIFFICULTIES,
+        bestScore: DEFAULT_BEST_SCORE,
+        tileSoundIndex: DEFAULT_TILE_SOUND_INDEX,
+        isSoundOn: true,
+      };
+
     default:
       return state;
   }

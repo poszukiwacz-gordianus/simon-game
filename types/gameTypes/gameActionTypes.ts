@@ -22,4 +22,5 @@ export type GameActionType =
   | { type: "SHOW_SEQUENCE"; payload: (length: number) => number[] }
   | { type: "ENABLE_USER_RESPONSE" }
   | { type: "SHOW_HINT" }
-  | { type: "VERIFY_USER_RESPONSE"; payload: number };
+  | { type: "VERIFY_USER_RESPONSE"; payload: number }
+  | { type: "RESET_APP_STATE" };

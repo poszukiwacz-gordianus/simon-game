@@ -1,7 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import SoundSettings from "./SoundSettings";
+import Modal from "./Modal";
+import FontText from "./FontText";
+import ResetAppSettings from "./ResetAppSettings";
 
 export default function Settings() {
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
@@ -15,7 +18,17 @@ export default function Settings() {
         <Ionicons name="settings" size={24} color="black" />
       </Pressable>
       {isSettingsVisible && (
-        <SoundSettings onClose={() => setIsSettingsVisible(false)} />
+        <Modal onClose={() => setIsSettingsVisible(false)}>
+          <FontText style={styles.header}>Settings</FontText>
+          <View
+            style={{
+              gap: 10,
+            }}
+          >
+            <SoundSettings />
+            <ResetAppSettings />
+          </View>
+        </Modal>
       )}
     </>
   );
@@ -31,5 +44,9 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
+  },
+  header: {
+    fontSize: 48,
+    marginBottom: 20,
   },
 });
