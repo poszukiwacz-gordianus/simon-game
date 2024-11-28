@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet } from "react-native";
 import { Level } from "@/components/Components";
 import { SafeAreaView } from "react-native-safe-area-context";
-import FontText from "@/components/FontText";
+import { FontText, BackButton } from "@/components/Components";
 
 export default function ShowLevels() {
   return (
@@ -10,6 +10,14 @@ export default function ShowLevels() {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Level />
       </ScrollView>
+
+      <BackButton
+        style={{
+          position: "absolute",
+          bottom: 20,
+          left: 20,
+        }}
+      />
     </SafeAreaView>
   );
 }

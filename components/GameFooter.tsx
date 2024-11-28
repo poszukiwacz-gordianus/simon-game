@@ -1,9 +1,9 @@
 import { StyleSheet, View } from "react-native";
-import { router } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import { useGameContext } from "@/context/GameContext";
 import { useInitializeLevelSequence } from "@/hooks/useHooks";
 import IconButton from "./IconButton";
+import BackButton from "./BackButton";
 
 export default function GameFooter() {
   const {
@@ -16,14 +16,7 @@ export default function GameFooter() {
 
   return (
     <View style={styles.container}>
-      <IconButton
-        onPress={() => {
-          stopAnimation();
-          router.back();
-        }}
-      >
-        <AntDesign name="back" size={48} color="#FCFCF7" />
-      </IconButton>
+      <BackButton callback={stopAnimation} />
       {!isInfiniteMode && (
         <IconButton
           disabled={!isPlaying}

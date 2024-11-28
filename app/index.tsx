@@ -2,7 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
 import { Play, InfiniteMode, Rules } from "@/components/Components";
 import { useLoadOnAppStart } from "@/hooks/useHooks";
-import Settings from "@/components/Settings";
+import { Settings, BackButton } from "@/components/Components";
 
 export default function Index() {
   useLoadOnAppStart();
@@ -13,6 +13,14 @@ export default function Index() {
       <InfiniteMode />
       <Rules />
       <Settings />
+      <BackButton
+        isFirstScreen={true}
+        style={{
+          position: "absolute",
+          bottom: 20,
+          left: 20,
+        }}
+      />
     </SafeAreaView>
   );
 }

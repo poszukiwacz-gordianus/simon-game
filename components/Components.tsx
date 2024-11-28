@@ -13,8 +13,13 @@ import Modal from "./Modal";
 import InfiniteMode from "./InfiniteMode";
 import Play from "./Play";
 import GameMode from "./GameMode";
+import BackButton from "./BackButton";
+import FontText from "./FontText";
+import Settings from "./Settings";
 
 export {
+  BackButton,
+  FontText,
   LinkButton,
   DifficultyChoice,
   GameFooter,
@@ -26,6 +31,7 @@ export {
   Rule,
   Tile,
   TilesContainer,
+  Settings,
   Sound,
   Modal,
   InfiniteMode,

@@ -42,7 +42,7 @@ export default function GameOver() {
 
   return (
     <Modal>
-      <FontText style={styles.text}>Game over</FontText>
+      <FontText style={styles.header}>Game over</FontText>
       <View style={{ flexDirection: "row" }}>
         <IconButton onPress={() => initializeLevelSequence(level)}>
           <AntDesign name="reload1" size={48} color="#FCFCF7" />

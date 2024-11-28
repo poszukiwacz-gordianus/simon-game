@@ -19,12 +19,7 @@ export default function RootLayout() {
           />
           <Stack.Screen
             name="levels"
-            options={{
-              title: "Back",
-              headerStyle: { backgroundColor: "#c2a664" },
-              headerTintColor: "#000",
-              animation: "slide_from_right",
-            }}
+            options={{ headerShown: false, animation: "slide_from_right" }}
           />
         </Stack>
       </GameProvider>
