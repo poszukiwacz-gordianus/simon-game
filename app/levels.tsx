@@ -2,14 +2,17 @@ import { ScrollView, StyleSheet } from "react-native";
 import { Level } from "@/components/Components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontText, BackButton } from "@/components/Components";
+import ImageTile from "@/components/ImageTile";
 
 export default function ShowLevels() {
   return (
     <SafeAreaView style={styles.container}>
       <FontText style={styles.header}>Choose Level</FontText>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      {/* <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Level />
-      </ScrollView>
+      </ScrollView> */}
+
+      <ImageTile />
 
       <BackButton
         style={{

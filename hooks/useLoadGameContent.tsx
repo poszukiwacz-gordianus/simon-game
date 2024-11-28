@@ -21,13 +21,13 @@ export default function useLoadGameContent() {
   const { playSound } = useSound();
 
   const tiles = [
-    { color: "blue", opacity: useAnimatedValue(1) },
+    { color: "#41B06E", opacity: useAnimatedValue(1) },
     {
-      color: "yellow",
+      color: "#D04848",
       opacity: useAnimatedValue(1),
     },
-    { color: "red", opacity: useAnimatedValue(1) },
-    { color: "white", opacity: useAnimatedValue(1) },
+    { color: "#F8E559", opacity: useAnimatedValue(1) },
+    { color: "#525CEB", opacity: useAnimatedValue(1) },
   ];
 
   useEffect(() => {
