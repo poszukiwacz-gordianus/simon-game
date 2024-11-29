@@ -16,6 +16,7 @@ import useGenerateTileSequence from "./useGenerateTileSequence";
  * @returns An object containing the `initializeLevelSequence` function.
  */
 export default function useInitializeLevelSequence() {
+  console.log("useInitializeLevelSequence");
   const {
     state: { level, animationPace, difficulty },
     dispatch,

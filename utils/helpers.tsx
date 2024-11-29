@@ -10,6 +10,7 @@ import {
 } from "@/types/types";
 
 export const animateTile: AnimatedTileProps = (tileOpacity, pace) => {
+  console.log("animateTile");
   // Animate tile opacity
   Animated.sequence([
     Animated.timing(tileOpacity, {
@@ -29,6 +30,7 @@ export const saveGameStateToStorage: SaveGameStateToStorageProps = async (
   key,
   gameState
 ) => {
+  console.log("saveGameStateToStorage");
   // Save game state
   try {
     await AsyncStorage.setItem(key, JSON.stringify(gameState));
@@ -42,6 +44,7 @@ export const loadGameStateFromStorage: LoadGameStateFromStorageProps = async (
   dispatch,
   defaultState
 ) => {
+  console.log("loadGameStateFromStorage");
   // Load game state from storage
   try {
     const jsonValue = await AsyncStorage.getItem(key);
@@ -59,6 +62,7 @@ export const loadGameStateFromStorage: LoadGameStateFromStorageProps = async (
 };
 
 export const stopTilesAnimation: StopTilesAnimationProps = (ref, tiles) => {
+  console.log("stopTilesAnimation");
   // Clear all animation timeouts
   ref.current.forEach((timeoutId) => clearTimeout(timeoutId));
   ref.current = []; // Reset timeouts

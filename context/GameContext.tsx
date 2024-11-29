@@ -44,13 +44,15 @@ const initialState: GameState = {
   tiles: [],
   sequence: [],
   animationPace: DEFAULT_ANIMATION_PACE,
-  tileSound: async () => {},
+  tileSound: () => {},
   gameOverSound: () => {},
 };
 
 const gameReducer: GameReducer = (state, action) => {
+  console.log("gameReducer");
   switch (action.type) {
     case "LOAD_GAME_STATE":
+      console.log("LOAD_GAME_STATE");
       // Load saved game state
       return {
         ...state,
@@ -59,6 +61,7 @@ const gameReducer: GameReducer = (state, action) => {
       };
 
     case "LOAD_DEFAULT_CONTENT":
+      console.log("LOAD_DEFAULT_CONTENT");
       // Load tiles, tile sound, and game over sound
       const load = action.payload;
       return {
@@ -69,6 +72,7 @@ const gameReducer: GameReducer = (state, action) => {
       };
 
     case "SET_DIFFICULTY":
+      console.log("SET_DIFFICULTY");
       // Set difficulty choosen by user
       const difficulty = action.payload;
 
@@ -88,24 +92,29 @@ const gameReducer: GameReducer = (state, action) => {
       };
 
     case "SET_SOUND_INDEX":
+      console.log("SET_SOUND_INDEX");
+      state.tileSound(action.payload);
       return {
         ...state,
         tileSoundIndex: action.payload,
       };
 
     case "SET_INFINITE_MODE":
+      console.log("SET_INFINITE_MODE");
       return {
         ...state,
         isInfiniteMode: action.payload,
       };
 
     case "TOGGLE_SOUND":
+      console.log("TOGGLE_SOUND");
       return {
         ...state,
         isSoundOn: !state.isSoundOn,
       };
 
     case "INITIALIZE_LEVEL":
+      console.log("INITIALIZE_LEVEL");
       // Initialize level
       return {
         ...state,
@@ -120,6 +129,7 @@ const gameReducer: GameReducer = (state, action) => {
       };
 
     case "SHOW_SEQUENCE":
+      console.log("SHOW_SEQUENCE");
       // Generate a new sequence
       const newSequence = action.payload(state.level);
 
@@ -130,9 +140,11 @@ const gameReducer: GameReducer = (state, action) => {
       };
 
     case "ENABLE_USER_RESPONSE":
+      console.log("ENABLE_USER_RESPONSE");
       return { ...state, isPlaying: true };
 
     case "SHOW_HINT":
+      console.log("SHOW_HINT");
       // Animate and play sound for current tile
       if (state.isSoundOn) state.tileSound(state.tileSoundIndex);
       animateTile(
@@ -142,6 +154,7 @@ const gameReducer: GameReducer = (state, action) => {
       return { ...state, hints: state.hints - 1 };
 
     case "VERIFY_USER_RESPONSE":
+      console.log("VERIFY_USER_RESPONSE");
       const userResponse = action.payload;
       const isCorrect = state.sequence[state.userGuess] === userResponse;
       const isNewBestScore =
@@ -211,6 +224,7 @@ const gameReducer: GameReducer = (state, action) => {
       };
 
     case "RESET_APP_STATE":
+      console.log("RESET_APP_STATE");
       saveGameStateToStorage("gameState", {
         difficulties: DEFAULT_DIFFICULTIES,
         bestScore: DEFAULT_BEST_SCORE,
@@ -230,8 +244,11 @@ const gameReducer: GameReducer = (state, action) => {
 };
 
 function GameProvider({ children }: GameContextProviderProps) {
+  console.log("gameProvider");
   const [state, dispatch] = useReducer(gameReducer, initialState);
+  console.log("loadState");
   const timeoutRefs = useRef<number[]>([]); // Shared timeout refs for all tiles
+  console.log("timeouts", timeoutRefs);
 
   const stopAnimation = () => stopTilesAnimation(timeoutRefs, state.tiles);
 
@@ -245,6 +262,7 @@ function GameProvider({ children }: GameContextProviderProps) {
 }
 
 function useGameContext(): GameContextType {
+  console.log("useGameContext");
   const context = useContext(GameContext);
   if (!context) {
     throw new Error("useGameContext must be used within a GameProvider");

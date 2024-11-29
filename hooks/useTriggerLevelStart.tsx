@@ -13,6 +13,7 @@ import useInitializeLevelSequence from "./useInitializeLevelSequence";
  * the start of the new level when the user has completed the current level.
  */
 export default function useTriggerLevelStart() {
+  console.log("useTriggerLevelStart");
   const {
     state: { levelUp, level },
   } = useGameContext();

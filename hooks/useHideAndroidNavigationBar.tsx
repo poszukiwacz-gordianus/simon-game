@@ -11,6 +11,7 @@ import * as NavigationBar from "expo-navigation-bar";
  */
 export default function useHideAndroidNavigationBar() {
   useEffect(() => {
+    console.log("useHideNavigationBar");
     // Hide the navigation bar
     NavigationBar.setVisibilityAsync("hidden");
   }, []);

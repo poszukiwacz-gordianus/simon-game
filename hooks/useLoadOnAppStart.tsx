@@ -12,6 +12,7 @@ import useTriggerLevelStart from "./useTriggerLevelStart";
  * upon launch by setting the required game states and UI configurations.
  */
 export default function useLoadOnAppStart() {
+  console.log("useLoadOnAppStart");
   // Hide navigation bar on app start
   useHideAndroidNavigationBar();
 

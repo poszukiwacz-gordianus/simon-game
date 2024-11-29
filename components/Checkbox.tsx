@@ -1,6 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet } from "react-native";
-import { useSound } from "@/hooks/useHooks";
 import { useGameContext } from "@/context/GameContext";
 import FontText from "./FontText";
 
@@ -15,7 +14,6 @@ export default function Checkbox({
     state: { isSoundOn, tileSoundIndex },
     dispatch,
   } = useGameContext();
-  const { playSound } = useSound();
   const checked = sound === tileSoundIndex;
 
   return (
@@ -25,7 +23,7 @@ export default function Checkbox({
       disabled={!isSoundOn}
       style={styles.checkboxContainer}
       onPress={() => {
-        playSound(sound), dispatch({ type: "SET_SOUND_INDEX", payload: sound });
+        dispatch({ type: "SET_SOUND_INDEX", payload: sound });
       }}
     >
       {checked ? (

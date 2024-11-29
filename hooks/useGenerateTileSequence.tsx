@@ -12,6 +12,7 @@ import { useGameContext } from "@/context/GameContext";
  * @returns An object containing the `generateTileSequence` function.
  */
 export default function useGenerateTileSequence() {
+  console.log("useGenerateTileSequence");
   const {
     timeoutRefs,
     state: {
@@ -47,7 +48,9 @@ export default function useGenerateTileSequence() {
       // Set the timeout and store its ID
       const timeoutId = window.setTimeout(async () => {
         try {
-          if (isSoundOn) tileSound(tileSoundIndex); // Play sound asynchronously
+          // Play sound asynchronously
+          if (isSoundOn) tileSound(tileSoundIndex);
+
           animateTile(tiles[sequenceItem].opacity, animationPace);
         } catch (error) {
           console.error("Error during animation or sound:", error);

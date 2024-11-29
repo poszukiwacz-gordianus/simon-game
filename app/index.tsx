@@ -5,6 +5,7 @@ import { useLoadOnAppStart } from "@/hooks/useHooks";
 import { Settings, BackButton } from "@/components/Components";
 
 export default function Index() {
+  console.log("Index");
   useLoadOnAppStart();
 
   return (
