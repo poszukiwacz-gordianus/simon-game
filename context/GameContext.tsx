@@ -44,7 +44,7 @@ const initialState: GameState = {
   tiles: [],
   sequence: [],
   animationPace: DEFAULT_ANIMATION_PACE,
-  tileSound: () => {},
+  tileSound: async () => {},
   gameOverSound: () => {},
 };
 
@@ -54,8 +54,8 @@ const gameReducer: GameReducer = (state, action) => {
       // Load saved game state
       return {
         ...state,
-        difficulties: action.payload.difficulties,
-        bestScore: action.payload.bestScore,
+        difficulties: action.payload.difficulties || DEFAULT_DIFFICULTIES,
+        bestScore: action.payload.bestScore || DEFAULT_BEST_SCORE,
       };
 
     case "LOAD_DEFAULT_CONTENT":

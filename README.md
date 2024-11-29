@@ -1,50 +1,42 @@
-# Welcome to your Expo app 👋
+Scale Width Height
+Normal 142px 282px
+@2x 284px 564px
+@3x 426px 846px
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+const tileSets = {
+classic: [
+require('./images/tiles/tilesClassic/classicImage1.png'),
+require('./images/tiles/tilesClassic/classicImage2.png'),
+],
+dogs: [
+require('./images/tiles/tilesDogs/dogImage1.png'),
+require('./images/tiles/tilesDogs/dogImage2.png'),
+],
+};
 
-## Get started
+eas build --profile development --platform android
 
-1. Install dependencies
+Nature-Inspired Themes
 
-   ```bash
-   npm install
-   ```
+Forest: Trees, leaves, and earthy colors.
+Ocean: Waves, seashells, and blue gradients.
+Animal-Themed Sets
 
-2. Start the app
+Dogs: Different breeds or paw prints.
+Cats: Whiskers, paws, and playful poses.
+Fantasy Themes
 
-   ```bash
-    npx expo start
-   ```
+Space: Stars, planets, and galaxies.
+Magic: Wands, potions, and spell icons.
+Pop Culture References
 
-In the output, you'll find options to open the app in a
+Retro Gaming: Pixels, arcade characters, and 8-bit style.
+Sci-fi or superhero-inspired symbols.
+Seasonal Themes
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Winter: Snowflakes and frosty icons.
+Autumn: Pumpkins and orange leaves.
+Minimalistic or Abstract
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Geometric shapes in muted or bold colors.
+Simple patterns like gradients or textures.

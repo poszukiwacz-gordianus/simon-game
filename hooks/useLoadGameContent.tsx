@@ -9,6 +9,9 @@ import { useGameContext } from "@/context/GameContext";
 import { loadGameStateFromStorage } from "@/utils/helpers";
 import useSound from "./useSound";
 
+import tilesClassic from "@/assets/images/tiles/tilesClassic";
+import tilesTrees from "@/assets/images/tiles/tilesTrees";
+
 /**
  * Loads the game content and the game state from storage when the component mounts.
  *
@@ -20,15 +23,10 @@ export default function useLoadGameContent() {
   const { dispatch } = useGameContext();
   const { playSound } = useSound();
 
-  const tiles = [
-    { color: "#41B06E", opacity: useAnimatedValue(1) },
-    {
-      color: "#D04848",
-      opacity: useAnimatedValue(1),
-    },
-    { color: "#F8E559", opacity: useAnimatedValue(1) },
-    { color: "#525CEB", opacity: useAnimatedValue(1) },
-  ];
+  const tiles = Object.values(tilesTrees).map((source) => ({
+    source,
+    opacity: useAnimatedValue(1),
+  }));
 
   useEffect(() => {
     dispatch({

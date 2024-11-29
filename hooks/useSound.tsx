@@ -26,6 +26,7 @@ export default function useSound() {
 
     try {
       if (sound) {
+        await soundRef.current?.stopAsync();
         await sound.replayAsync();
       }
     } catch (error) {

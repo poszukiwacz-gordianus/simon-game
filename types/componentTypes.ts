@@ -10,7 +10,7 @@ export interface ButtonProps {
 }
 
 export interface AnimatedTile {
-  color: string;
+  source: string;
   opacity: Animated.Value;
 }
 

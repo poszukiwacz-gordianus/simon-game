@@ -41,11 +41,18 @@ export default function useGenerateTileSequence() {
           ? Math.floor(Math.random() * tiles.length) // Ensure valid index range
           : prevSequence[index];
 
+      // Calculate the exact delay for this animation step
+      const delay = animationPace * index;
+
       // Set the timeout and store its ID
-      const timeoutId = window.setTimeout(() => {
-        if (isSoundOn) tileSound(tileSoundIndex);
-        animateTile(tiles[sequenceItem].opacity, animationPace);
-      }, animationPace * (index + 1));
+      const timeoutId = window.setTimeout(async () => {
+        try {
+          if (isSoundOn) tileSound(tileSoundIndex); // Play sound asynchronously
+          animateTile(tiles[sequenceItem].opacity, animationPace);
+        } catch (error) {
+          console.error("Error during animation or sound:", error);
+        }
+      }, delay);
 
       timeoutRefs.current.push(timeoutId); // Track the timeout ID
       return sequenceItem;
