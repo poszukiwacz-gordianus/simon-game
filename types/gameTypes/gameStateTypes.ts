@@ -1,5 +1,6 @@
 import { MutableRefObject } from "react";
 import { AnimatedTile } from "../componentTypes";
+import { Audio } from "expo-av";
 
 /**
  * The shape of the game state.
@@ -58,10 +59,6 @@ export type GenerateTileSequence = (
  * @property sequence - The sequence of tiles to be shown to the user.
  * @property animationPace - The pace of animations to controll the speed of the game by difficulty.
  * @property timeoutRefs - A ref object for the timeouts.
- * @property tileSound - The function to play the tile sound.
- * @property gameOverSound - The function to play the game over sound.
- * @property tileSequence - The function to generate the tile sequence.
- * @property stopAnimation - The function to stop the animation.
  */
 export interface GameState {
   readonly difficulty: Difficulty;
@@ -81,10 +78,7 @@ export interface GameState {
   isNewBestScore: boolean;
   tiles: AnimatedTile[];
   sequence: number[];
+  tilesSounds: Audio.Sound[];
   animationPace: number;
   timeoutRefs: MutableRefObject<number[]>;
-  tileSound: (tileSoundIndex: number) => void;
-  gameOverSound: (tileSoundIndex: number) => void;
-  tileSequence: (state: GameState) => number[];
-  stopAnimation: () => void;
 }

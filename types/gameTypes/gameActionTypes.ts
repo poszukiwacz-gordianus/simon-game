@@ -1,10 +1,7 @@
 import { MutableRefObject } from "react";
 import { type AnimatedTile } from "../componentTypes";
-import {
-  GameState,
-  type Difficulty,
-  type LoadGameState,
-} from "./gameStateTypes";
+import { type Difficulty, type LoadGameState } from "./gameStateTypes";
+import { Audio } from "expo-av";
 
 export type GameActionType =
   | {
@@ -15,10 +12,7 @@ export type GameActionType =
       type: "LOAD_DEFAULT_CONTENT";
       payload: {
         tiles: AnimatedTile[];
-        tileSound: () => void;
-        gameOverSound: () => void;
-        tileSequence: (state: GameState) => number[];
-        stopAnimation: () => void;
+        tilesSounds: Audio.Sound[];
         timeoutRefs: MutableRefObject<number[]>;
       };
     }

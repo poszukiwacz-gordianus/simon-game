@@ -1,17 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useAnimatedValue } from "react-native";
-import {
-  DEFAULT_BEST_SCORE,
-  DEFAULT_DIFFICULTIES,
-  GAME_OVER_SOUND,
-} from "@/config";
+import { DEFAULT_BEST_SCORE, DEFAULT_DIFFICULTIES } from "@/config";
 import { useGameContext } from "@/context/GameContext";
-import { loadGameStateFromStorage, stopTilesAnimation } from "@/utils/helpers";
-import usePlaySound from "./usePlaySound";
+import { loadGameStateFromStorage } from "@/utils/helpers";
 
 import tilesClassic from "@/assets/images/tiles/tilesClassic";
 import tilesTrees from "@/assets/images/tiles/tilesTrees";
-import useGenerateTileSequence from "./useGenerateTileSequence";
+import useLoadSoundsToMemory from "./useLoadSoundsToMemory";
 
 /**
  * Loads the game content and the game state from storage when the component mounts.
@@ -23,8 +18,7 @@ import useGenerateTileSequence from "./useGenerateTileSequence";
 export default function useLoadGameContent() {
   console.log("useLoadGameContent");
   const { dispatch } = useGameContext();
-  const { playSound } = usePlaySound();
-  const { generateTileSequence } = useGenerateTileSequence();
+  const { tilesSounds, isLoading } = useLoadSoundsToMemory();
   const timeoutRefs = useRef<number[]>([]); // Shared timeout refs for all tiles
 
   const tiles = Object.values(tilesTrees).map((source) => ({
@@ -34,7 +28,7 @@ export default function useLoadGameContent() {
 
   useEffect(() => {
     const loadGameContent = async () => {
-      if (!playSound) {
+      if (isLoading) {
         console.log("Waiting for sounds to load...");
         return; // Exit early until playSound is ready
       }
@@ -48,15 +42,12 @@ export default function useLoadGameContent() {
         type: "LOAD_DEFAULT_CONTENT",
         payload: {
           tiles,
-          tileSound: playSound,
-          gameOverSound: () => playSound(GAME_OVER_SOUND),
-          tileSequence: generateTileSequence,
-          stopAnimation: () => stopTilesAnimation(timeoutRefs, tiles),
+          tilesSounds,
           timeoutRefs,
         },
       });
     };
 
     loadGameContent();
-  }, [playSound]);
+  }, [isLoading]);
 }

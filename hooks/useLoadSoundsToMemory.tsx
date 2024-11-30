@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { DEFAULT_TILE_SOUND_INDEX } from "@/config";
-
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from "expo-av";
 
 const soundMap = [
@@ -11,13 +9,13 @@ const soundMap = [
   require("@/assets/sounds/gameover.mp3"),
 ];
 
-export default function usePlaySound() {
-  const [playSound, setPlaySound] = useState<
-    ((tileSoundIndex?: number) => Promise<void>) | null
-  >(null);
+export default function useLoadSoundsToMemory() {
+  console.log("useLoadSoundsToMemory");
+  const [tilesSounds, setTilesSounds] = useState<Audio.Sound[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loadSoundsToMemoryAndSetPlaySoundFunction = async () => {
+    const loadSoundsToMemory = async () => {
       console.log("Loading sounds to memory...");
       Audio.setAudioModeAsync({
         staysActiveInBackground: true,
@@ -27,32 +25,17 @@ export default function usePlaySound() {
         shouldDuckAndroid: true,
         playThroughEarpieceAndroid: true,
       });
-
-      const preloadedSounds: Audio.Sound[] = [];
       for (let i = 0; i < soundMap.length; i++) {
         const { sound } = await Audio.Sound.createAsync(soundMap[i]);
-        preloadedSounds.push(sound);
+        setTilesSounds((sounds) => [...sounds, sound]);
       }
 
       console.log("Sounds loaded to memory");
-
-      const playSoundFunction = async (
-        tileSoundIndex = DEFAULT_TILE_SOUND_INDEX
-      ) => {
-        const sound = preloadedSounds[tileSoundIndex];
-        if (sound) {
-          console.log(`Playing sound at index ${tileSoundIndex}`);
-          await sound.replayAsync(); // Replay if already loaded
-        } else {
-          console.warn(`Sound at index ${tileSoundIndex} is not loaded yet`);
-        }
-      };
-
-      setPlaySound(() => playSoundFunction);
+      setIsLoading(false);
     };
 
-    loadSoundsToMemoryAndSetPlaySoundFunction();
+    loadSoundsToMemory();
   }, []);
 
-  return { playSound };
+  return { tilesSounds, isLoading };
 }

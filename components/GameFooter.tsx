@@ -3,17 +3,18 @@ import { AntDesign } from "@expo/vector-icons";
 import { useGameContext } from "@/context/GameContext";
 import IconButton from "./IconButton";
 import BackButton from "./BackButton";
+import { stopTilesAnimation } from "@/utils/helpers";
 
 export default function GameFooter() {
   const {
-    state: { level, isInfiniteMode, isPlaying, hints, stopAnimation },
+    state: { level, isInfiniteMode, isPlaying, hints, timeoutRefs, tiles },
     dispatch,
     initializeLevelSequence,
   } = useGameContext();
 
   return (
     <View style={styles.container}>
-      <BackButton callback={stopAnimation} />
+      <BackButton callback={() => stopTilesAnimation(timeoutRefs, tiles)} />
       {!isInfiniteMode && (
         <IconButton
           disabled={!isPlaying}

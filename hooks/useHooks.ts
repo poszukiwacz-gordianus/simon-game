@@ -3,11 +3,11 @@ import useHideAndroidNavigationBar from "./useHideAndroidNavigationBar";
 import useInitializeLevelSequence from "./useInitializeLevelSequence";
 import useLoadGameContent from "./useLoadGameContent";
 import useLoadOnAppStart from "./useLoadOnAppStart";
-import usePlaySound from "./usePlaySound";
+import useLoadSoundsToMemory from "./useLoadSoundsToMemory";
 import useTriggerLevelStart from "./useTriggerLevelStart";
 
 export {
-  usePlaySound,
+  useLoadSoundsToMemory,
   useLoadGameContent,
   useGenerateTileSequence,
   useHideAndroidNavigationBar,

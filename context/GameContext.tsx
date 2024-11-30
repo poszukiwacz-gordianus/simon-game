@@ -17,7 +17,12 @@ import {
   type GameState,
   type GameReducer,
 } from "@/types/types";
-import { animateTile, saveGameStateToStorage } from "@/utils/helpers";
+import {
+  animateTile,
+  generateTileSequence,
+  playSound,
+  saveGameStateToStorage,
+} from "@/utils/helpers";
 import useTriggerLevelStart from "@/hooks/useTriggerLevelStart";
 import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
 
@@ -42,12 +47,9 @@ const initialState: GameState = {
   isNewBestScore: false,
   tiles: [],
   sequence: [],
+  tilesSounds: [],
   animationPace: DEFAULT_ANIMATION_PACE,
   timeoutRefs: { current: [] },
-  tileSound: () => {},
-  gameOverSound: () => {},
-  tileSequence: () => [],
-  stopAnimation: () => {},
 };
 
 const gameReducer: GameReducer = (state, action) => {
@@ -69,10 +71,7 @@ const gameReducer: GameReducer = (state, action) => {
       return {
         ...state,
         tiles: load.tiles,
-        tileSound: load.tileSound,
-        gameOverSound: load.gameOverSound,
-        tileSequence: load.tileSequence,
-        stopAnimation: load.stopAnimation,
+        tilesSounds: load.tilesSounds,
         timeoutRefs: load.timeoutRefs,
         isAppActive: true,
       };
@@ -99,7 +98,7 @@ const gameReducer: GameReducer = (state, action) => {
 
     case "SET_SOUND_INDEX":
       console.log("SET_SOUND_INDEX");
-      state.tileSound(action.payload);
+      playSound(action.payload, state.tilesSounds);
       return {
         ...state,
         tileSoundIndex: action.payload,
@@ -137,18 +136,11 @@ const gameReducer: GameReducer = (state, action) => {
     case "SHOW_SEQUENCE":
       console.log("SHOW_SEQUENCE");
       // Generate a new sequence
-      // Ensure `tileSequence` is a function before calling it
-      if (typeof state.tileSequence === "function") {
-        console.log("tileSequence is a function");
-        const newSequence = state.tileSequence(state); // Pass the state here
-        return {
-          ...state,
-          sequence: newSequence,
-        };
-      } else {
-        console.error("tileSequence is not a function!");
-        return state; // Return unchanged state as a fallback
-      }
+      const newSequence = generateTileSequence(state);
+      return {
+        ...state,
+        sequence: newSequence,
+      };
 
     case "ENABLE_USER_RESPONSE":
       console.log("ENABLE_USER_RESPONSE");
@@ -157,7 +149,7 @@ const gameReducer: GameReducer = (state, action) => {
     case "SHOW_HINT":
       console.log("SHOW_HINT");
       // Animate and play sound for current tile
-      if (state.isSoundOn) state.tileSound(state.tileSoundIndex);
+      if (state.isSoundOn) playSound(state.tileSoundIndex, state.tilesSounds);
       animateTile(
         state.tiles[state.sequence[state.userGuess]].opacity,
         state.animationPace
@@ -174,7 +166,7 @@ const gameReducer: GameReducer = (state, action) => {
       // If user response is isCorrect
       if (isCorrect) {
         // Play tile sound
-        if (state.isSoundOn) state.tileSound(state.tileSoundIndex);
+        if (state.isSoundOn) playSound(state.tileSoundIndex, state.tilesSounds);
         const isLevelCompleted = state.userGuess === state.sequence.length - 1;
 
         // Handle level completion logic
@@ -227,7 +219,7 @@ const gameReducer: GameReducer = (state, action) => {
 
       // Handle incorrect guess
       // Play game over sound
-      if (state.isSoundOn) state.gameOverSound(GAME_OVER_SOUND);
+      if (state.isSoundOn) playSound(GAME_OVER_SOUND, state.tilesSounds);
       return {
         ...state,
         gameOver: true,

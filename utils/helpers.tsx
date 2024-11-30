@@ -6,7 +6,10 @@ import {
   type AnimatedTileProps,
   type StopTilesAnimationProps,
   type LoadGameState,
+  GameState,
 } from "@/types/types";
+import { DEFAULT_TILE_SOUND_INDEX } from "@/config";
+import { Audio } from "expo-av";
 
 export const animateTile: AnimatedTileProps = (tileOpacity, pace) => {
   console.log("animateTile");
@@ -68,4 +71,59 @@ export const stopTilesAnimation: StopTilesAnimationProps = (ref, tiles) => {
 
   // Reset all tile opacities
   tiles.forEach((tile) => tile.opacity.resetAnimation());
+};
+
+export const playSound = async (
+  index = DEFAULT_TILE_SOUND_INDEX,
+  sounds: Audio.Sound[]
+) => {
+  console.log("playSound");
+  const sound = sounds[index];
+  if (sound) {
+    console.log(`Playing sound at index ${index}`);
+    await sound.replayAsync(); // Replay if already loaded
+  } else {
+    console.warn(`Sound at index ${index} is not loaded yet`);
+  }
+};
+
+export const generateTileSequence = (state: GameState) => {
+  console.log("generateTileSequence");
+  const {
+    level: length,
+    sequence: prevSequence,
+    tiles,
+    animationPace,
+    tilesSounds,
+    tileSoundIndex,
+    isSoundOn,
+    isInfiniteMode,
+    timeoutRefs,
+  } = state;
+
+  return Array.from({ length }, (_, index) => {
+    const sequenceItem =
+      index >= prevSequence.length || (isInfiniteMode && length === 1)
+        ? Math.floor(Math.random() * tiles.length) // Ensure valid index range
+        : prevSequence[index];
+
+    // Calculate the exact delay for this animation step
+    const delay = animationPace * index;
+
+    // Set the timeout and store its ID
+    const timeoutId = window.setTimeout(async () => {
+      try {
+        console.log("Animating tile and Play sound");
+        // Play sound asynchronously
+        if (isSoundOn) playSound(tileSoundIndex, tilesSounds);
+
+        animateTile(tiles[sequenceItem].opacity, animationPace);
+      } catch (error) {
+        console.error("Error during animation or sound:", error);
+      }
+    }, delay);
+
+    timeoutRefs.current.push(timeoutId); // Track the timeout ID
+    return sequenceItem;
+  });
 };
