@@ -1,9 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useGameContext } from "@/context/GameContext";
-import IconButton from "./IconButton";
-import BackButton from "./BackButton";
 import { stopTilesAnimation } from "@/utils/helpers";
+import BackButton from "../Icons/BackButton";
+import IconButton from "../UI/IconButton";
 
 export default function GameFooter() {
   const {

@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+    // backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
     zIndex: 10, // Ensure it overlays other elements
   },
   modalView: {

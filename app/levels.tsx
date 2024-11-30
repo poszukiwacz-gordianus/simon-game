@@ -1,7 +1,8 @@
 import { ScrollView, StyleSheet } from "react-native";
-import { Level } from "@/components/Components";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { FontText, BackButton } from "@/components/Components";
+import BackButton from "@/components/Icons/BackButton";
+import Level from "@/components/LevelsComponents/Level";
+import FontText from "@/components/UI/FontText";
 
 export default function ShowLevels() {
   return (

@@ -1,5 +1,5 @@
-import useLoadOnAppStart from "@/hooks/useLoadOnAppStart";
-import FontText from "./FontText";
+import { useLoadOnAppStart } from "@/hooks/useHooks";
+import FontText from "../UI/FontText";
 
 export default function LoadingAppScreen() {
   useLoadOnAppStart();

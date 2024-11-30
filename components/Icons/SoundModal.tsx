@@ -2,7 +2,7 @@ import { useGameContext } from "@/context/GameContext";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet } from "react-native";
 
-export default function Sound() {
+export default function SoundModal() {
   const {
     state: { isSoundOn, isPlaying },
     dispatch,

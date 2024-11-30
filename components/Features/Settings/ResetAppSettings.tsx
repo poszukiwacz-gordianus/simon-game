@@ -1,9 +1,9 @@
-import { Pressable, StyleSheet, View } from "react-native";
-import { useGameContext } from "@/context/GameContext";
-import FontText from "./FontText";
-import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
-import Modal from "./Modal";
+import { Pressable, StyleSheet, View } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { useGameContext } from "@/context/GameContext";
+import FontText from "@/components/UI/FontText";
+import Modal from "@/components/UI/Modal";
 
 export default function ResetAppSettings() {
   const [isVisible, setIsVisible] = useState(false);

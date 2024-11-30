@@ -1,13 +1,11 @@
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGameContext } from "@/context/GameContext";
-import {
-  GameFooter,
-  GameHeader,
-  GameOver,
-  TilesContainer,
-  Sound,
-} from "@/components/Components";
+import GameOver from "@/components/GameComponents/GameOver";
+import GameHeader from "@/components/GameComponents/GameHeader";
+import GameTilesContainer from "@/components/GameComponents/GameTilesContainer";
+import GameFooter from "@/components/GameComponents/GameFooter";
+import SoundModal from "@/components/Icons/SoundModal";
 
 export default function Game() {
   const {
@@ -19,9 +17,9 @@ export default function Game() {
       {gameOver && <GameOver />}
 
       <GameHeader />
-      <TilesContainer />
+      <GameTilesContainer />
       <GameFooter />
-      <Sound />
+      <SoundModal />
     </SafeAreaView>
   );
 }

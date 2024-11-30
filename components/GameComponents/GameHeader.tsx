@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { useGameContext } from "@/context/GameContext";
-import FontText from "./FontText";
+import FontText from "../UI/FontText";
 
 export default function GameHeader() {
   const {

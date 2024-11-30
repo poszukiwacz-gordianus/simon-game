@@ -1,8 +1,8 @@
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Pressable, StyleSheet, View } from "react-native";
 import { useGameContext } from "@/context/GameContext";
-import FontText from "./FontText";
-import Checkbox from "./Checkbox";
+import FontText from "@/components/UI/FontText";
+import Checkbox from "@/components/UI/Checkbox";
 
 const checkboxes = [
   { sound: 0, label: "cartoon" },
@@ -11,7 +11,7 @@ const checkboxes = [
   { sound: 3, label: "spring" },
 ];
 
-export default function SoundSettings() {
+export default function ManageSoundSettings() {
   const {
     state: { isSoundOn },
     dispatch,

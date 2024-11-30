@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import FontText from "./FontText";
-import GameMode from "./GameMode";
+import FontText from "../UI/FontText";
+import GameMode from "../UI/GameMode";
 
 export default function InfiniteMode() {
   return (

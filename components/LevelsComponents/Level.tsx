@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { Link } from "expo-router";
 import { DEFAULT_MAX_LEVELS } from "@/config";
 import { useGameContext } from "@/context/GameContext";
-import FontText from "./FontText";
+import FontText from "../UI/FontText";
 
 export default function Level() {
   const {

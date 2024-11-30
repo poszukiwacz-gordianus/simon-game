@@ -2,9 +2,9 @@ import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useGameContext } from "@/context/GameContext";
-import FontText from "./FontText";
-import IconButton from "./IconButton";
-import Modal from "./Modal";
+import Modal from "../UI/Modal";
+import FontText from "../UI/FontText";
+import IconButton from "../UI/IconButton";
 
 export default function GameOver() {
   const {

@@ -1,9 +1,14 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
-import { Play, InfiniteMode, Rules, ScoreBoard } from "@/components/Components";
-import { Settings, BackButton } from "@/components/Components";
 import { useGameContext } from "@/context/GameContext";
-import LoadingAppScreen from "@/components/LoadingAppScreen";
+import LoadingAppScreen from "@/components/IndexComponents/LoadingAppScreen";
+import Play from "@/components/IndexComponents/Play";
+import InfiniteMode from "@/components/IndexComponents/InfiniteMode";
+import InfoModal from "@/components/Features/Info/InfoModal";
+import SettingsModal from "@/components/Features/Settings/SettingsModal";
+import BackButton from "@/components/Icons/BackButton";
+import ScoreboardModal from "@/components/Features/Scoreboard/ScoreboardModal";
+import StoreModal from "@/components/Features/Store/StoreModal";
 
 export default function Index() {
   console.log("Index");
@@ -19,8 +24,8 @@ export default function Index() {
     <SafeAreaView style={styles.container}>
       <Play />
       <InfiniteMode />
-      <Rules />
-      <Settings />
+      <InfoModal />
+      <SettingsModal />
       <BackButton
         isFirstScreen={true}
         style={{
@@ -29,7 +34,8 @@ export default function Index() {
           left: 20,
         }}
       />
-      <ScoreBoard />
+      <ScoreboardModal />
+      <StoreModal />
     </SafeAreaView>
   );
 }

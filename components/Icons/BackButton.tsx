@@ -1,6 +1,5 @@
 import { router } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
-import IconButton from "./IconButton";
 import {
   Alert,
   BackHandler,
@@ -9,6 +8,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
+import IconButton from "../UI/IconButton";
 
 export default function BackButton({
   isFirstScreen = false,

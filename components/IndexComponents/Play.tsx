@@ -9,7 +9,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
-import GameMode from "./GameMode";
+import GameMode from "../UI/GameMode";
 
 const duration = 1500;
 
