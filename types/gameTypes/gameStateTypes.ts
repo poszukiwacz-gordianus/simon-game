@@ -1,3 +1,4 @@
+import { MutableRefObject } from "react";
 import { AnimatedTile } from "../componentTypes";
 
 /**
@@ -24,6 +25,17 @@ export interface LoadGameState {
   bestScore: number;
 }
 
+export type GenerateTileSequence = (
+  length: number,
+  prevSequence: number[],
+  tiles: AnimatedTile[],
+  animationPace: number,
+  tileSound: (tileIndex: number) => void,
+  tileSoundIndex: number,
+  isSoundOn: boolean,
+  isInfiniteMode: boolean
+) => number[];
+
 /**
  * The initial state of the game.
  *
@@ -35,6 +47,7 @@ export interface LoadGameState {
  * @property hints - The number of hints left for the user.
  * @property tileSoundIndex - The index of the tile sound to play.
  * @property bestScore - The best score achieved by the user in infinite mode.
+ * @property isAppActive - A boolean indicating if the app is active.
  * @property isPlaying - A boolean indicating if the user is currently playing.
  * @property isSoundOn - A boolean indicating if the sound is on or off.
  * @property levelUp - A boolean indicating if the game should advance to the next level.
@@ -44,8 +57,11 @@ export interface LoadGameState {
  * @property tiles - An array of the tiles in the game.
  * @property sequence - The sequence of tiles to be shown to the user.
  * @property animationPace - The pace of animations to controll the speed of the game by difficulty.
+ * @property timeoutRefs - A ref object for the timeouts.
  * @property tileSound - The function to play the tile sound.
  * @property gameOverSound - The function to play the game over sound.
+ * @property tileSequence - The function to generate the tile sequence.
+ * @property stopAnimation - The function to stop the animation.
  */
 export interface GameState {
   readonly difficulty: Difficulty;
@@ -56,6 +72,7 @@ export interface GameState {
   hints: number;
   tileSoundIndex: number;
   bestScore: number;
+  isAppActive: boolean;
   isPlaying: boolean;
   isSoundOn: boolean;
   levelUp: boolean;
@@ -65,6 +82,9 @@ export interface GameState {
   tiles: AnimatedTile[];
   sequence: number[];
   animationPace: number;
+  timeoutRefs: MutableRefObject<number[]>;
   tileSound: (tileSoundIndex: number) => void;
   gameOverSound: (tileSoundIndex: number) => void;
+  tileSequence: (state: GameState) => number[];
+  stopAnimation: () => void;
 }

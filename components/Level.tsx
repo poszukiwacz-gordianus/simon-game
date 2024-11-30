@@ -2,15 +2,13 @@ import { StyleSheet } from "react-native";
 import { Link } from "expo-router";
 import { DEFAULT_MAX_LEVELS } from "@/config";
 import { useGameContext } from "@/context/GameContext";
-import { useInitializeLevelSequence } from "@/hooks/useHooks";
 import FontText from "./FontText";
 
 export default function Level() {
   const {
     state: { difficulty, difficulties },
+    initializeLevelSequence,
   } = useGameContext();
-
-  const { initializeLevelSequence } = useInitializeLevelSequence();
 
   const currentLevel = difficulties[difficulty]?.level ?? 0;
 

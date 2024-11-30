@@ -1,18 +1,15 @@
 import { StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useGameContext } from "@/context/GameContext";
-import { useInitializeLevelSequence } from "@/hooks/useHooks";
 import IconButton from "./IconButton";
 import BackButton from "./BackButton";
 
 export default function GameFooter() {
   const {
-    state: { isPlaying, hints, level, isInfiniteMode },
+    state: { level, isInfiniteMode, isPlaying, hints, stopAnimation },
     dispatch,
-    stopAnimation,
+    initializeLevelSequence,
   } = useGameContext();
-
-  const { initializeLevelSequence } = useInitializeLevelSequence();
 
   return (
     <View style={styles.container}>

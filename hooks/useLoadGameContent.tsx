@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAnimatedValue } from "react-native";
 import {
   DEFAULT_BEST_SCORE,
@@ -6,11 +6,12 @@ import {
   GAME_OVER_SOUND,
 } from "@/config";
 import { useGameContext } from "@/context/GameContext";
-import { loadGameStateFromStorage } from "@/utils/helpers";
+import { loadGameStateFromStorage, stopTilesAnimation } from "@/utils/helpers";
 import usePlaySound from "./usePlaySound";
 
 import tilesClassic from "@/assets/images/tiles/tilesClassic";
 import tilesTrees from "@/assets/images/tiles/tilesTrees";
+import useGenerateTileSequence from "./useGenerateTileSequence";
 
 /**
  * Loads the game content and the game state from storage when the component mounts.
@@ -23,6 +24,8 @@ export default function useLoadGameContent() {
   console.log("useLoadGameContent");
   const { dispatch } = useGameContext();
   const { playSound } = usePlaySound();
+  const { generateTileSequence } = useGenerateTileSequence();
+  const timeoutRefs = useRef<number[]>([]); // Shared timeout refs for all tiles
 
   const tiles = Object.values(tilesTrees).map((source) => ({
     source,
@@ -47,6 +50,9 @@ export default function useLoadGameContent() {
           tiles,
           tileSound: playSound,
           gameOverSound: () => playSound(GAME_OVER_SOUND),
+          tileSequence: generateTileSequence,
+          stopAnimation: () => stopTilesAnimation(timeoutRefs, tiles),
+          timeoutRefs,
         },
       });
     };

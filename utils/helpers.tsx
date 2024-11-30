@@ -1,12 +1,11 @@
 import { Animated } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
-  type Difficulties,
   type SaveGameStateToStorageProps,
   type LoadGameStateFromStorageProps,
   type AnimatedTileProps,
   type StopTilesAnimationProps,
-  LoadGameState,
+  type LoadGameState,
 } from "@/types/types";
 
 export const animateTile: AnimatedTileProps = (tileOpacity, pace) => {

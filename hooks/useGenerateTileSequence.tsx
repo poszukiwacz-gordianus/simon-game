@@ -1,5 +1,5 @@
 import { animateTile } from "@/utils/helpers";
-import { useGameContext } from "@/context/GameContext";
+import { GameState } from "@/types/types";
 
 /**
  * Custom hook to generate a sequence of tile indices for the current game level.
@@ -13,19 +13,6 @@ import { useGameContext } from "@/context/GameContext";
  */
 export default function useGenerateTileSequence() {
   console.log("useGenerateTileSequence");
-  const {
-    timeoutRefs,
-    state: {
-      sequence: prevSequence,
-      tiles,
-      animationPace,
-      tileSound,
-      tileSoundIndex,
-      isSoundOn,
-      isInfiniteMode,
-    },
-  } = useGameContext();
-
   /**
    * Generates a sequence of tile indices for the current game level and animates them.
    *
@@ -35,7 +22,20 @@ export default function useGenerateTileSequence() {
    *
    * @returns An array of numbers representing the sequence of tile indices.
    */
-  const generateTileSequence = (length: number) => {
+  const generateTileSequence = (state: GameState) => {
+    console.log("generateTileSequence");
+    const {
+      level: length,
+      sequence: prevSequence,
+      tiles,
+      animationPace,
+      tileSound,
+      tileSoundIndex,
+      isSoundOn,
+      isInfiniteMode,
+      timeoutRefs,
+    } = state;
+
     return Array.from({ length }, (_, index) => {
       const sequenceItem =
         index >= prevSequence.length || (isInfiniteMode && length === 1)
@@ -48,6 +48,7 @@ export default function useGenerateTileSequence() {
       // Set the timeout and store its ID
       const timeoutId = window.setTimeout(async () => {
         try {
+          console.log("Animating tile and Play sound");
           // Play sound asynchronously
           if (isSoundOn) tileSound(tileSoundIndex);
 

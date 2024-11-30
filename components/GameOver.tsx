@@ -1,7 +1,6 @@
 import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { useInitializeLevelSequence } from "@/hooks/useHooks";
 import { useGameContext } from "@/context/GameContext";
 import FontText from "./FontText";
 import IconButton from "./IconButton";
@@ -10,8 +9,8 @@ import Modal from "./Modal";
 export default function GameOver() {
   const {
     state: { level, bestScore, isInfiniteMode, isNewBestScore },
+    initializeLevelSequence,
   } = useGameContext();
-  const { initializeLevelSequence } = useInitializeLevelSequence();
 
   if (isInfiniteMode)
     return (

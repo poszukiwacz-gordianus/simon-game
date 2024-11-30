@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useRef } from "react";
+import { createContext, useContext, useReducer } from "react";
 import {
   DEFAULT_ANIMATION_PACE,
   DEFAULT_ANIMATION_PACE_HARD,
@@ -17,11 +17,9 @@ import {
   type GameState,
   type GameReducer,
 } from "@/types/types";
-import {
-  animateTile,
-  saveGameStateToStorage,
-  stopTilesAnimation,
-} from "@/utils/helpers";
+import { animateTile, saveGameStateToStorage } from "@/utils/helpers";
+import useTriggerLevelStart from "@/hooks/useTriggerLevelStart";
+import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
 
 const GameContext = createContext<GameContextType | null>(null);
 
@@ -35,6 +33,7 @@ const initialState: GameState = {
   hints: DEFAULT_HINTS,
   tileSoundIndex: DEFAULT_TILE_SOUND_INDEX,
   bestScore: DEFAULT_BEST_SCORE,
+  isAppActive: false,
   isPlaying: false,
   isSoundOn: true,
   levelUp: false,
@@ -44,8 +43,11 @@ const initialState: GameState = {
   tiles: [],
   sequence: [],
   animationPace: DEFAULT_ANIMATION_PACE,
+  timeoutRefs: { current: [] },
   tileSound: () => {},
   gameOverSound: () => {},
+  tileSequence: () => [],
+  stopAnimation: () => {},
 };
 
 const gameReducer: GameReducer = (state, action) => {
@@ -69,6 +71,10 @@ const gameReducer: GameReducer = (state, action) => {
         tiles: load.tiles,
         tileSound: load.tileSound,
         gameOverSound: load.gameOverSound,
+        tileSequence: load.tileSequence,
+        stopAnimation: load.stopAnimation,
+        timeoutRefs: load.timeoutRefs,
+        isAppActive: true,
       };
 
     case "SET_DIFFICULTY":
@@ -77,7 +83,7 @@ const gameReducer: GameReducer = (state, action) => {
       const difficulty = action.payload;
 
       // Set animation pace based on difficulty
-      const pace =
+      const animationPace =
         difficulty === "medium"
           ? DEFAULT_ANIMATION_PACE_MEDIUM
           : difficulty === "hard"
@@ -87,7 +93,7 @@ const gameReducer: GameReducer = (state, action) => {
       return {
         ...state,
         difficulty: action.payload,
-        animationPace: pace,
+        animationPace,
         sequence: [],
       };
 
@@ -131,13 +137,18 @@ const gameReducer: GameReducer = (state, action) => {
     case "SHOW_SEQUENCE":
       console.log("SHOW_SEQUENCE");
       // Generate a new sequence
-      const newSequence = action.payload(state.level);
-
-      // Return state with new sequence
-      return {
-        ...state,
-        sequence: newSequence,
-      };
+      // Ensure `tileSequence` is a function before calling it
+      if (typeof state.tileSequence === "function") {
+        console.log("tileSequence is a function");
+        const newSequence = state.tileSequence(state); // Pass the state here
+        return {
+          ...state,
+          sequence: newSequence,
+        };
+      } else {
+        console.error("tileSequence is not a function!");
+        return state; // Return unchanged state as a fallback
+      }
 
     case "ENABLE_USER_RESPONSE":
       console.log("ENABLE_USER_RESPONSE");
@@ -246,15 +257,21 @@ const gameReducer: GameReducer = (state, action) => {
 function GameProvider({ children }: GameContextProviderProps) {
   console.log("gameProvider");
   const [state, dispatch] = useReducer(gameReducer, initialState);
-  console.log("loadState");
-  const timeoutRefs = useRef<number[]>([]); // Shared timeout refs for all tiles
-  console.log("timeouts", timeoutRefs);
+  const { initializeLevelSequence } = useInitializeLevelSequence(
+    state,
+    dispatch
+  );
 
-  const stopAnimation = () => stopTilesAnimation(timeoutRefs, state.tiles);
+  // Trigger automatic level start after level up
+  useTriggerLevelStart(state.level + 1, state.levelUp, initializeLevelSequence);
 
   return (
     <GameContext.Provider
-      value={{ state, dispatch, timeoutRefs, stopAnimation }}
+      value={{
+        state,
+        dispatch,
+        initializeLevelSequence,
+      }}
     >
       {children}
     </GameContext.Provider>

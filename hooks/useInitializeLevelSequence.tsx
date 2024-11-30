@@ -1,6 +1,5 @@
 import { START_LEVEL_DELAY, USER_RESPONSE_DELAY } from "@/config";
-import { useGameContext } from "@/context/GameContext";
-import useGenerateTileSequence from "./useGenerateTileSequence";
+import { GameState } from "@/types/types";
 
 /**
  * Custom hook to initialize and manage the sequence of levels in the game.
@@ -15,13 +14,12 @@ import useGenerateTileSequence from "./useGenerateTileSequence";
  *
  * @returns An object containing the `initializeLevelSequence` function.
  */
-export default function useInitializeLevelSequence() {
+export default function useInitializeLevelSequence(
+  state: GameState,
+  dispatch: React.Dispatch<any>
+) {
   console.log("useInitializeLevelSequence");
-  const {
-    state: { level, animationPace, difficulty },
-    dispatch,
-  } = useGameContext();
-  const { generateTileSequence } = useGenerateTileSequence();
+  const { animationPace, difficulty } = state;
 
   const delay =
     difficulty === "easy" ? START_LEVEL_DELAY - 200 : START_LEVEL_DELAY;
@@ -41,15 +39,12 @@ export default function useInitializeLevelSequence() {
     });
 
     // Show sequence to user after a delay
-    setTimeout(
-      () => dispatch({ type: "SHOW_SEQUENCE", payload: generateTileSequence }),
-      delay
-    );
+    setTimeout(() => dispatch({ type: "SHOW_SEQUENCE" }), delay);
 
     // Enable user response after all tiles are shown
     setTimeout(
       () => dispatch({ type: "ENABLE_USER_RESPONSE" }),
-      level * animationPace + USER_RESPONSE_DELAY
+      newLevel * animationPace + USER_RESPONSE_DELAY
     );
   };
 

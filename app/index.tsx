@@ -1,12 +1,19 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
 import { Play, InfiniteMode, Rules, ScoreBoard } from "@/components/Components";
-import { useLoadOnAppStart } from "@/hooks/useHooks";
 import { Settings, BackButton } from "@/components/Components";
+import { useGameContext } from "@/context/GameContext";
+import LoadingAppScreen from "@/components/LoadingAppScreen";
 
 export default function Index() {
   console.log("Index");
-  useLoadOnAppStart();
+  const {
+    state: { isAppActive },
+  } = useGameContext();
+
+  if (!isAppActive) {
+    return <LoadingAppScreen />;
+  }
 
   return (
     <SafeAreaView style={styles.container}>

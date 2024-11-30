@@ -1,4 +1,5 @@
 import { GameProvider } from "@/context/GameContext";
+import useLoadOnAppStart from "@/hooks/useLoadOnAppStart";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";

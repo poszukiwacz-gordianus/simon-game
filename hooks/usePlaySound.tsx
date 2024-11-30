@@ -40,8 +40,6 @@ export default function usePlaySound() {
         tileSoundIndex = DEFAULT_TILE_SOUND_INDEX
       ) => {
         const sound = preloadedSounds[tileSoundIndex];
-        console.log(tileSoundIndex);
-        console.log("playSound", preloadedSounds);
         if (sound) {
           console.log(`Playing sound at index ${tileSoundIndex}`);
           await sound.replayAsync(); // Replay if already loaded

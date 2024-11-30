@@ -2,17 +2,6 @@ import { type ReactNode } from "react";
 import { type GameState } from "./gameStateTypes";
 import { type GameActionType } from "./gameActionTypes";
 
-/**
- * Hook to access the game state and dispatch function.
- *
- * This hook provides the `state` and `dispatch` objects from the
- * `GameContext` context. This hook must be used within a `GameProvider`
- * component.
- *
- * @throws {Error} If the hook is not used within a `GameProvider` component.
- *
- * @returns {GameContextType} The game state and dispatch function.
- */
 export interface GameContextType {
   /**
    * The current state of the game.
@@ -24,9 +13,7 @@ export interface GameContextType {
    */
   readonly dispatch: React.Dispatch<GameActionType>;
 
-  timeoutRefs: React.MutableRefObject<number[]>;
-
-  stopAnimation: () => void;
+  initializeLevelSequence: (level: number) => void;
 }
 
 /**
