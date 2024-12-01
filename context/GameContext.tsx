@@ -23,7 +23,6 @@ import {
   playSound,
   saveGameStateToStorage,
 } from "@/utils/helpers";
-import useTriggerLevelStart from "@/hooks/useTriggerLevelStart";
 import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
 
 const GameContext = createContext<GameContextType | null>(null);
@@ -253,9 +252,6 @@ function GameProvider({ children }: GameContextProviderProps) {
     state,
     dispatch
   );
-
-  // Trigger automatic level start after level up
-  useTriggerLevelStart(state.level + 1, state.levelUp, initializeLevelSequence);
 
   return (
     <GameContext.Provider

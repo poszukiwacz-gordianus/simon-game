@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useHandleLevelUp } from "@/hooks/useHooks";
 import { useGameContext } from "@/context/GameContext";
 import GameOver from "@/components/GameComponents/GameOver";
 import GameHeader from "@/components/GameComponents/GameHeader";
@@ -11,6 +12,8 @@ export default function Game() {
   const {
     state: { gameOver },
   } = useGameContext();
+
+  useHandleLevelUp();
 
   return (
     <SafeAreaView style={styles.container}>
