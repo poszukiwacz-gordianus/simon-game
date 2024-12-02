@@ -12,6 +12,7 @@ import useLoadGameContent from "./useLoadGameContent";
  */
 export default function useLoadOnAppStart() {
   console.log("useLoadOnAppStart");
+
   // Hide navigation bar on app start
   useHideAndroidNavigationBar();
 

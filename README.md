@@ -29,3 +29,7 @@ Minimalistic or Abstract
 
 Geometric shapes in muted or bold colors.
 Simple patterns like gradients or textures.
+
+// Todo:
+
+1. Remember sound settings

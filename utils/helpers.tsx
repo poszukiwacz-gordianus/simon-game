@@ -1,5 +1,5 @@
 import { Animated } from "react-native";
-import { Audio } from "expo-av";
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   type SaveGameStateToStorageProps,
@@ -12,6 +12,7 @@ import {
 import { DEFAULT_TILE_SOUND_INDEX } from "@/config";
 
 import tilesImages from "@/assets/images/tiles";
+import soundMap from "@/assets/sounds";
 
 export const loadTiles: LoadTiles = (storeState, defaultTilesSet) => {
   // Find the used tiles set from data loaded from storage
@@ -163,4 +164,32 @@ export const generateTileSequence = (state: GameState) => {
     timeoutRefs.current.push(timeoutId); // Track the timeout ID
     return sequenceItem;
   });
+};
+
+/**
+ * Loads all game sounds to memory and sets the audio mode to allow
+ * background play and ducking of other audio.
+ *
+ * @returns {Promise<Audio.Sound[]>} A promise that resolves to an array of
+ *   Audio.Sound objects, each representing a loaded sound.
+ */
+export const loadSoundsToMemory = async (): Promise<Audio.Sound[]> => {
+  console.log("Loading sounds...");
+  await Audio.setAudioModeAsync({
+    staysActiveInBackground: true,
+    playsInSilentModeIOS: true,
+    interruptionModeIOS: InterruptionModeIOS.DuckOthers,
+    interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+    shouldDuckAndroid: true,
+    playThroughEarpieceAndroid: true,
+  });
+
+  const sounds = await Promise.all(
+    soundMap.map((soundFile) =>
+      Audio.Sound.createAsync(soundFile).then(({ sound }) => sound)
+    )
+  );
+
+  console.log("Sounds loaded to memory");
+  return sounds;
 };

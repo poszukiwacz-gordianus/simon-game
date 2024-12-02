@@ -3,18 +3,18 @@ import { useAnimatedValue } from "react-native";
 import { DEFAULT_BEST_SCORE, DEFAULT_DIFFICULTIES } from "@/config";
 import { useGameContext } from "@/context/GameContext";
 import { useStoreContext } from "@/context/StoreContext";
-import { loadStateFromStorage, loadTiles } from "@/utils/helpers";
+import {
+  loadSoundsToMemory,
+  loadStateFromStorage,
+  loadTiles,
+} from "@/utils/helpers";
 
 import tilesClassic from "@/assets/images/tiles/tilesClassic";
-import useLoadSoundsToMemory from "./useLoadSoundsToMemory";
 
 export default function useLoadGameContent() {
   console.log("useLoadGameContent");
   const { dispatch: gameDispatch } = useGameContext();
   const { state: storeState, dispatch: storeDispatch } = useStoreContext();
-
-  // Loads sounds to memory and returns an array of Audio.Sound
-  const { tilesSounds, isLoading } = useLoadSoundsToMemory();
 
   // Shared timeout refs to track tile animations to stop them
   const timeoutRefs = useRef<number[]>([]);
@@ -27,10 +27,8 @@ export default function useLoadGameContent() {
 
   useEffect(() => {
     const loadGameContent = async () => {
-      if (isLoading) {
-        console.log("Waiting for sounds to load...");
-        return; // Exit early until sounds are loaded
-      }
+      // Load game sounds
+      const tilesSounds = await loadSoundsToMemory();
 
       // Load saved game state from storage
       await loadStateFromStorage("gameState", gameDispatch, "LOAD_GAME_STATE", {
@@ -59,5 +57,5 @@ export default function useLoadGameContent() {
     };
 
     loadGameContent();
-  }, [isLoading]);
+  }, []);
 }
