@@ -3,17 +3,6 @@ Normal 142px 282px
 @2x 284px 564px
 @3x 426px 846px
 
-const tileSets = {
-classic: [
-require('./images/tiles/tilesClassic/classicImage1.png'),
-require('./images/tiles/tilesClassic/classicImage2.png'),
-],
-dogs: [
-require('./images/tiles/tilesDogs/dogImage1.png'),
-require('./images/tiles/tilesDogs/dogImage2.png'),
-],
-};
-
 eas build --profile development --platform android
 
 Nature-Inspired Themes

@@ -1,15 +1,42 @@
 import { Animated } from "react-native";
+import { Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   type SaveGameStateToStorageProps,
-  type LoadGameStateFromStorageProps,
+  type LoadStateFromStorageProps,
   type AnimatedTileProps,
   type StopTilesAnimationProps,
-  type LoadGameState,
-  GameState,
+  type GameState,
+  type LoadTiles,
 } from "@/types/types";
 import { DEFAULT_TILE_SOUND_INDEX } from "@/config";
-import { Audio } from "expo-av";
+
+import tilesImages from "@/assets/images/tiles";
+
+export const loadTiles: LoadTiles = (storeState, defaultTilesSet) => {
+  // Find the used tiles set from data loaded from storage
+  const usedTilesSet = storeState.tilesSets.find((set) => set.isCurrentlyUsed);
+
+  // If there is no used tiles set, return the default tiles
+  if (!usedTilesSet) return defaultTilesSet;
+
+  // Get the tiles object
+  const tilesSet = tilesImages.find((set) => set.id === usedTilesSet.id);
+
+  // If there is no tiles set found, return the default tiles
+  if (!tilesSet) return defaultTilesSet;
+
+  const { id, ...tilesObject } = tilesSet;
+
+  // Extract the tiles array
+  const tilesArray = Object.values(tilesObject)[0];
+
+  // Return new tiles with swapped image sources
+  return defaultTilesSet.map(({ source, opacity }, index) => ({
+    source: tilesArray[index],
+    opacity,
+  }));
+};
 
 export const animateTile: AnimatedTileProps = (tileOpacity, pace) => {
   console.log("animateTile");
@@ -28,6 +55,13 @@ export const animateTile: AnimatedTileProps = (tileOpacity, pace) => {
   ]).start();
 };
 
+// helper type guard to help TypeScript narrow the return type based on the key parameter.
+export function isGameState(
+  key: "gameState" | "storeState"
+): key is "gameState" {
+  return key === "gameState";
+}
+
 export const saveGameStateToStorage: SaveGameStateToStorageProps = async (
   key,
   gameState
@@ -41,26 +75,29 @@ export const saveGameStateToStorage: SaveGameStateToStorageProps = async (
   }
 };
 
-export const loadGameStateFromStorage: LoadGameStateFromStorageProps = async (
+export const loadStateFromStorage: LoadStateFromStorageProps = async (
   key,
   dispatch,
+  type,
   defaultState
 ) => {
-  console.log("loadGameStateFromStorage");
-  // Load game state from storage
-  try {
-    const jsonValue = await AsyncStorage.getItem(key);
-    const loadGameState: LoadGameState = jsonValue
-      ? JSON.parse(jsonValue)
-      : defaultState;
+  console.log("loadStateFromStorage");
+  return new Promise(async (resolve) => {
+    try {
+      const jsonValue = await AsyncStorage.getItem(key);
+      const loadState = jsonValue ? await JSON.parse(jsonValue) : defaultState;
 
-    dispatch({
-      type: "LOAD_GAME_STATE",
-      payload: loadGameState,
-    });
-  } catch (e) {
-    console.error("Failed to load game state", e);
-  }
+      dispatch({
+        type,
+        payload: loadState,
+      } as any);
+
+      resolve(loadState);
+    } catch (e) {
+      console.error("Failed to load state from storage", e);
+      resolve(defaultState);
+    }
+  });
 };
 
 export const stopTilesAnimation: StopTilesAnimationProps = (ref, tiles) => {

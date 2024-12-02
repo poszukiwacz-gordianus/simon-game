@@ -1,13 +1,28 @@
 import { useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View, useAnimatedValue } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useGameContext } from "@/context/GameContext";
+import { useStoreContext } from "@/context/StoreContext";
 import FontText from "@/components/UI/FontText";
 import Modal from "@/components/UI/Modal";
+import tilesClassic from "@/assets/images/tiles/tilesClassic";
 
 export default function ResetAppSettings() {
   const [isVisible, setIsVisible] = useState(false);
-  const { dispatch } = useGameContext();
+  const { dispatch: gameDispatch } = useGameContext();
+  const { dispatch: storeDispatch } = useStoreContext();
+
+  const defaultTiles = tilesClassic.map((source) => ({
+    source,
+    opacity: useAnimatedValue(1),
+  }));
+
+  const handleResetData = () => {
+    setIsVisible(false);
+    gameDispatch({ type: "RESET_APP_STATE" });
+    storeDispatch({ type: "RESET_STORE_STATE" });
+    gameDispatch({ type: "SET_TILES", payload: defaultTiles });
+  };
 
   return (
     <>
@@ -23,7 +38,7 @@ export default function ResetAppSettings() {
             <FontText style={styles.modalText}>
               Are you sure you want to reset all data? This action will restore
               the application to its default state. You will lose your best
-              score, level progress, and downloaded tiles.
+              score, level progress, and unlocked tiles.
             </FontText>
             <View style={styles.modalActions}>
               <Pressable
@@ -33,10 +48,7 @@ export default function ResetAppSettings() {
                 <FontText style={styles.buttonText}>Cancel</FontText>
               </Pressable>
               <Pressable
-                onPress={() => {
-                  setIsVisible(false);
-                  dispatch({ type: "RESET_APP_STATE" });
-                }}
+                onPress={handleResetData}
                 style={[styles.actionButton, styles.deleteButton]}
               >
                 <FontText style={styles.buttonText}>Delete</FontText>

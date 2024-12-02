@@ -2,26 +2,25 @@ import { useEffect, useRef } from "react";
 import { useAnimatedValue } from "react-native";
 import { DEFAULT_BEST_SCORE, DEFAULT_DIFFICULTIES } from "@/config";
 import { useGameContext } from "@/context/GameContext";
-import { loadGameStateFromStorage } from "@/utils/helpers";
+import { useStoreContext } from "@/context/StoreContext";
+import { loadStateFromStorage, loadTiles } from "@/utils/helpers";
 
 import tilesClassic from "@/assets/images/tiles/tilesClassic";
-import tilesTrees from "@/assets/images/tiles/tilesTrees";
 import useLoadSoundsToMemory from "./useLoadSoundsToMemory";
 
-/**
- * Loads the game content and the game state from storage when the component mounts.
- *
- * This hook loads the game content, such as the tiles, tile sound, game over sound, and the game state, such as
- * the difficulty level, from storage. It dispatches actions to update the game
- * state with the loaded content and state.
- */
 export default function useLoadGameContent() {
   console.log("useLoadGameContent");
-  const { dispatch } = useGameContext();
-  const { tilesSounds, isLoading } = useLoadSoundsToMemory();
-  const timeoutRefs = useRef<number[]>([]); // Shared timeout refs for all tiles
+  const { dispatch: gameDispatch } = useGameContext();
+  const { state: storeState, dispatch: storeDispatch } = useStoreContext();
 
-  const tiles = Object.values(tilesTrees).map((source) => ({
+  // Loads sounds to memory and returns an array of Audio.Sound
+  const { tilesSounds, isLoading } = useLoadSoundsToMemory();
+
+  // Shared timeout refs to track tile animations to stop them
+  const timeoutRefs = useRef<number[]>([]);
+
+  // Load default tiles
+  const defaultTiles = tilesClassic.map((source) => ({
     source,
     opacity: useAnimatedValue(1),
   }));
@@ -30,18 +29,29 @@ export default function useLoadGameContent() {
     const loadGameContent = async () => {
       if (isLoading) {
         console.log("Waiting for sounds to load...");
-        return; // Exit early until playSound is ready
+        return; // Exit early until sounds are loaded
       }
 
-      loadGameStateFromStorage("gameState", dispatch, {
+      // Load saved game state from storage
+      await loadStateFromStorage("gameState", gameDispatch, "LOAD_GAME_STATE", {
         bestScore: DEFAULT_BEST_SCORE,
         difficulties: DEFAULT_DIFFICULTIES,
       });
 
-      dispatch({
+      // Load saved store state from storage and return loaded state
+      const loadedStoreState = await loadStateFromStorage(
+        "storeState",
+        storeDispatch,
+        "LOAD_STORE_STATE",
+        storeState
+      );
+
+      // Load starting game content
+      gameDispatch({
         type: "LOAD_DEFAULT_CONTENT",
         payload: {
-          tiles,
+          // Checks which tiles are used by user and return the corresponding tiles set
+          tiles: loadTiles(loadedStoreState, defaultTiles),
           tilesSounds,
           timeoutRefs,
         },

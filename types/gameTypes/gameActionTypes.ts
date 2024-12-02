@@ -20,6 +20,7 @@ export type GameActionType =
   | { type: "SET_DIFFICULTY"; payload: Difficulty }
   | { type: "SET_SOUND_INDEX"; payload: number }
   | { type: "SET_INFINITE_MODE"; payload: boolean }
+  | { type: "SET_TILES"; payload: AnimatedTile[] }
   | { type: "SET_TIMEOUT_REFS"; payload: MutableRefObject<number[]> }
   | { type: "INITIALIZE_LEVEL"; payload: number }
   | { type: "SHOW_SEQUENCE" }

@@ -110,6 +110,13 @@ const gameReducer: GameReducer = (state, action) => {
         isInfiniteMode: action.payload,
       };
 
+    case "SET_TILES":
+      console.log("SET_TILES");
+      return {
+        ...state,
+        tiles: action.payload,
+      };
+
     case "TOGGLE_SOUND":
       console.log("TOGGLE_SOUND");
       return {
