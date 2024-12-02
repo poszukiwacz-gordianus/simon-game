@@ -23,7 +23,6 @@ import {
   playSound,
   saveGameStateToStorage,
 } from "@/utils/helpers";
-import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
 
 const GameContext = createContext<GameContextType | null>(null);
 
@@ -255,17 +254,12 @@ const gameReducer: GameReducer = (state, action) => {
 function GameProvider({ children }: GameContextProviderProps) {
   console.log("gameProvider");
   const [state, dispatch] = useReducer(gameReducer, initialState);
-  const { initializeLevelSequence } = useInitializeLevelSequence(
-    state,
-    dispatch
-  );
 
   return (
     <GameContext.Provider
       value={{
         state,
         dispatch,
-        initializeLevelSequence,
       }}
     >
       {children}

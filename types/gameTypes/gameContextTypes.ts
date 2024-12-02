@@ -12,8 +12,6 @@ export interface GameContextType {
    * The function to dispatch an action to the reducer.
    */
   readonly dispatch: React.Dispatch<GameActionType>;
-
-  initializeLevelSequence: (level: number) => void;
 }
 
 /**

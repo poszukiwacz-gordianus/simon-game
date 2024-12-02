@@ -4,12 +4,13 @@ import { useGameContext } from "@/context/GameContext";
 import { stopTilesAnimation } from "@/utils/helpers";
 import BackButton from "../Icons/BackButton";
 import IconButton from "../UI/IconButton";
+import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
 
 export default function GameFooter() {
+  const { initializeLevelSequence } = useInitializeLevelSequence();
   const {
     state: { level, isInfiniteMode, isPlaying, hints, timeoutRefs, tiles },
     dispatch,
-    initializeLevelSequence,
   } = useGameContext();
 
   return (

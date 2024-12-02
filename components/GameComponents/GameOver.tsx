@@ -5,11 +5,12 @@ import { useGameContext } from "@/context/GameContext";
 import Modal from "../UI/Modal";
 import FontText from "../UI/FontText";
 import IconButton from "../UI/IconButton";
+import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
 
 export default function GameOver() {
+  const { initializeLevelSequence } = useInitializeLevelSequence();
   const {
     state: { level, bestScore, isInfiniteMode, isNewBestScore },
-    initializeLevelSequence,
   } = useGameContext();
 
   if (isInfiniteMode)

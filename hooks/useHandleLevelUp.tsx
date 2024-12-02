@@ -1,12 +1,13 @@
 import { useGameContext } from "@/context/GameContext";
 import { useStoreContext } from "@/context/StoreContext";
 import { useEffect } from "react";
+import useInitializeLevelSequence from "./useInitializeLevelSequence";
 
 export default function useHandleLevelUp() {
   console.log("useHandleLevelUp");
+  const { initializeLevelSequence } = useInitializeLevelSequence();
   const {
     state: { level, levelUp, difficulty, isInfiniteMode },
-    initializeLevelSequence,
   } = useGameContext();
   const { dispatch: storeDispatch } = useStoreContext();
 

@@ -3,11 +3,12 @@ import { Link } from "expo-router";
 import { DEFAULT_MAX_LEVELS } from "@/config";
 import { useGameContext } from "@/context/GameContext";
 import FontText from "../UI/FontText";
+import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
 
 export default function Level() {
+  const { initializeLevelSequence } = useInitializeLevelSequence();
   const {
     state: { difficulty, difficulties },
-    initializeLevelSequence,
   } = useGameContext();
 
   const currentLevel = difficulties[difficulty]?.level ?? 0;

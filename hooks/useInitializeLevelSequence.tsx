@@ -1,5 +1,5 @@
 import { START_LEVEL_DELAY, USER_RESPONSE_DELAY } from "@/config";
-import { GameState } from "@/types/types";
+import { useGameContext } from "@/context/GameContext";
 
 /**
  * Custom hook to initialize and manage the sequence of levels in the game.
@@ -14,12 +14,12 @@ import { GameState } from "@/types/types";
  *
  * @returns An object containing the `initializeLevelSequence` function.
  */
-export default function useInitializeLevelSequence(
-  state: GameState,
-  dispatch: React.Dispatch<any>
-) {
+export default function useInitializeLevelSequence() {
   console.log("useInitializeLevelSequence");
-  const { animationPace, difficulty } = state;
+  const {
+    state: { animationPace, difficulty },
+    dispatch,
+  } = useGameContext();
 
   const delay =
     difficulty === "easy" ? START_LEVEL_DELAY - 200 : START_LEVEL_DELAY;

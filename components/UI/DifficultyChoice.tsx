@@ -2,6 +2,7 @@ import { useGameContext } from "@/context/GameContext";
 import { type Difficulty } from "@/types/types";
 import LinkButton from "./LinkButton";
 import Modal from "./Modal";
+import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
 
 const choices: { text: string; payload: Difficulty }[] = [
   { text: "Easy", payload: "easy" },
@@ -10,10 +11,11 @@ const choices: { text: string; payload: Difficulty }[] = [
 ];
 
 export default function DifficultyChoice({ onClose }: { onClose: () => void }) {
+  const { initializeLevelSequence } = useInitializeLevelSequence();
+
   const {
     state: { isInfiniteMode },
     dispatch,
-    initializeLevelSequence,
   } = useGameContext();
 
   return (
