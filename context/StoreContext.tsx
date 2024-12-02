@@ -40,6 +40,7 @@ const initialState: StoreStateType = {
 };
 
 const storeReducer: StoreReducer = (state, action) => {
+  console.log("storeReducer");
   switch (action.type) {
     case "LOAD_STORE_STATE": {
       console.log("LOAD_STORE_STATE");
@@ -121,6 +122,7 @@ const storeReducer: StoreReducer = (state, action) => {
 };
 
 function StoreProvider({ children }: StoreContextProviderProps) {
+  console.log("storeProvider");
   const [state, dispatch] = useReducer(storeReducer, initialState);
   return (
     <StoreContext.Provider value={{ state, dispatch }}>
@@ -130,6 +132,7 @@ function StoreProvider({ children }: StoreContextProviderProps) {
 }
 
 function useStoreContext(): StoreContextType {
+  console.log("useStoreContext");
   const context = useContext(StoreContext);
   if (!context) {
     throw new Error("useStoreContext must be used within a StoreProvider");
