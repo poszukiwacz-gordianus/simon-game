@@ -42,12 +42,12 @@ const initialState: StoreStateType = {
 const storeReducer: StoreReducer = (state, action) => {
   console.log("storeReducer");
   switch (action.type) {
-    case "LOAD_STORE_STATE": {
+    case "STORE_LOAD_STATE": {
       console.log("LOAD_STORE_STATE");
       if (action.payload) return action.payload;
       return state;
     }
-    case "TOGGLE_MODAL":
+    case "STORE_TOGGLE_MODAL":
       console.log("TOGGLE_MODAL");
       return {
         ...state,
@@ -57,7 +57,7 @@ const storeReducer: StoreReducer = (state, action) => {
         },
       };
 
-    case "SET_PURCHASE": {
+    case "STORE_SET_PURCHASE": {
       console.log("SET_PURCHASE");
       const { id, setName } = action.payload;
       return {
@@ -71,7 +71,7 @@ const storeReducer: StoreReducer = (state, action) => {
       };
     }
 
-    case "UNLOCK_SET_TILES": {
+    case "STORE_UNLOCK_SET_TILES": {
       console.log("UNLOCK_SET_TILES");
       const { level, difficulty } = action.payload;
 
@@ -90,7 +90,7 @@ const storeReducer: StoreReducer = (state, action) => {
       return newState;
     }
 
-    case "SET_CURRENT_TILESET": {
+    case "STORE_SET_CURRENT_TILESET": {
       console.log("SET_CURRENT_TILESET");
       const newState = {
         ...state,
@@ -110,7 +110,7 @@ const storeReducer: StoreReducer = (state, action) => {
       return newState;
     }
 
-    case "RESET_STORE_STATE": {
+    case "STORE_RESET_STATE": {
       console.log("RESET_STORE_STATE");
       saveGameStateToStorage("storeState", initialState);
       return initialState;

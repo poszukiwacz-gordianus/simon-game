@@ -19,7 +19,7 @@ export default function useHandleLevelUp() {
       const unlockLevel = [10, 20, 30, 40].includes(newLevel);
       if (!isInfiniteMode && unlockLevel) {
         storeDispatch({
-          type: "UNLOCK_SET_TILES",
+          type: "STORE_UNLOCK_SET_TILES",
           payload: { difficulty, level: newLevel },
         });
       }

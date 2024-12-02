@@ -17,7 +17,7 @@ export default function GameTile({ source, opacity }: AnimatedTile) {
       style={styles.tileContainer}
       disabled={!isPlaying}
       onPress={() => {
-        dispatch({ type: "VERIFY_USER_RESPONSE", payload: tileIndex });
+        dispatch({ type: "GAME_VERIFY_USER_RESPONSE", payload: tileIndex });
       }}
     >
       <Animated.View style={{ opacity }}>

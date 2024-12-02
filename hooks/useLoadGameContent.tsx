@@ -31,7 +31,7 @@ export default function useLoadGameContent() {
       const tilesSounds = await loadSoundsToMemory();
 
       // Load saved game state from storage
-      await loadStateFromStorage("gameState", gameDispatch, "LOAD_GAME_STATE", {
+      await loadStateFromStorage("gameState", gameDispatch, "GAME_LOAD_STATE", {
         bestScore: DEFAULT_BEST_SCORE,
         difficulties: DEFAULT_DIFFICULTIES,
       });
@@ -40,13 +40,13 @@ export default function useLoadGameContent() {
       const loadedStoreState = await loadStateFromStorage(
         "storeState",
         storeDispatch,
-        "LOAD_STORE_STATE",
+        "STORE_LOAD_STATE",
         storeState
       );
 
       // Load starting game content
       gameDispatch({
-        type: "LOAD_DEFAULT_CONTENT",
+        type: "GAME_LOAD_CONTENT",
         payload: {
           // Checks which tiles are used by user and return the corresponding tiles set
           tiles: loadTiles(loadedStoreState, defaultTiles),

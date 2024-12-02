@@ -11,7 +11,7 @@ export default function SoundModal() {
   return (
     <Pressable
       style={styles.sound}
-      onPress={() => dispatch({ type: "TOGGLE_SOUND" })}
+      onPress={() => dispatch({ type: "GAME_TOGGLE_SOUND" })}
       disabled={!isPlaying}
     >
       {isSoundOn ? (

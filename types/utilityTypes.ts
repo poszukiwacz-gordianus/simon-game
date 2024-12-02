@@ -70,13 +70,13 @@ export type LoadStateFromStorageProps = {
   (
     key: "gameState",
     dispatch: React.Dispatch<GameActionType>,
-    type: "LOAD_GAME_STATE",
+    type: "GAME_LOAD_STATE",
     defaultState: LoadGameState
   ): Promise<any>;
   (
     key: "storeState",
     dispatch: React.Dispatch<StoreActionType>,
-    type: "LOAD_STORE_STATE",
+    type: "STORE_LOAD_STATE",
     defaultState: StoreStateType
   ): Promise<any>;
 };

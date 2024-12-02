@@ -53,7 +53,7 @@ const initialState: GameState = {
 const gameReducer: GameReducer = (state, action) => {
   console.log("gameReducer");
   switch (action.type) {
-    case "LOAD_GAME_STATE":
+    case "GAME_LOAD_STATE":
       console.log("LOAD_GAME_STATE");
       // Load saved game state
       return {
@@ -62,7 +62,7 @@ const gameReducer: GameReducer = (state, action) => {
         bestScore: action.payload.bestScore || DEFAULT_BEST_SCORE,
       };
 
-    case "LOAD_DEFAULT_CONTENT":
+    case "GAME_LOAD_CONTENT": {
       console.log("LOAD_DEFAULT_CONTENT");
       // Load tiles, tile sound, and game over sound
       const load = action.payload;
@@ -73,8 +73,9 @@ const gameReducer: GameReducer = (state, action) => {
         timeoutRefs: load.timeoutRefs,
         isAppActive: true,
       };
+    }
 
-    case "SET_DIFFICULTY":
+    case "GAME_SET_DIFFICULTY": {
       console.log("SET_DIFFICULTY");
       // Set difficulty choosen by user
       const difficulty = action.payload;
@@ -93,37 +94,39 @@ const gameReducer: GameReducer = (state, action) => {
         animationPace,
         sequence: [],
       };
+    }
 
-    case "SET_SOUND_INDEX":
+    case "GAME_SET_SOUND_INDEX": {
       console.log("SET_SOUND_INDEX");
       playSound(action.payload, state.tilesSounds);
       return {
         ...state,
         tileSoundIndex: action.payload,
       };
+    }
 
-    case "SET_INFINITE_MODE":
+    case "GAME_SET_INFINITE_MODE":
       console.log("SET_INFINITE_MODE");
       return {
         ...state,
         isInfiniteMode: action.payload,
       };
 
-    case "SET_TILES":
+    case "GAME_SET_TILES":
       console.log("SET_TILES");
       return {
         ...state,
         tiles: action.payload,
       };
 
-    case "TOGGLE_SOUND":
+    case "GAME_TOGGLE_SOUND":
       console.log("TOGGLE_SOUND");
       return {
         ...state,
         isSoundOn: !state.isSoundOn,
       };
 
-    case "INITIALIZE_LEVEL":
+    case "GAME_INITIALIZE_LEVEL":
       console.log("INITIALIZE_LEVEL");
       // Initialize level
       return {
@@ -138,7 +141,7 @@ const gameReducer: GameReducer = (state, action) => {
         hints: DEFAULT_HINTS,
       };
 
-    case "SHOW_SEQUENCE":
+    case "GAME_SHOW_SEQUENCE": {
       console.log("SHOW_SEQUENCE");
       // Generate a new sequence
       const newSequence = generateTileSequence(state);
@@ -146,12 +149,13 @@ const gameReducer: GameReducer = (state, action) => {
         ...state,
         sequence: newSequence,
       };
+    }
 
-    case "ENABLE_USER_RESPONSE":
+    case "GAME_ENABLE_USER_RESPONSE":
       console.log("ENABLE_USER_RESPONSE");
       return { ...state, isPlaying: true };
 
-    case "SHOW_HINT":
+    case "GAME_SHOW_HINT": {
       console.log("SHOW_HINT");
       // Animate and play sound for current tile
       if (state.isSoundOn) playSound(state.tileSoundIndex, state.tilesSounds);
@@ -160,11 +164,14 @@ const gameReducer: GameReducer = (state, action) => {
         state.animationPace
       );
       return { ...state, hints: state.hints - 1 };
+    }
 
-    case "VERIFY_USER_RESPONSE":
+    case "GAME_VERIFY_USER_RESPONSE": {
       console.log("VERIFY_USER_RESPONSE");
       const userResponse = action.payload;
       const isCorrect = state.sequence[state.userGuess] === userResponse;
+
+      // Check if user has new best score
       const isNewBestScore =
         state.isInfiniteMode && state.level > state.bestScore;
 
@@ -180,22 +187,31 @@ const gameReducer: GameReducer = (state, action) => {
           const isMaxLevelExceeded =
             state.difficulties[state.difficulty].level < state.level + 1 &&
             state.level < DEFAULT_MAX_LEVELS;
+
+          // Set new level if it's not greater than current max difficulty level and game is not in infinite mode
           const newLevel =
             isMaxLevelExceeded && state.isInfiniteMode
               ? state.difficulties[state.difficulty].level
               : state.level + 1;
+
+          // If it's new best score than update best score otherwise not
           const bestScore = isNewBestScore ? state.level : state.bestScore;
 
-          // Save to storage if new level is greater than current max difficulty level
-          if (isMaxLevelExceeded) {
-            saveGameStateToStorage("gameState", {
-              difficulties: {
+          // Update difficulties state if newLevel is higher than current max difficulty level else return current state difficulties
+          const difficulties = isMaxLevelExceeded
+            ? {
                 ...state.difficulties,
                 [state.difficulty]: {
                   ...state.difficulties[state.difficulty],
                   level: newLevel,
                 },
-              },
+              }
+            : state.difficulties;
+
+          // Save to storage if new level is greater than current max difficulty level
+          if (isMaxLevelExceeded) {
+            saveGameStateToStorage("gameState", {
+              difficulties,
               bestScore,
             });
           }
@@ -203,13 +219,7 @@ const gameReducer: GameReducer = (state, action) => {
           return {
             ...state,
             levelUp: true,
-            difficulties: {
-              ...state.difficulties,
-              [state.difficulty]: {
-                ...state.difficulties[state.difficulty],
-                level: newLevel,
-              },
-            },
+            difficulties,
             bestScore,
           };
         }
@@ -230,8 +240,9 @@ const gameReducer: GameReducer = (state, action) => {
         gameOver: true,
         isNewBestScore,
       };
+    }
 
-    case "RESET_APP_STATE":
+    case "GAME_RESET_STATE": {
       console.log("RESET_APP_STATE");
       saveGameStateToStorage("gameState", {
         difficulties: DEFAULT_DIFFICULTIES,
@@ -245,6 +256,7 @@ const gameReducer: GameReducer = (state, action) => {
         tileSoundIndex: DEFAULT_TILE_SOUND_INDEX,
         isSoundOn: true,
       };
+    }
 
     default:
       return state;

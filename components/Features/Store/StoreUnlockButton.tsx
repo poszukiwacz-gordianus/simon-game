@@ -14,7 +14,7 @@ export default function StoreUnlockButton({
       title="Unlock Now"
       color="#c2a664"
       onPress={() => {
-        dispatch({ type: "SET_PURCHASE", payload: { id, setName } });
+        dispatch({ type: "STORE_SET_PURCHASE", payload: { id, setName } });
       }}
     />
   );

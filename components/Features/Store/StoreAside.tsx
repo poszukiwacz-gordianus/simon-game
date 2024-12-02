@@ -18,8 +18,8 @@ export default function StoreAside({ tileSet }: { tileSet: TileSet }) {
   }));
 
   const handleButtonPress = () => {
-    storeDispatch({ type: "SET_CURRENT_TILESET", payload: id });
-    gameDispatch({ type: "SET_TILES", payload: newTiles });
+    storeDispatch({ type: "STORE_SET_CURRENT_TILESET", payload: id });
+    gameDispatch({ type: "GAME_SET_TILES", payload: newTiles });
   };
 
   return (

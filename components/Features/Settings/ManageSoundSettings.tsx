@@ -21,7 +21,7 @@ export default function ManageSoundSettings() {
     <>
       <View style={styles.container}>
         <FontText style={styles.header}>Sound</FontText>
-        <Pressable onPress={() => dispatch({ type: "TOGGLE_SOUND" })}>
+        <Pressable onPress={() => dispatch({ type: "GAME_TOGGLE_SOUND" })}>
           {isSoundOn ? (
             <FontAwesome5 name="toggle-on" size={32} color="#000" />
           ) : (

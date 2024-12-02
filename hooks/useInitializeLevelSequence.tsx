@@ -34,16 +34,16 @@ export default function useInitializeLevelSequence() {
   const initializeLevelSequence = (newLevel: number) => {
     // Load level state
     dispatch({
-      type: "INITIALIZE_LEVEL",
+      type: "GAME_INITIALIZE_LEVEL",
       payload: newLevel,
     });
 
     // Show sequence to user after a delay
-    setTimeout(() => dispatch({ type: "SHOW_SEQUENCE" }), delay);
+    setTimeout(() => dispatch({ type: "GAME_SHOW_SEQUENCE" }), delay);
 
     // Enable user response after all tiles are shown
     setTimeout(
-      () => dispatch({ type: "ENABLE_USER_RESPONSE" }),
+      () => dispatch({ type: "GAME_ENABLE_USER_RESPONSE" }),
       newLevel * animationPace + USER_RESPONSE_DELAY
     );
   };

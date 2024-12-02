@@ -17,7 +17,7 @@ export default function GameMode({
       <Pressable
         onPress={() => {
           setIsOpen(true);
-          dispatch({ type: "SET_INFINITE_MODE", payload: isInfiniteMode });
+          dispatch({ type: "GAME_SET_INFINITE_MODE", payload: isInfiniteMode });
         }}
       >
         {children}

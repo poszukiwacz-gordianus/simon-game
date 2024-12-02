@@ -30,7 +30,7 @@ export default function GameFooter() {
       )}
       <IconButton
         disabled={!isPlaying}
-        onPress={hints > 0 ? () => dispatch({ type: "SHOW_HINT" }) : null}
+        onPress={hints > 0 ? () => dispatch({ type: "GAME_SHOW_HINT" }) : null}
       >
         <AntDesign
           name="bulb1"

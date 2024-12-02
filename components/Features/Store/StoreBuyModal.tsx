@@ -12,7 +12,7 @@ export default function StoreBuyModal() {
   } = useStoreContext();
   return (
     isModalOpen && (
-      <Modal onClose={() => dispatch({ type: "TOGGLE_MODAL" })}>
+      <Modal onClose={() => dispatch({ type: "STORE_TOGGLE_MODAL" })}>
         <View style={{ gap: 20 }}>
           <View style={{ gap: 10 }}>
             <FontText

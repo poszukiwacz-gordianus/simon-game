@@ -19,9 +19,9 @@ export default function ResetAppSettings() {
 
   const handleResetData = () => {
     setIsVisible(false);
-    gameDispatch({ type: "RESET_APP_STATE" });
-    storeDispatch({ type: "RESET_STORE_STATE" });
-    gameDispatch({ type: "SET_TILES", payload: defaultTiles });
+    gameDispatch({ type: "GAME_RESET_STATE" });
+    storeDispatch({ type: "STORE_RESET_STATE" });
+    gameDispatch({ type: "GAME_SET_TILES", payload: defaultTiles });
   };
 
   return (

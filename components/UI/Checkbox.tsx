@@ -23,7 +23,7 @@ export default function Checkbox({
       disabled={!isSoundOn}
       style={styles.checkboxContainer}
       onPress={() => {
-        dispatch({ type: "SET_SOUND_INDEX", payload: sound });
+        dispatch({ type: "GAME_SET_SOUND_INDEX", payload: sound });
       }}
     >
       {checked ? (
