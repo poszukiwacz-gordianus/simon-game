@@ -24,6 +24,7 @@ export interface Difficulties {
 export interface LoadGameState {
   difficulties: Difficulties;
   bestScore: number;
+  tileSoundIndex: number;
 }
 
 export type GenerateTileSequence = (

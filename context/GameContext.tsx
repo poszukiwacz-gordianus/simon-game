@@ -10,6 +10,7 @@ import {
   DEFAULT_MAX_LEVELS,
   DEFAULT_TILE_SOUND_INDEX,
   GAME_OVER_SOUND,
+  STORAGE_GAME_STATE_KEY,
 } from "@/config";
 import {
   type GameContextType,
@@ -21,7 +22,7 @@ import {
   animateTile,
   generateTileSequence,
   playSound,
-  saveGameStateToStorage,
+  saveStateToStorage,
 } from "@/utils/helpers";
 
 const GameContext = createContext<GameContextType | null>(null);
@@ -58,8 +59,7 @@ const gameReducer: GameReducer = (state, action) => {
       // Load saved game state
       return {
         ...state,
-        difficulties: action.payload.difficulties || DEFAULT_DIFFICULTIES,
-        bestScore: action.payload.bestScore || DEFAULT_BEST_SCORE,
+        ...action.payload,
       };
 
     case "GAME_LOAD_CONTENT": {
@@ -99,6 +99,11 @@ const gameReducer: GameReducer = (state, action) => {
     case "GAME_SET_SOUND_INDEX": {
       console.log("SET_SOUND_INDEX");
       playSound(action.payload, state.tilesSounds);
+      saveStateToStorage(STORAGE_GAME_STATE_KEY, {
+        difficulties: state.difficulties,
+        bestScore: state.bestScore,
+        tileSoundIndex: action.payload,
+      });
       return {
         ...state,
         tileSoundIndex: action.payload,
@@ -210,9 +215,10 @@ const gameReducer: GameReducer = (state, action) => {
 
           // Save to storage if new level is greater than current max difficulty level
           if (isMaxLevelExceeded) {
-            saveGameStateToStorage("gameState", {
+            saveStateToStorage(STORAGE_GAME_STATE_KEY, {
               difficulties,
               bestScore,
+              tileSoundIndex: state.tileSoundIndex,
             });
           }
 
@@ -244,9 +250,10 @@ const gameReducer: GameReducer = (state, action) => {
 
     case "GAME_RESET_STATE": {
       console.log("RESET_APP_STATE");
-      saveGameStateToStorage("gameState", {
+      saveStateToStorage(STORAGE_GAME_STATE_KEY, {
         difficulties: DEFAULT_DIFFICULTIES,
         bestScore: DEFAULT_BEST_SCORE,
+        tileSoundIndex: DEFAULT_TILE_SOUND_INDEX,
       });
 
       return {

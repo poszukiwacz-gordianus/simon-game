@@ -8,8 +8,9 @@ import {
   StoreReducer,
   StoreStateType,
 } from "@/types/types";
-import { saveGameStateToStorage } from "@/utils/helpers";
+import { saveStateToStorage } from "@/utils/helpers";
 import { createContext, useContext, useReducer } from "react";
+import { STORAGE_STORE_STATE_KEY } from "@/config";
 
 const StoreContext = createContext<StoreContextType | null>(null);
 
@@ -96,7 +97,7 @@ const storeReducer: StoreReducer = (state, action) => {
         ),
       };
 
-      saveGameStateToStorage("storeState", newState);
+      saveStateToStorage(STORAGE_STORE_STATE_KEY, newState);
       return newState;
     }
 
@@ -116,13 +117,13 @@ const storeReducer: StoreReducer = (state, action) => {
       console.log(state.tilesSets[0].tiles);
       console.log(tilesClassic);
 
-      saveGameStateToStorage("storeState", newState);
+      saveStateToStorage(STORAGE_STORE_STATE_KEY, newState);
       return newState;
     }
 
     case "STORE_RESET_STATE": {
       console.log("RESET_STORE_STATE");
-      saveGameStateToStorage("storeState", initialState);
+      saveStateToStorage(STORAGE_STORE_STATE_KEY, initialState);
       return initialState;
     }
 

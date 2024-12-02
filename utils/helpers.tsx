@@ -2,7 +2,7 @@ import { Animated } from "react-native";
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
-  type SaveGameStateToStorageProps,
+  type SaveStateToStorageProps,
   type LoadStateFromStorageProps,
   type AnimatedTileProps,
   type StopTilesAnimationProps,
@@ -56,21 +56,14 @@ export const animateTile: AnimatedTileProps = (tileOpacity, pace) => {
   ]).start();
 };
 
-// helper type guard to help TypeScript narrow the return type based on the key parameter.
-export function isGameState(
-  key: "gameState" | "storeState"
-): key is "gameState" {
-  return key === "gameState";
-}
-
-export const saveGameStateToStorage: SaveGameStateToStorageProps = async (
+export const saveStateToStorage: SaveStateToStorageProps = async (
   key,
-  gameState
+  stateToSave
 ) => {
-  console.log("saveGameStateToStorage");
+  console.log("SaveStateToStorage");
   // Save game state
   try {
-    await AsyncStorage.setItem(key, JSON.stringify(gameState));
+    await AsyncStorage.setItem(key, JSON.stringify(stateToSave));
   } catch (e) {
     console.error("Failed to save game state", e);
   }

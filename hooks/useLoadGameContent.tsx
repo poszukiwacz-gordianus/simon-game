@@ -1,6 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useAnimatedValue } from "react-native";
-import { DEFAULT_BEST_SCORE, DEFAULT_DIFFICULTIES } from "@/config";
+import {
+  DEFAULT_GAME_STATE_FROM_STORAGE,
+  STORAGE_GAME_ACTION,
+  STORAGE_GAME_STATE_KEY,
+  STORAGE_STORE_ACTION,
+  STORAGE_STORE_STATE_KEY,
+} from "@/config";
 import { useGameContext } from "@/context/GameContext";
 import { useStoreContext } from "@/context/StoreContext";
 import {
@@ -31,16 +37,18 @@ export default function useLoadGameContent() {
       const tilesSounds = await loadSoundsToMemory();
 
       // Load saved game state from storage
-      await loadStateFromStorage("gameState", gameDispatch, "GAME_LOAD_STATE", {
-        bestScore: DEFAULT_BEST_SCORE,
-        difficulties: DEFAULT_DIFFICULTIES,
-      });
+      await loadStateFromStorage(
+        STORAGE_GAME_STATE_KEY,
+        gameDispatch,
+        STORAGE_GAME_ACTION,
+        DEFAULT_GAME_STATE_FROM_STORAGE
+      );
 
       // Load saved store state from storage and return loaded state
       const loadedStoreState = await loadStateFromStorage(
-        "storeState",
+        STORAGE_STORE_STATE_KEY,
         storeDispatch,
-        "STORE_LOAD_STATE",
+        STORAGE_STORE_ACTION,
         storeState
       );
 

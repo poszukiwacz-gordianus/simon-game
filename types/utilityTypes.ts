@@ -44,9 +44,9 @@ export type AnimatedTileProps = (
  * @param {string} key - The key under which to store the game state.
  * @param {Difficulties} difficulties - The game state to store.
  */
-export type SaveGameStateToStorageProps = (
+export type SaveStateToStorageProps = (
   key: string,
-  gameState: { difficulties: Difficulties; bestScore: number } | StoreStateType
+  stateToSave: LoadGameState | StoreStateType
 ) => void;
 
 /**
