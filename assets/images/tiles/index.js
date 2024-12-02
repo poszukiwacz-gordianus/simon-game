@@ -17,4 +17,13 @@ export default [
       require("./tilesTrees/treeTile4.jpg"),
     ],
   },
+  {
+    id: 3,
+    trees: [
+      require("./tilesOcean/oceanTile1.jpg"),
+      require("./tilesOcean/oceanTile2.jpg"),
+      require("./tilesOcean/oceanTile3.jpg"),
+      require("./tilesOcean/oceanTile4.jpg"),
+    ],
+  },
 ];

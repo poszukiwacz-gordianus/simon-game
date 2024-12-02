@@ -1,5 +1,7 @@
 import tilesClassic from "@/assets/images/tiles/tilesClassic";
 import tilesTrees from "@/assets/images/tiles/tilesTrees";
+import tilesOcean from "@/assets/images/tiles/tilesOcean";
+
 import {
   StoreContextProviderProps,
   StoreContextType,
@@ -28,6 +30,14 @@ const initialState: StoreStateType = {
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "easy", level: 10 },
       tiles: tilesTrees,
+    },
+    {
+      setName: "Ocean",
+      id: 3,
+      isUnlocked: false,
+      isCurrentlyUsed: false,
+      unlockedAt: { difficulty: "easy", level: 20 },
+      tiles: tilesOcean,
     },
   ],
   purchase: {
