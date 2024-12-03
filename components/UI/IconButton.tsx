@@ -1,4 +1,17 @@
-import { Pressable, type PressableProps, StyleSheet } from "react-native";
+import {
+  Pressable,
+  type PressableProps,
+  StyleSheet,
+  TextProps,
+} from "react-native";
+import FontText from "./FontText";
+
+type IconName = "Go Back" | "Try Again" | "Hint" | "Home" | "Exit App";
+
+type IconButtonProps = PressableProps & {
+  iconName: IconName;
+  style?: TextProps["style"];
+};
 
 /**
  * Button component with a pressable container.
@@ -8,11 +21,14 @@ import { Pressable, type PressableProps, StyleSheet } from "react-native";
  */
 export default function IconButton({
   children,
+  iconName,
+  style,
   ...props
-}: React.PropsWithChildren<PressableProps>): React.ReactElement {
+}: React.PropsWithChildren<IconButtonProps>): React.ReactElement {
   return (
     <Pressable {...props} style={styles.container}>
       {children}
+      <FontText style={[style, { fontSize: 16 }]}>{iconName}</FontText>
     </Pressable>
   );
 }
@@ -21,5 +37,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     paddingHorizontal: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 5,
   },
 });

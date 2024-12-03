@@ -9,6 +9,7 @@ import SettingsModal from "@/components/Features/Settings/SettingsModal";
 import BackButton from "@/components/Icons/BackButton";
 import ScoreboardModal from "@/components/Features/Scoreboard/ScoreboardModal";
 import StoreModal from "@/components/Features/Store/StoreModal";
+import BackgroundColor from "@/components/UI/BackgroundColor";
 
 export default function Index() {
   console.log("Index");
@@ -21,22 +22,25 @@ export default function Index() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Play />
-      <InfiniteMode />
-      <InfoModal />
-      <SettingsModal />
-      <BackButton
-        isFirstScreen={true}
-        style={{
-          position: "absolute",
-          bottom: 20,
-          left: 20,
-        }}
-      />
-      <ScoreboardModal />
-      <StoreModal />
-    </SafeAreaView>
+    <BackgroundColor>
+      <SafeAreaView style={styles.container}>
+        <Play />
+        <InfiniteMode />
+        <InfoModal />
+        <SettingsModal />
+        <BackButton
+          iconName="Exit App"
+          isFirstScreen={true}
+          style={{
+            position: "absolute",
+            bottom: 50,
+            left: 50,
+          }}
+        />
+        <ScoreboardModal />
+        <StoreModal />
+      </SafeAreaView>
+    </BackgroundColor>
   );
 }
 
@@ -44,9 +48,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 40,
-    position: "relative",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#c2a664",
   },
 });

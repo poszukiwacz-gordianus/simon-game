@@ -9,16 +9,19 @@ import {
   type ViewStyle,
 } from "react-native";
 import IconButton from "../UI/IconButton";
+import { Colors } from "@/constants/Colors";
 
 export default function BackButton({
   isFirstScreen = false,
   callback = () => {},
   style,
+  iconName = "Go Back",
   ...props
 }: {
   isFirstScreen?: boolean;
   callback?: () => void;
   style?: StyleProp<ViewStyle>;
+  iconName?: "Go Back" | "Exit App";
   props?: React.PropsWithChildren<PressableProps>;
 }) {
   const handleBackPress = () => {
@@ -35,8 +38,8 @@ export default function BackButton({
   };
   return (
     <Pressable style={style} {...props}>
-      <IconButton onPress={handleBackPress}>
-        <AntDesign name="back" size={48} color="#FCFCF7" />
+      <IconButton iconName={iconName} onPress={handleBackPress}>
+        <AntDesign name="back" size={48} color={Colors.iconTint} />
       </IconButton>
     </Pressable>
   );

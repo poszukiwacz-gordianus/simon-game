@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
@@ -9,7 +10,7 @@ export default function StoreModal() {
         <Ionicons
           name="storefront"
           size={24}
-          color="#000"
+          color={Colors.tint}
           style={{ alignSelf: "center", alignItems: "center" }}
         />
       </View>
@@ -20,11 +21,13 @@ export default function StoreModal() {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    backgroundColor: "#FEF2BF",
+    backgroundColor: Colors.primary,
     width: 50,
     height: 50,
     top: 200,
     right: 20,
+    borderRadius: 10,
+    overflow: "hidden",
   },
   centerIcon: {
     width: "100%",

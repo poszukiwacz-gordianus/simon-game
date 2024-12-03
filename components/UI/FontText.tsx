@@ -1,6 +1,7 @@
 import React from "react";
 import { Text as RNText, TextProps, StyleSheet } from "react-native";
 import { useFonts } from "expo-font";
+import { Colors } from "@/constants/Colors";
 
 export default function FontText({ style, ...props }: TextProps) {
   const [fontsLoaded] = useFonts({
@@ -17,6 +18,6 @@ export default function FontText({ style, ...props }: TextProps) {
 const styles = StyleSheet.create({
   text: {
     fontFamily: "DotGothic16",
-    color: "#000",
+    color: Colors.textPrimary,
   },
 });

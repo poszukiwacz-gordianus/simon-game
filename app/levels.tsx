@@ -1,36 +1,43 @@
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackButton from "@/components/Icons/BackButton";
 import Level from "@/components/LevelsComponents/Level";
 import FontText from "@/components/UI/FontText";
+import BackgroundColor from "@/components/UI/BackgroundColor";
 
 export default function ShowLevels() {
   return (
-    <SafeAreaView style={styles.container}>
-      <FontText style={styles.header}>Choose Level</FontText>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Level />
-      </ScrollView>
+    <BackgroundColor>
+      <SafeAreaView style={styles.container}>
+        <FontText style={styles.header}>Level</FontText>
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <Level />
+        </ScrollView>
 
-      <BackButton
-        style={{
-          position: "absolute",
-          bottom: 20,
-          left: 20,
-        }}
-      />
-    </SafeAreaView>
+        <View style={{ height: 150 }} />
+
+        <BackButton
+          style={{
+            position: "absolute",
+            bottom: 50,
+            left: 50,
+          }}
+        />
+      </SafeAreaView>
+    </BackgroundColor>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#c2a664",
     alignItems: "center",
+    paddingHorizontal: 20,
   },
   header: {
-    fontSize: 30,
+    fontSize: 40,
+    marginTop: 50,
+    marginBottom: 10,
   },
   scrollViewContent: {
     flexDirection: "row",
@@ -38,5 +45,6 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "center",
     alignContent: "center",
+    gap: 5,
   },
 });

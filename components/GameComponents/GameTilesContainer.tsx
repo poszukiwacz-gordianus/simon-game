@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { useGameContext } from "@/context/GameContext";
 import GameTile from "./GameTile";
+import { Colors } from "@/constants/Colors";
 
 export default function GameTilesContainer() {
   const {
@@ -22,6 +23,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     marginBottom: 20,
-    backgroundColor: "#AD8F51",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 10,
+    backgroundColor: Colors.backgroundTiles,
+    padding: 2.5,
+    justifyContent: "space-between",
+    alignContent: "space-between",
   },
 });

@@ -1,5 +1,6 @@
 import { Button } from "react-native";
 import { useStoreContext } from "@/context/StoreContext";
+import { Colors } from "@/constants/Colors";
 
 export default function StoreUnlockButton({
   id,
@@ -12,7 +13,7 @@ export default function StoreUnlockButton({
   return (
     <Button
       title="Unlock Now"
-      color="#c2a664"
+      color={Colors.buttonPrimary}
       onPress={() => {
         dispatch({ type: "STORE_SET_PURCHASE", payload: { id, setName } });
       }}

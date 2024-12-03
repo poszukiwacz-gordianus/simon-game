@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet } from "react-native";
 import { useGameContext } from "@/context/GameContext";
 import FontText from "./FontText";
+import { Colors } from "@/constants/Colors";
 
 export default function Checkbox({
   sound,
@@ -30,14 +31,14 @@ export default function Checkbox({
         <Ionicons
           name="radio-button-on"
           size={32}
-          color="#000"
+          color={Colors.tint}
           style={!isSoundOn && { opacity: 0.5 }}
         />
       ) : (
         <Ionicons
           name="radio-button-off"
           size={32}
-          color="#000"
+          color={Colors.tint}
           style={!isSoundOn && { opacity: 0.5 }}
         />
       )}

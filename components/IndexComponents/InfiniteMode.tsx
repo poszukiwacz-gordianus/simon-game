@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import FontText from "../UI/FontText";
 import GameMode from "../UI/GameMode";
+import { Colors } from "@/constants/Colors";
 
 export default function InfiniteMode() {
   return (
@@ -17,6 +18,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     paddingHorizontal: 20,
-    backgroundColor: "#FEF2BF",
+    backgroundColor: Colors.buttonSecondary,
+    borderRadius: 10,
   },
 });

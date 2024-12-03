@@ -5,6 +5,7 @@ import BackButton from "@/components/Icons/BackButton";
 import FontText from "@/components/UI/FontText";
 import StoreCard from "@/components/Features/Store/StoreCard";
 import StoreBuyModal from "@/components/Features/Store/StoreBuyModal";
+import BackgroundColor from "@/components/UI/BackgroundColor";
 
 export default function Store() {
   const {
@@ -12,42 +13,43 @@ export default function Store() {
   } = useStoreContext();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FontText style={styles.header}>Store</FontText>
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-        {tilesSets.map((set, index) => (
-          <StoreCard key={index} tileSet={set} />
-        ))}
-      </ScrollView>
+    <BackgroundColor>
+      <SafeAreaView style={styles.container}>
+        <FontText style={styles.header}>Store</FontText>
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+          {tilesSets.map((set, index) => (
+            <StoreCard key={index} tileSet={set} />
+          ))}
+        </ScrollView>
 
-      <View style={{ height: 100 }} />
+        <View style={{ height: 150 }} />
 
-      <BackButton
-        style={{
-          position: "absolute",
-          bottom: 20,
-          left: 20,
-        }}
-      />
+        <BackButton
+          style={{
+            position: "absolute",
+            bottom: 50,
+            left: 50,
+          }}
+        />
 
-      <StoreBuyModal />
-    </SafeAreaView>
+        <StoreBuyModal />
+      </SafeAreaView>
+    </BackgroundColor>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#c2a664",
   },
   header: {
-    fontSize: 30,
+    fontSize: 40,
+    marginTop: 50,
     marginBottom: 20,
     textAlign: "center",
   },
   scrollViewContainer: {
     paddingHorizontal: 20,
-    paddingBottom: 20,
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 5,

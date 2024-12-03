@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/Colors";
 import { useGameContext } from "@/context/GameContext";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet } from "react-native";
@@ -18,10 +19,10 @@ export default function SoundModal() {
         <Ionicons
           name="volume-high"
           size={48}
-          color={!isPlaying ? "#755224" : "#FCFCF7"}
+          color={!isPlaying ? Colors.Disabled : Colors.iconTint}
         />
       ) : (
-        <Ionicons name="volume-mute" size={48} color="#755224" />
+        <Ionicons name="volume-mute" size={48} color={Colors.iconTint} />
       )}
     </Pressable>
   );

@@ -10,6 +10,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import GameMode from "../UI/GameMode";
+import { Colors } from "@/constants/Colors";
 
 const duration = 1500;
 
@@ -33,7 +34,7 @@ export default function Play() {
     <GameMode isInfiniteMode={false}>
       <Animated.View entering={BounceIn} exiting={BounceOut}>
         <Animated.View style={animatedStyle}>
-          <Ionicons name="play-sharp" size={300} color="#FEF2BF" />
+          <Ionicons name="play" size={300} color={Colors.buttonPrimary} />
         </Animated.View>
       </Animated.View>
     </GameMode>

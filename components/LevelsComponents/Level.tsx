@@ -1,9 +1,10 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Link } from "expo-router";
 import { DEFAULT_MAX_LEVELS } from "@/config";
 import { useGameContext } from "@/context/GameContext";
 import FontText from "../UI/FontText";
 import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
+import { Colors } from "@/constants/Colors";
 
 export default function Level() {
   const { initializeLevelSequence } = useInitializeLevelSequence();
@@ -22,15 +23,20 @@ export default function Level() {
         key={index}
         href={"/game"}
         disabled={isLocked}
-        style={[
-          styles.container,
-          {
-            backgroundColor: isLocked ? "#AD8F51" : "#FEF2BF",
-          },
-        ]}
         onPress={() => initializeLevelSequence(levelNumber)}
       >
-        <FontText style={styles.text}>{levelNumber}</FontText>
+        <View
+          style={[
+            styles.container,
+            {
+              backgroundColor: isLocked
+                ? Colors.levelDisabled
+                : Colors.levelEnabled,
+            },
+          ]}
+        >
+          <FontText style={styles.text}>{levelNumber}</FontText>
+        </View>
       </Link>
     );
   });
@@ -38,10 +44,12 @@ export default function Level() {
 
 const styles = StyleSheet.create({
   container: {
-    width: "20%",
+    width: 100,
+    height: 150,
+    justifyContent: "center",
+    alignItems: "center",
     padding: 10,
-    paddingVertical: 20,
-    margin: 5,
+    borderRadius: 10,
   },
-  text: { textAlign: "center", fontSize: 20 },
+  text: { fontSize: 30, color: Colors.textSecondary },
 });

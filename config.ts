@@ -3,7 +3,7 @@ export const DEFAULT_HINTS = 3;
 export const DEFAULT_ANIMATION_PACE = 600;
 export const DEFAULT_ANIMATION_PACE_MEDIUM = 400;
 export const DEFAULT_ANIMATION_PACE_HARD = 200;
-export const DEFAULT_MAX_LEVELS = 40;
+export const DEFAULT_MAX_LEVELS = 30;
 export const DEFAULT_DIFFICULTIES = {
   easy: { level: 1 },
   medium: { level: 1 },

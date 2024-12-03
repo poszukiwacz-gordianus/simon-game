@@ -6,6 +6,7 @@ import Modal from "../UI/Modal";
 import FontText from "../UI/FontText";
 import IconButton from "../UI/IconButton";
 import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
+import { Colors } from "@/constants/Colors";
 
 export default function GameOver() {
   const { initializeLevelSequence } = useInitializeLevelSequence();
@@ -28,25 +29,31 @@ export default function GameOver() {
           </>
         )}
         <View style={{ flexDirection: "row" }}>
-          <IconButton onPress={() => initializeLevelSequence(1)}>
-            <AntDesign name="reload1" size={48} color="#FCFCF7" />
+          <IconButton
+            iconName="Try Again"
+            onPress={() => initializeLevelSequence(1)}
+          >
+            <AntDesign name="reload1" size={48} color={Colors.iconTint} />
           </IconButton>
-          <IconButton onPress={() => router.navigate("/")}>
-            <AntDesign name="home" size={48} color="#FCFCF7" />
+          <IconButton iconName="Home" onPress={() => router.navigate("/")}>
+            <AntDesign name="home" size={48} color={Colors.iconTint} />
           </IconButton>
         </View>
       </Modal>
     );
 
   return (
-    <Modal>
+    <Modal isGameOver={true}>
       <FontText style={styles.header}>Game over</FontText>
       <View style={{ flexDirection: "row" }}>
-        <IconButton onPress={() => initializeLevelSequence(level)}>
-          <AntDesign name="reload1" size={48} color="#FCFCF7" />
+        <IconButton
+          iconName="Try Again"
+          onPress={() => initializeLevelSequence(level)}
+        >
+          <AntDesign name="reload1" size={48} color={Colors.iconTint} />
         </IconButton>
-        <IconButton onPress={() => router.navigate("/")}>
-          <AntDesign name="home" size={48} color="#FCFCF7" />
+        <IconButton iconName="Home" onPress={() => router.navigate("/")}>
+          <AntDesign name="home" size={48} color={Colors.iconTint} />
         </IconButton>
       </View>
     </Modal>
@@ -55,8 +62,9 @@ export default function GameOver() {
 
 export const styles = StyleSheet.create({
   header: {
-    fontSize: 30,
+    fontSize: 40,
     marginBottom: 20,
+    color: Colors.textSecondary,
   },
   text: {
     fontSize: 20,

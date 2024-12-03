@@ -2,6 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { type TileSet } from "@/types/types";
 import StoreTile from "./StoreTile";
 import StoreAside from "./StoreAside";
+import { Colors } from "@/constants/Colors";
 
 export default function StoreCard({ tileSet }: { tileSet: TileSet }) {
   return (
@@ -11,7 +12,7 @@ export default function StoreCard({ tileSet }: { tileSet: TileSet }) {
           styles.tilesContainer,
           {
             opacity: tileSet.isUnlocked ? 1 : 0.4,
-            backgroundColor: tileSet.isUnlocked ? "" : "rgb(0, 0, 0)",
+            backgroundColor: tileSet.isUnlocked ? "" : Colors.shadow,
           },
         ]}
       >
@@ -29,14 +30,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "49%",
     height: 350,
-    marginBottom: 20,
-    overflow: "hidden",
     borderColor: "white",
     borderWidth: 1,
-    position: "relative",
+    borderRadius: 10,
+    overflow: "hidden",
   },
   tilesContainer: {
-    backgroundColor: "black",
+    backgroundColor: Colors.background,
     flexDirection: "row",
     flexWrap: "wrap",
   },

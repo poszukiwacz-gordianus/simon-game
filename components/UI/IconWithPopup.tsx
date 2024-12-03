@@ -1,6 +1,7 @@
 import { PropsWithChildren, ReactNode, useState } from "react";
 import { StyleSheet, Pressable, View } from "react-native";
 import Modal from "./Modal";
+import { Colors } from "@/constants/Colors";
 
 interface IconWithPopupProps extends PropsWithChildren {
   icon: ReactNode;
@@ -40,11 +41,13 @@ export default function IconWithPopup({
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    backgroundColor: "#FEF2BF",
+    backgroundColor: Colors.primary,
     width: 50,
     height: 50,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 10,
+    overflow: "hidden",
   },
   modalContent: {
     gap: 20,

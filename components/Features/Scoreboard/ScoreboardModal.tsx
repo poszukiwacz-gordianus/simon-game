@@ -4,6 +4,7 @@ import { DEFAULT_MAX_LEVELS } from "@/config";
 import { useGameContext } from "@/context/GameContext";
 import FontText from "@/components/UI/FontText";
 import IconWithPopup from "@/components/UI/IconWithPopup";
+import { Colors } from "@/constants/Colors";
 
 export default function ScoreboardModal() {
   const {
@@ -12,7 +13,7 @@ export default function ScoreboardModal() {
 
   return (
     <IconWithPopup
-      icon={<FontAwesome name="trophy" size={24} color="#000" />}
+      icon={<FontAwesome name="trophy" size={24} color={Colors.tint} />}
       position={{ top: 140, right: 20 }}
     >
       <>
@@ -21,7 +22,9 @@ export default function ScoreboardModal() {
           Best Score: <FontText style={styles.highlight}>{bestScore}</FontText>
         </FontText>
 
-        <FontText style={styles.header}>Level Progress</FontText>
+        <FontText style={[styles.header, { fontSize: 35 }]}>
+          Level Progress
+        </FontText>
         {Object.entries(difficulties).map(
           ([difficultyKey, difficultyValue], index) => (
             <FontText style={styles.progressText} key={index}>
@@ -41,21 +44,20 @@ export default function ScoreboardModal() {
 
 const styles = StyleSheet.create({
   header: {
-    fontSize: 24,
-    fontWeight: "600",
+    fontSize: 40,
     marginBottom: 10,
   },
   bestScoreText: {
-    fontSize: 20,
+    fontSize: 25,
     marginBottom: 10,
-    color: "#444",
+    color: Colors.textPrimary,
   },
   progressText: {
-    fontSize: 18,
-    color: "#333",
+    fontSize: 20,
+    color: Colors.textPrimary,
   },
   highlight: {
     fontWeight: "bold",
-    color: "#da1f1f",
+    color: Colors.textHighlight,
   },
 });

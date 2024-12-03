@@ -7,6 +7,7 @@ import GameHeader from "@/components/GameComponents/GameHeader";
 import GameTilesContainer from "@/components/GameComponents/GameTilesContainer";
 import GameFooter from "@/components/GameComponents/GameFooter";
 import SoundModal from "@/components/Icons/SoundModal";
+import BackgroundColor from "@/components/UI/BackgroundColor";
 
 export default function Game() {
   const {
@@ -16,14 +17,16 @@ export default function Game() {
   useHandleLevelUp();
 
   return (
-    <SafeAreaView style={styles.container}>
-      {gameOver && <GameOver />}
+    <BackgroundColor>
+      <SafeAreaView style={styles.container}>
+        {gameOver && <GameOver />}
 
-      <GameHeader />
-      <GameTilesContainer />
-      <GameFooter />
-      <SoundModal />
-    </SafeAreaView>
+        <GameHeader />
+        <GameTilesContainer />
+        <GameFooter />
+        <SoundModal />
+      </SafeAreaView>
+    </BackgroundColor>
   );
 }
 
@@ -31,9 +34,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 10,
-    position: "relative",
     padding: 50,
-    backgroundColor: "#c2a664",
     justifyContent: "center",
     alignItems: "center",
   },

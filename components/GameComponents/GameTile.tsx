@@ -34,9 +34,10 @@ export default function GameTile({ source, opacity }: AnimatedTile) {
 
 const styles = StyleSheet.create({
   tileContainer: {
-    width: "50%",
-    height: "50%",
-    padding: 2.5,
+    width: "49%",
+    height: "49.5%",
+    borderRadius: 10,
+    overflow: "hidden",
   },
   image: {
     width: "100%",

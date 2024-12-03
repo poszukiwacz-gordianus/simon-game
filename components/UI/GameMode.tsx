@@ -2,6 +2,7 @@ import { ReactNode, useState } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { useGameContext } from "@/context/GameContext";
 import DifficultyChoice from "./DifficultyChoice";
+import { Colors } from "@/constants/Colors";
 
 export default function GameMode({
   isInfiniteMode,
@@ -35,6 +36,6 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     paddingHorizontal: 20,
-    backgroundColor: "#FEF2BF",
+    backgroundColor: Colors.primary,
   },
 });

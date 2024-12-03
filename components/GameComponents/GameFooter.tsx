@@ -5,37 +5,51 @@ import { stopTilesAnimation } from "@/utils/helpers";
 import BackButton from "../Icons/BackButton";
 import IconButton from "../UI/IconButton";
 import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
+import { Colors } from "@/constants/Colors";
 
 export default function GameFooter() {
   const { initializeLevelSequence } = useInitializeLevelSequence();
-  const {
-    state: { level, isInfiniteMode, isPlaying, hints, timeoutRefs, tiles },
-    dispatch,
-  } = useGameContext();
+  const { state, dispatch } = useGameContext();
+
+  const isPlaying = state.isPlaying;
+  const isInfiniteMode = state.isInfiniteMode;
+  const level = state.level;
+  const hints = state.hints;
+  const timeoutRefs = state.timeoutRefs;
+  const tiles = state.tiles;
+
+  const handleShowHint = () => dispatch({ type: "GAME_SHOW_HINT" });
+  const handleTryAgain = () => initializeLevelSequence(level);
 
   return (
     <View style={styles.container}>
       <BackButton callback={() => stopTilesAnimation(timeoutRefs, tiles)} />
       {!isInfiniteMode && (
         <IconButton
+          iconName="Try Again"
           disabled={!isPlaying}
-          onPress={() => initializeLevelSequence(level)}
+          onPress={handleTryAgain}
+          style={{ color: isPlaying ? Colors.iconTint : Colors.Disabled }}
         >
           <AntDesign
             name="reload1"
             size={48}
-            color={isPlaying ? "#FCFCF7" : "#755224"}
+            color={isPlaying ? Colors.iconTint : Colors.Disabled}
           />
         </IconButton>
       )}
       <IconButton
-        disabled={!isPlaying}
-        onPress={hints > 0 ? () => dispatch({ type: "GAME_SHOW_HINT" }) : null}
+        iconName="Hint"
+        disabled={!isPlaying || hints === 0}
+        onPress={handleShowHint}
+        style={{
+          color: isPlaying && hints > 0 ? Colors.iconTint : Colors.Disabled,
+        }}
       >
         <AntDesign
           name="bulb1"
           size={48}
-          color={hints > 0 && isPlaying ? "#FCFCF7" : "#755224"}
+          color={isPlaying && hints > 0 ? Colors.iconTint : Colors.Disabled}
         />
       </IconButton>
     </View>

@@ -6,6 +6,7 @@ import { useStoreContext } from "@/context/StoreContext";
 import FontText from "@/components/UI/FontText";
 import Modal from "@/components/UI/Modal";
 import tilesClassic from "@/assets/images/tiles/tilesClassic";
+import { Colors } from "@/constants/Colors";
 
 export default function ResetAppSettings() {
   const [isVisible, setIsVisible] = useState(false);
@@ -29,11 +30,11 @@ export default function ResetAppSettings() {
       <View style={styles.container}>
         <FontText style={styles.header}>Reset Data</FontText>
         <Pressable onPress={() => setIsVisible(true)}>
-          <AntDesign name="delete" size={32} color="#da1f1f" />
+          <AntDesign name="delete" size={42} color={Colors.textHighlight} />
         </Pressable>
       </View>
       {isVisible && (
-        <Modal onClose={() => setIsVisible(false)}>
+        <Modal onClose={() => setIsVisible(false)} isBackgroundColor={false}>
           <View style={styles.modalContent}>
             <FontText style={styles.modalText}>
               Are you sure you want to reset all data? This action will restore
@@ -64,13 +65,12 @@ export default function ResetAppSettings() {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
+    gap: 10,
     marginVertical: 10,
   },
   header: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "600",
   },
   modalContent: {
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     marginBottom: 20,
-    color: "#333",
+    color: Colors.textPrimary,
   },
   modalActions: {
     flexDirection: "row",
@@ -98,10 +98,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   cancelButton: {
-    backgroundColor: "green",
+    backgroundColor: Colors.buttonSecondary,
   },
   deleteButton: {
-    backgroundColor: "red",
+    backgroundColor: Colors.buttonDanger,
   },
   buttonText: {
     color: "white",

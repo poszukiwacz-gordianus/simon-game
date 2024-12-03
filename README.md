@@ -33,3 +33,4 @@ Simple patterns like gradients or textures.
 // Todo:
 
 1. Remember sound settings
+2. Fix new best

@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { useGameContext } from "@/context/GameContext";
 import FontText from "@/components/UI/FontText";
 import Checkbox from "@/components/UI/Checkbox";
+import { Colors } from "@/constants/Colors";
 
 const checkboxes = [
   { sound: 0, label: "cartoon" },
@@ -23,9 +24,9 @@ export default function ManageSoundSettings() {
         <FontText style={styles.header}>Sound</FontText>
         <Pressable onPress={() => dispatch({ type: "GAME_TOGGLE_SOUND" })}>
           {isSoundOn ? (
-            <FontAwesome5 name="toggle-on" size={32} color="#000" />
+            <FontAwesome5 name="toggle-on" size={32} color={Colors.tint} />
           ) : (
-            <FontAwesome5 name="toggle-off" size={32} color="#000" />
+            <FontAwesome5 name="toggle-off" size={32} color={Colors.tint} />
           )}
         </Pressable>
       </View>
@@ -45,11 +46,10 @@ export default function ManageSoundSettings() {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "space-around",
     alignItems: "center",
     gap: 10,
   },
   header: {
-    fontSize: 32,
+    fontSize: 30,
   },
 });

@@ -2,6 +2,7 @@ import { Link } from "expo-router";
 import { StyleSheet } from "react-native";
 import { type ButtonProps } from "@/types/types";
 import FontText from "./FontText";
+import { Colors } from "@/constants/Colors";
 
 export default function LinkButton({ buttonText, href, onPress }: ButtonProps) {
   return (
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     paddingHorizontal: 20,
-    backgroundColor: "#c2a664",
+    borderRadius: 10,
+    backgroundColor: Colors.buttonSecondary,
   },
 });

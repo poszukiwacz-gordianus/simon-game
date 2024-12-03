@@ -4,6 +4,7 @@ import StoreUnlockButton from "./StoreUnlockButton";
 import { TileSet } from "@/types/types";
 import { useStoreContext } from "@/context/StoreContext";
 import { useGameContext } from "@/context/GameContext";
+import { Colors } from "@/constants/Colors";
 
 export default function StoreAside({ tileSet }: { tileSet: TileSet }) {
   const { dispatch: storeDispatch } = useStoreContext();
@@ -35,6 +36,7 @@ export default function StoreAside({ tileSet }: { tileSet: TileSet }) {
       {isUnlocked && (
         <Button
           title={isCurrentlyUsed ? "In Use" : "Use Now"}
+          color={Colors.buttonSecondary}
           disabled={isCurrentlyUsed}
           onPress={handleButtonPress}
         />
@@ -56,12 +58,14 @@ const styles = StyleSheet.create({
   cardHeader: {
     fontSize: 24,
     padding: 10,
-    color: "white",
+    color: Colors.textPrimary,
+    backgroundColor: Colors.backgroundAccent,
+    borderRadius: 10,
   },
   cardAside: {
     fontSize: 20,
     padding: 10,
     textAlign: "center",
-    color: "white",
+    color: Colors.textPrimary,
   },
 });
