@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { Link } from "expo-router";
 import { DEFAULT_MAX_LEVELS } from "@/config";
 import { useGameContext } from "@/context/GameContext";
@@ -14,34 +14,49 @@ export default function Level() {
 
   const currentLevel = difficulties[difficulty]?.level ?? 0;
 
-  return Array.from({ length: DEFAULT_MAX_LEVELS }, (_, index) => {
+  const levels = Array.from({ length: DEFAULT_MAX_LEVELS }, (_, index) => {
     const levelNumber = index + 1;
     const isLocked = levelNumber > currentLevel;
 
-    return (
-      <Link
-        key={index}
-        href={"/game"}
-        disabled={isLocked}
-        onPress={() =>
-          initializeLevelSequence(levelNumber, animationPace, true)
-        }
-      >
-        <View
-          style={[
-            styles.container,
-            {
-              backgroundColor: isLocked
-                ? Colors.levelDisabled
-                : Colors.levelEnabled,
-            },
-          ]}
-        >
-          <FontText style={styles.text}>{levelNumber}</FontText>
-        </View>
-      </Link>
-    );
+    return {
+      key: String(index),
+      levelNumber,
+      isLocked,
+    };
   });
+
+  return (
+    <FlatList
+      ListHeaderComponent={<FontText style={styles.header}>Levels</FontText>}
+      data={levels}
+      renderItem={({ item }) => (
+        <Link
+          href={"/game"}
+          disabled={item.isLocked}
+          onPress={() =>
+            initializeLevelSequence(item.levelNumber, animationPace, true)
+          }
+        >
+          <View
+            style={[
+              styles.container,
+              {
+                backgroundColor: item.isLocked
+                  ? Colors.levelDisabled
+                  : Colors.levelEnabled,
+              },
+            ]}
+          >
+            <FontText style={styles.text}>{item.levelNumber}</FontText>
+          </View>
+        </Link>
+      )}
+      numColumns={3}
+      contentContainerStyle={styles.flatListContent}
+      columnWrapperStyle={styles.columnWrapper}
+      showsVerticalScrollIndicator={false}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
@@ -50,8 +65,26 @@ const styles = StyleSheet.create({
     height: 150,
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
     borderRadius: 10,
   },
-  text: { fontSize: 30, color: Colors.textSecondary },
+  header: {
+    fontSize: 40,
+    marginTop: 50,
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  text: {
+    fontSize: 30,
+    color: Colors.textSecondary,
+  },
+  flatListContent: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+  },
+  columnWrapper: {
+    gap: 10,
+    marginBottom: 10,
+  },
 });

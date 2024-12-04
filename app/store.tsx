@@ -15,8 +15,8 @@ export default function Store() {
   return (
     <BackgroundColor>
       <SafeAreaView style={styles.container}>
-        <FontText style={styles.header}>Store</FontText>
         <FlatList
+          ListHeaderComponent={<FontText style={styles.header}>Store</FontText>}
           contentContainerStyle={styles.flatListContainer}
           data={tilesSets}
           renderItem={({ item }) => <StoreCard tileSet={item} />}
