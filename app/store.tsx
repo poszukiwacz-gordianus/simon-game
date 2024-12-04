@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useStoreContext } from "@/context/StoreContext";
 import BackButton from "@/components/Icons/BackButton";
@@ -16,11 +16,15 @@ export default function Store() {
     <BackgroundColor>
       <SafeAreaView style={styles.container}>
         <FontText style={styles.header}>Store</FontText>
-        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-          {tilesSets.map((set, index) => (
-            <StoreCard key={index} tileSet={set} />
-          ))}
-        </ScrollView>
+        <FlatList
+          contentContainerStyle={styles.flatListContainer}
+          data={tilesSets}
+          renderItem={({ item }) => <StoreCard tileSet={item} />}
+          keyExtractor={(item) => String(item.id)}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+          showsVerticalScrollIndicator={false} // hides the scroll bar
+        />
 
         <View style={{ height: 150 }} />
 
@@ -48,10 +52,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
   },
-  scrollViewContainer: {
+  flatListContainer: {
     paddingHorizontal: 20,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 5,
+  },
+  row: {
+    justifyContent: "space-between",
+    marginBottom: 10,
   },
 });
