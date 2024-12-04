@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: 300,
+    height: 250,
     padding: 20,
     alignItems: "center",
     justifyContent: "space-between",
