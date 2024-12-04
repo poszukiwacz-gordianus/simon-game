@@ -1,4 +1,4 @@
-import { Animated } from "react-native";
+import { Animated, Platform } from "react-native";
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -40,7 +40,7 @@ export const loadTiles: LoadTiles = (storeState, defaultTilesSet) => {
 };
 
 export const animateTile: AnimatedTileProps = (tileOpacity, pace) => {
-  console.log("animateTile");
+  // console.log("animateTile");
   // Animate tile opacity
   Animated.sequence([
     Animated.timing(tileOpacity, {
@@ -60,7 +60,7 @@ export const saveStateToStorage: SaveStateToStorageProps = async (
   key,
   stateToSave
 ) => {
-  console.log("SaveStateToStorage");
+  // console.log("SaveStateToStorage");
   // Save game state
   try {
     await AsyncStorage.setItem(key, JSON.stringify(stateToSave));
@@ -75,7 +75,7 @@ export const loadStateFromStorage: LoadStateFromStorageProps = async (
   type,
   defaultState
 ) => {
-  console.log("loadStateFromStorage");
+  // console.log("loadStateFromStorage");
   return new Promise(async (resolve) => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
@@ -95,7 +95,7 @@ export const loadStateFromStorage: LoadStateFromStorageProps = async (
 };
 
 export const stopTilesAnimation: StopTilesAnimationProps = (ref, tiles) => {
-  console.log("stopTilesAnimation");
+  // console.log("stopTilesAnimation");
   // Clear all animation timeouts
   ref.current.forEach((timeoutId) => clearTimeout(timeoutId));
   ref.current = []; // Reset timeouts
@@ -108,10 +108,11 @@ export const playSound = async (
   index = DEFAULT_TILE_SOUND_INDEX,
   sounds: Audio.Sound[]
 ) => {
-  console.log("playSound");
+  // console.log("playSound");
   const sound = sounds[index];
   if (sound) {
-    console.log(`Playing sound at index ${index}`);
+    // console.log(`Playing sound at index ${index}`);
+    await sound.stopAsync();
     await sound.replayAsync(); // Replay if already loaded
   } else {
     console.warn(`Sound at index ${index} is not loaded yet`);
@@ -119,9 +120,9 @@ export const playSound = async (
 };
 
 export const generateTileSequence = (state: GameState) => {
-  console.log("generateTileSequence");
+  // console.log("generateTileSequence");
   const {
-    level: length,
+    level,
     sequence: prevSequence,
     tiles,
     animationPace,
@@ -132,9 +133,11 @@ export const generateTileSequence = (state: GameState) => {
     timeoutRefs,
   } = state;
 
+  const length = isInfiniteMode ? level + 1 : level;
+
   return Array.from({ length }, (_, index) => {
     const sequenceItem =
-      index >= prevSequence.length || (isInfiniteMode && length === 1)
+      index >= prevSequence.length
         ? Math.floor(Math.random() * tiles.length) // Ensure valid index range
         : prevSequence[index];
 
@@ -144,7 +147,7 @@ export const generateTileSequence = (state: GameState) => {
     // Set the timeout and store its ID
     const timeoutId = window.setTimeout(async () => {
       try {
-        console.log("Animating tile and Play sound");
+        // console.log("Animating tile and Play sound");
         // Play sound asynchronously
         if (isSoundOn) playSound(tileSoundIndex, tilesSounds);
 
@@ -167,15 +170,24 @@ export const generateTileSequence = (state: GameState) => {
  *   Audio.Sound objects, each representing a loaded sound.
  */
 export const loadSoundsToMemory = async (): Promise<Audio.Sound[]> => {
-  console.log("Loading sounds...");
-  await Audio.setAudioModeAsync({
-    staysActiveInBackground: true,
-    playsInSilentModeIOS: true,
-    interruptionModeIOS: InterruptionModeIOS.DuckOthers,
-    interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
-    shouldDuckAndroid: true,
-    playThroughEarpieceAndroid: true,
-  });
+  // console.log("Loading sounds...");
+  if (Platform.OS === "android") {
+    // Adjust settings for Android
+    await Audio.setAudioModeAsync({
+      staysActiveInBackground: false, // Avoids overriding other background audio
+      playsInSilentModeIOS: true, // Optional for cross-platform compatibility
+      interruptionModeAndroid: InterruptionModeAndroid.DoNotMix, // Do not mix with other audio
+      shouldDuckAndroid: false, // Prevents other apps' audio from ducking
+      playThroughEarpieceAndroid: false, // Avoid forcing earpiece playback
+    });
+  } else if (Platform.OS === "ios") {
+    // Configure for iOS
+    await Audio.setAudioModeAsync({
+      staysActiveInBackground: true,
+      playsInSilentModeIOS: true,
+      interruptionModeIOS: InterruptionModeIOS.DuckOthers,
+    });
+  }
 
   const sounds = await Promise.all(
     soundMap.map((soundFile) =>
@@ -183,6 +195,6 @@ export const loadSoundsToMemory = async (): Promise<Audio.Sound[]> => {
     )
   );
 
-  console.log("Sounds loaded to memory");
+  // console.log("Sounds loaded to memory");
   return sounds;
 };

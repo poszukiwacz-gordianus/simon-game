@@ -11,8 +11,9 @@ export const DEFAULT_DIFFICULTIES = {
 };
 export const START_LEVEL_DELAY = 500;
 export const USER_RESPONSE_DELAY = 1000;
-export const DEFAULT_TILE_SOUND_INDEX = 0;
-export const GAME_OVER_SOUND = 4;
+export const WINNING_SOUND = 0;
+export const GAME_OVER_SOUND = 1;
+export const DEFAULT_TILE_SOUND_INDEX = 2;
 export const DEFAULT_BEST_SCORE = 0;
 export const DEFAULT_GAME_STATE_FROM_STORAGE = {
   bestScore: DEFAULT_BEST_SCORE,

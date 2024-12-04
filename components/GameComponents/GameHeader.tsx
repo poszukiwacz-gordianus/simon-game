@@ -10,7 +10,7 @@ export default function GameHeader() {
   if (isInfiniteMode)
     return (
       <View style={styles.container}>
-        <FontText style={styles.infiniteHeader}>{level - 1}</FontText>
+        <FontText style={styles.infiniteHeader}>{level}</FontText>
       </View>
     );
 

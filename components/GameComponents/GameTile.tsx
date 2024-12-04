@@ -4,7 +4,7 @@ import { useGameContext } from "@/context/GameContext";
 import { type AnimatedTile } from "@/types/types";
 
 export default function GameTile({ source, opacity }: AnimatedTile) {
-  console.log("GameTile", source);
+  // console.log("GameTile", source);
   const {
     state: { isPlaying, tiles },
     dispatch,

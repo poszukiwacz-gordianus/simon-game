@@ -11,6 +11,7 @@ import {
   DEFAULT_TILE_SOUND_INDEX,
   GAME_OVER_SOUND,
   STORAGE_GAME_STATE_KEY,
+  WINNING_SOUND,
 } from "@/config";
 import {
   type GameContextType,
@@ -52,10 +53,10 @@ const initialState: GameState = {
 };
 
 const gameReducer: GameReducer = (state, action) => {
-  console.log("gameReducer");
+  // console.log("gameReducer");
   switch (action.type) {
     case "GAME_LOAD_STATE":
-      console.log("LOAD_GAME_STATE");
+      // console.log("LOAD_GAME_STATE");
       // Load saved game state
       return {
         ...state,
@@ -63,7 +64,7 @@ const gameReducer: GameReducer = (state, action) => {
       };
 
     case "GAME_LOAD_CONTENT": {
-      console.log("LOAD_DEFAULT_CONTENT");
+      // console.log("LOAD_DEFAULT_CONTENT");
       // Load tiles, tile sound, and game over sound
       const load = action.payload;
       return {
@@ -76,7 +77,7 @@ const gameReducer: GameReducer = (state, action) => {
     }
 
     case "GAME_SET_DIFFICULTY": {
-      console.log("SET_DIFFICULTY");
+      // console.log("SET_DIFFICULTY");
       // Set difficulty choosen by user
       const difficulty = action.payload;
 
@@ -97,7 +98,7 @@ const gameReducer: GameReducer = (state, action) => {
     }
 
     case "GAME_SET_SOUND_INDEX": {
-      console.log("SET_SOUND_INDEX");
+      // console.log("SET_SOUND_INDEX");
       playSound(action.payload, state.tilesSounds);
       saveStateToStorage(STORAGE_GAME_STATE_KEY, {
         difficulties: state.difficulties,
@@ -118,36 +119,37 @@ const gameReducer: GameReducer = (state, action) => {
       };
 
     case "GAME_SET_TILES":
-      console.log("SET_TILES");
+      // console.log("SET_TILES");
       return {
         ...state,
         tiles: action.payload,
       };
 
     case "GAME_TOGGLE_SOUND":
-      console.log("TOGGLE_SOUND");
+      // console.log("TOGGLE_SOUND");
       return {
         ...state,
         isSoundOn: !state.isSoundOn,
       };
 
     case "GAME_INITIALIZE_LEVEL":
-      console.log("INITIALIZE_LEVEL");
+      // console.log("INITIALIZE_LEVEL");
       // Initialize level
+      const level = action.payload;
       return {
         ...state,
-        level: action.payload,
-        tilesRemaining: action.payload,
+        level,
+        tilesRemaining: level,
         isPlaying: false,
         gameOver: false,
         levelUp: false,
-        isNewBestScore: false,
+        isNewBestScore: level === 0 ? false : state.isNewBestScore,
         userGuess: 0,
         hints: DEFAULT_HINTS,
       };
 
     case "GAME_SHOW_SEQUENCE": {
-      console.log("SHOW_SEQUENCE");
+      // console.log("SHOW_SEQUENCE");
       // Generate a new sequence
       const newSequence = generateTileSequence(state);
       return {
@@ -157,11 +159,11 @@ const gameReducer: GameReducer = (state, action) => {
     }
 
     case "GAME_ENABLE_USER_RESPONSE":
-      console.log("ENABLE_USER_RESPONSE");
+      // console.log("ENABLE_USER_RESPONSE");
       return { ...state, isPlaying: true };
 
     case "GAME_SHOW_HINT": {
-      console.log("SHOW_HINT");
+      // console.log("SHOW_HINT");
       // Animate and play sound for current tile
       if (state.isSoundOn) playSound(state.tileSoundIndex, state.tilesSounds);
       animateTile(
@@ -175,10 +177,6 @@ const gameReducer: GameReducer = (state, action) => {
       console.log("VERIFY_USER_RESPONSE");
       const userResponse = action.payload;
       const isCorrect = state.sequence[state.userGuess] === userResponse;
-
-      // Check if user has new best score
-      const isNewBestScore =
-        state.isInfiniteMode && state.level > state.bestScore;
 
       // If user response is isCorrect
       if (isCorrect) {
@@ -199,8 +197,14 @@ const gameReducer: GameReducer = (state, action) => {
               ? state.difficulties[state.difficulty].level
               : state.level + 1;
 
+          // If its infinite mode level starts at 0 so we need to add 1
+          const infinitiLevel = state.level + 1;
+          // Check if user has new best score
+          const isNewBestScore =
+            state.isInfiniteMode && infinitiLevel > state.bestScore;
+
           // If it's new best score than update best score otherwise not
-          const bestScore = isNewBestScore ? state.level : state.bestScore;
+          const bestScore = isNewBestScore ? infinitiLevel : state.bestScore;
 
           // Update difficulties state if newLevel is higher than current max difficulty level else return current state difficulties
           const difficulties = isMaxLevelExceeded
@@ -214,7 +218,7 @@ const gameReducer: GameReducer = (state, action) => {
             : state.difficulties;
 
           // Save to storage if new level is greater than current max difficulty level
-          if (isMaxLevelExceeded) {
+          if (isMaxLevelExceeded || (state.isInfiniteMode && isNewBestScore)) {
             saveStateToStorage(STORAGE_GAME_STATE_KEY, {
               difficulties,
               bestScore,
@@ -227,6 +231,7 @@ const gameReducer: GameReducer = (state, action) => {
             levelUp: true,
             difficulties,
             bestScore,
+            isNewBestScore,
           };
         }
 
@@ -240,16 +245,19 @@ const gameReducer: GameReducer = (state, action) => {
 
       // Handle incorrect guess
       // Play game over sound
-      if (state.isSoundOn) playSound(GAME_OVER_SOUND, state.tilesSounds);
+      if (state.isSoundOn) {
+        if (state.isNewBestScore) playSound(WINNING_SOUND, state.tilesSounds);
+        else playSound(GAME_OVER_SOUND, state.tilesSounds);
+      }
+
       return {
         ...state,
         gameOver: true,
-        isNewBestScore,
       };
     }
 
     case "GAME_RESET_STATE": {
-      console.log("RESET_APP_STATE");
+      // console.log("RESET_APP_STATE");
       saveStateToStorage(STORAGE_GAME_STATE_KEY, {
         difficulties: DEFAULT_DIFFICULTIES,
         bestScore: DEFAULT_BEST_SCORE,
@@ -271,7 +279,7 @@ const gameReducer: GameReducer = (state, action) => {
 };
 
 function GameProvider({ children }: GameContextProviderProps) {
-  console.log("gameProvider");
+  // console.log("gameProvider");
   const [state, dispatch] = useReducer(gameReducer, initialState);
 
   return (
@@ -287,7 +295,7 @@ function GameProvider({ children }: GameContextProviderProps) {
 }
 
 function useGameContext(): GameContextType {
-  console.log("useGameContext");
+  // console.log("useGameContext");
   const context = useContext(GameContext);
   if (!context) {
     throw new Error("useGameContext must be used within a GameProvider");

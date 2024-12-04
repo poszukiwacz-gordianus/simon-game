@@ -18,7 +18,7 @@ import {
 import { classicTiles } from "@/assets/images/tiles";
 
 export default function useLoadGameContent() {
-  console.log("useLoadGameContent");
+  // console.log("useLoadGameContent");
   const { dispatch: gameDispatch } = useGameContext();
   const { state: storeState, dispatch: storeDispatch } = useStoreContext();
 

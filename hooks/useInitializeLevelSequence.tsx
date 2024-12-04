@@ -15,7 +15,7 @@ import { useGameContext } from "@/context/GameContext";
  * @returns An object containing the `initializeLevelSequence` function.
  */
 export default function useInitializeLevelSequence() {
-  console.log("useInitializeLevelSequence");
+  // console.log("useInitializeLevelSequence");
   const {
     state: { animationPace, difficulty },
     dispatch,

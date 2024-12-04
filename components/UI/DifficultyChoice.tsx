@@ -27,7 +27,7 @@ export default function DifficultyChoice({ onClose }: { onClose: () => void }) {
           buttonText={choice.text}
           onPress={() => {
             dispatch({ type: "GAME_SET_DIFFICULTY", payload: choice.payload });
-            isInfiniteMode && initializeLevelSequence(1);
+            isInfiniteMode && initializeLevelSequence(0);
             onClose();
           }}
         />

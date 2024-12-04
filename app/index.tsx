@@ -12,7 +12,7 @@ import StoreModal from "@/components/Features/Store/StoreModal";
 import BackgroundColor from "@/components/UI/BackgroundColor";
 
 export default function Index() {
-  console.log("Index");
+  // console.log("Index");
   const {
     state: { isAppActive },
   } = useGameContext();

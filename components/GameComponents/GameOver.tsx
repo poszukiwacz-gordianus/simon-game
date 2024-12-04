@@ -14,6 +14,11 @@ export default function GameOver() {
     state: { level, bestScore, isInfiniteMode, isNewBestScore },
   } = useGameContext();
 
+  console.log(
+    "GAMEOVER BESTSCORE: ___________________________________________________________",
+    bestScore
+  );
+
   if (isInfiniteMode)
     return (
       <Modal isGameOver={!isNewBestScore}>
@@ -31,14 +36,14 @@ export default function GameOver() {
           <FontText style={styles.best}>{bestScore}</FontText>
         ) : (
           <>
-            <FontText style={styles.text}>Your score: {level - 1}</FontText>
+            <FontText style={styles.text}>Your score: {level}</FontText>
             <FontText style={styles.text}>Best score: {bestScore}</FontText>
           </>
         )}
         <View style={{ flexDirection: "row" }}>
           <IconButton
             iconName="Try Again"
-            onPress={() => initializeLevelSequence(1)}
+            onPress={() => initializeLevelSequence(0)}
           >
             <AntDesign name="reload1" size={48} color={Colors.iconTint} />
           </IconButton>

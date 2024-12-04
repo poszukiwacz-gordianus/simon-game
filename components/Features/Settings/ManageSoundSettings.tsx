@@ -5,12 +5,15 @@ import FontText from "@/components/UI/FontText";
 import Checkbox from "@/components/UI/Checkbox";
 import { Colors } from "@/constants/Colors";
 
-const checkboxes = [
-  { sound: 0, label: "cartoon" },
-  { sound: 1, label: "ufo" },
-  { sound: 2, label: "laser" },
-  { sound: 3, label: "spring" },
-];
+// const checkboxes = [
+//   { sound: 2, label: "bump" },
+//   { sound: 3, label: "chime" },
+//   { sound: 4, label: "click" },
+//   { sound: 5, label: "metallic tap" },
+//   { sound: 6, label: "whisk" },
+//   { sound: 7, label: "whoosh" },
+//   { sound: 8, label: "wood tap" },
+// ];
 
 export default function ManageSoundSettings() {
   const {
@@ -30,7 +33,7 @@ export default function ManageSoundSettings() {
           )}
         </Pressable>
       </View>
-      <View>
+      {/* <View>
         {checkboxes.map((checkbox) => (
           <Checkbox
             key={checkbox.label}
@@ -38,7 +41,7 @@ export default function ManageSoundSettings() {
             sound={checkbox.sound}
           />
         ))}
-      </View>
+      </View> */}
     </>
   );
 }
