@@ -9,17 +9,21 @@ import { Colors } from "@/constants/Colors";
 
 export default function GameFooter() {
   const { initializeLevelSequence } = useInitializeLevelSequence();
-  const { state, dispatch } = useGameContext();
-
-  const isPlaying = state.isPlaying;
-  const isInfiniteMode = state.isInfiniteMode;
-  const level = state.level;
-  const hints = state.hints;
-  const timeoutRefs = state.timeoutRefs;
-  const tiles = state.tiles;
+  const {
+    state: {
+      isPlaying,
+      isInfiniteMode,
+      level,
+      hints,
+      timeoutRefs,
+      tiles,
+      animationPace,
+    },
+    dispatch,
+  } = useGameContext();
 
   const handleShowHint = () => dispatch({ type: "GAME_SHOW_HINT" });
-  const handleTryAgain = () => initializeLevelSequence(level);
+  const handleTryAgain = () => initializeLevelSequence(level, animationPace);
 
   return (
     <View style={styles.container}>

@@ -11,13 +11,8 @@ import { Colors } from "@/constants/Colors";
 export default function GameOver() {
   const { initializeLevelSequence } = useInitializeLevelSequence();
   const {
-    state: { level, bestScore, isInfiniteMode, isNewBestScore },
+    state: { level, bestScore, isInfiniteMode, isNewBestScore, animationPace },
   } = useGameContext();
-
-  console.log(
-    "GAMEOVER BESTSCORE: ___________________________________________________________",
-    bestScore
-  );
 
   if (isInfiniteMode)
     return (
@@ -43,7 +38,7 @@ export default function GameOver() {
         <View style={{ flexDirection: "row" }}>
           <IconButton
             iconName="Try Again"
-            onPress={() => initializeLevelSequence(0)}
+            onPress={() => initializeLevelSequence(0, animationPace, true)}
           >
             <AntDesign name="reload1" size={48} color={Colors.iconTint} />
           </IconButton>
@@ -60,7 +55,7 @@ export default function GameOver() {
       <View style={{ flexDirection: "row" }}>
         <IconButton
           iconName="Try Again"
-          onPress={() => initializeLevelSequence(level)}
+          onPress={() => initializeLevelSequence(level, animationPace, true)}
         >
           <AntDesign name="reload1" size={48} color={Colors.iconTint} />
         </IconButton>

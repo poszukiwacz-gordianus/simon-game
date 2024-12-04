@@ -1,4 +1,8 @@
-import { START_LEVEL_DELAY, USER_RESPONSE_DELAY } from "@/config";
+import {
+  START_GAME_DELAY,
+  START_LEVEL_DELAY,
+  USER_RESPONSE_DELAY,
+} from "@/config";
 import { useGameContext } from "@/context/GameContext";
 
 /**
@@ -16,13 +20,7 @@ import { useGameContext } from "@/context/GameContext";
  */
 export default function useInitializeLevelSequence() {
   // console.log("useInitializeLevelSequence");
-  const {
-    state: { animationPace, difficulty },
-    dispatch,
-  } = useGameContext();
-
-  const delay =
-    difficulty === "easy" ? START_LEVEL_DELAY - 200 : START_LEVEL_DELAY;
+  const { dispatch } = useGameContext();
 
   /**
    * Initializes the state for a new game level, shows the sequence of tiles with
@@ -31,7 +29,11 @@ export default function useInitializeLevelSequence() {
    *
    * @param {number} newLevel The new level to initialize.
    */
-  const initializeLevelSequence = (newLevel: number) => {
+  const initializeLevelSequence = (
+    newLevel: number,
+    animationPace: number,
+    isStartingNewGame: boolean = false
+  ) => {
     // Load level state
     dispatch({
       type: "GAME_INITIALIZE_LEVEL",
@@ -39,7 +41,10 @@ export default function useInitializeLevelSequence() {
     });
 
     // Show sequence to user after a delay
-    setTimeout(() => dispatch({ type: "GAME_SHOW_SEQUENCE" }), delay);
+    setTimeout(
+      () => dispatch({ type: "GAME_SHOW_SEQUENCE" }),
+      isStartingNewGame ? START_GAME_DELAY : START_LEVEL_DELAY
+    );
 
     // Enable user response after all tiles are shown
     setTimeout(

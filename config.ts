@@ -1,16 +1,17 @@
 export const DEFAULT_DIFFICULTY = "easy";
 export const DEFAULT_HINTS = 3;
-export const DEFAULT_ANIMATION_PACE = 600;
-export const DEFAULT_ANIMATION_PACE_MEDIUM = 400;
-export const DEFAULT_ANIMATION_PACE_HARD = 200;
+export const DEFAULT_ANIMATION_PACE = 650;
+export const DEFAULT_ANIMATION_PACE_MEDIUM = 450;
+export const DEFAULT_ANIMATION_PACE_HARD = 300;
 export const DEFAULT_MAX_LEVELS = 30;
 export const DEFAULT_DIFFICULTIES = {
   easy: { level: 30 },
   medium: { level: 30 },
   hard: { level: 30 },
 };
+export const START_GAME_DELAY = 1200;
 export const START_LEVEL_DELAY = 500;
-export const USER_RESPONSE_DELAY = 1000;
+export const USER_RESPONSE_DELAY = 900;
 export const WINNING_SOUND = 0;
 export const GAME_OVER_SOUND = 1;
 export const DEFAULT_TILE_SOUND_INDEX = 2;

@@ -7,7 +7,7 @@ export default function useHandleLevelUp() {
   // console.log("useHandleLevelUp");
   const { initializeLevelSequence } = useInitializeLevelSequence();
   const {
-    state: { level, levelUp, difficulty, isInfiniteMode },
+    state: { level, levelUp, difficulty, isInfiniteMode, animationPace },
   } = useGameContext();
   const { dispatch: storeDispatch } = useStoreContext();
 
@@ -15,7 +15,7 @@ export default function useHandleLevelUp() {
 
   useEffect(() => {
     if (levelUp) {
-      // Send dispatch action if level is 10, 20, 30, or 40 and it's not in infinite mode
+      // Send dispatch action if level is 10, 20, or 30, and it's not in infinite mode
       const unlockLevel = [10, 20, 30, 40].includes(newLevel);
       if (!isInfiniteMode && unlockLevel) {
         storeDispatch({
@@ -25,7 +25,7 @@ export default function useHandleLevelUp() {
       }
 
       // Starting new level
-      initializeLevelSequence(newLevel);
+      initializeLevelSequence(newLevel, animationPace);
     }
   }, [levelUp]);
 }

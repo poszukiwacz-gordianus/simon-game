@@ -9,7 +9,7 @@ import { Colors } from "@/constants/Colors";
 export default function Level() {
   const { initializeLevelSequence } = useInitializeLevelSequence();
   const {
-    state: { difficulty, difficulties },
+    state: { difficulty, difficulties, animationPace },
   } = useGameContext();
 
   const currentLevel = difficulties[difficulty]?.level ?? 0;
@@ -23,7 +23,9 @@ export default function Level() {
         key={index}
         href={"/game"}
         disabled={isLocked}
-        onPress={() => initializeLevelSequence(levelNumber)}
+        onPress={() =>
+          initializeLevelSequence(levelNumber, animationPace, true)
+        }
       >
         <View
           style={[

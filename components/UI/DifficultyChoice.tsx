@@ -5,16 +5,16 @@ import Modal from "./Modal";
 import useInitializeLevelSequence from "@/hooks/useInitializeLevelSequence";
 
 const choices: { text: string; payload: Difficulty }[] = [
-  { text: "Easy", payload: "easy" },
+  { text: "Slow", payload: "easy" },
   { text: "Medium", payload: "medium" },
-  { text: "Hard", payload: "hard" },
+  { text: "Fast", payload: "hard" },
 ];
 
 export default function DifficultyChoice({ onClose }: { onClose: () => void }) {
   const { initializeLevelSequence } = useInitializeLevelSequence();
 
   const {
-    state: { isInfiniteMode },
+    state: { isInfiniteMode, animationPace },
     dispatch,
   } = useGameContext();
 
@@ -27,7 +27,7 @@ export default function DifficultyChoice({ onClose }: { onClose: () => void }) {
           buttonText={choice.text}
           onPress={() => {
             dispatch({ type: "GAME_SET_DIFFICULTY", payload: choice.payload });
-            isInfiniteMode && initializeLevelSequence(0);
+            isInfiniteMode && initializeLevelSequence(0, animationPace);
             onClose();
           }}
         />
