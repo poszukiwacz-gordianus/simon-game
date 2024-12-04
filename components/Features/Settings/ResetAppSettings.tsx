@@ -5,7 +5,7 @@ import { useGameContext } from "@/context/GameContext";
 import { useStoreContext } from "@/context/StoreContext";
 import FontText from "@/components/UI/FontText";
 import Modal from "@/components/UI/Modal";
-import tilesClassic from "@/assets/images/tiles/tilesClassic";
+import { classicTiles } from "@/assets/images/tiles";
 import { Colors } from "@/constants/Colors";
 
 export default function ResetAppSettings() {
@@ -13,7 +13,7 @@ export default function ResetAppSettings() {
   const { dispatch: gameDispatch } = useGameContext();
   const { dispatch: storeDispatch } = useStoreContext();
 
-  const defaultTiles = tilesClassic.map((source) => ({
+  const defaultTiles = classicTiles.map((source) => ({
     source,
     opacity: useAnimatedValue(1),
   }));

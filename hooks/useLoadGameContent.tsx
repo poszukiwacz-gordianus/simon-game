@@ -15,7 +15,7 @@ import {
   loadTiles,
 } from "@/utils/helpers";
 
-import tilesClassic from "@/assets/images/tiles/tilesClassic";
+import { classicTiles } from "@/assets/images/tiles";
 
 export default function useLoadGameContent() {
   console.log("useLoadGameContent");
@@ -26,7 +26,7 @@ export default function useLoadGameContent() {
   const timeoutRefs = useRef<number[]>([]);
 
   // Load default tiles
-  const defaultTiles = tilesClassic.map((source) => ({
+  const defaultTiles = classicTiles.map((source) => ({
     source,
     opacity: useAnimatedValue(1),
   }));

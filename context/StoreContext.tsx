@@ -1,6 +1,15 @@
-import tilesClassic from "@/assets/images/tiles/tilesClassic";
-import tilesTrees from "@/assets/images/tiles/tilesTrees";
-import tilesOcean from "@/assets/images/tiles/tilesOcean";
+import {
+  classicTiles,
+  treeTiles,
+  oceanTiles,
+  transportTiles,
+  dogTiles,
+  catTiles,
+  planetTiles,
+  fantasyTiles,
+  sfTiles,
+  steampunkTiles,
+} from "@/assets/images/tiles";
 
 import {
   StoreContextProviderProps,
@@ -22,23 +31,79 @@ const initialState: StoreStateType = {
       isUnlocked: true,
       isCurrentlyUsed: true,
       unlockedAt: { difficulty: "easy", level: 0 },
-      tiles: tilesClassic,
+      tiles: classicTiles,
     },
     {
       setName: "Trees",
       id: 2,
-      isUnlocked: false,
+      isUnlocked: true,
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "easy", level: 10 },
-      tiles: tilesTrees,
+      tiles: treeTiles,
     },
     {
       setName: "Ocean",
       id: 3,
-      isUnlocked: false,
+      isUnlocked: true,
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "easy", level: 20 },
-      tiles: tilesOcean,
+      tiles: oceanTiles,
+    },
+    {
+      setName: "Transport",
+      id: 4,
+      isUnlocked: true,
+      isCurrentlyUsed: false,
+      unlockedAt: { difficulty: "easy", level: 30 },
+      tiles: transportTiles,
+    },
+    {
+      setName: "Dogs",
+      id: 5,
+      isUnlocked: true,
+      isCurrentlyUsed: false,
+      unlockedAt: { difficulty: "medium", level: 10 },
+      tiles: dogTiles,
+    },
+    {
+      setName: "Cats",
+      id: 6,
+      isUnlocked: true,
+      isCurrentlyUsed: false,
+      unlockedAt: { difficulty: "medium", level: 20 },
+      tiles: catTiles,
+    },
+    {
+      setName: "Planets",
+      id: 7,
+      isUnlocked: true,
+      isCurrentlyUsed: false,
+      unlockedAt: { difficulty: "medium", level: 30 },
+      tiles: planetTiles,
+    },
+    {
+      setName: "Fantasy",
+      id: 8,
+      isUnlocked: true,
+      isCurrentlyUsed: false,
+      unlockedAt: { difficulty: "hard", level: 10 },
+      tiles: fantasyTiles,
+    },
+    {
+      setName: "Si-Fi",
+      id: 9,
+      isUnlocked: true,
+      isCurrentlyUsed: false,
+      unlockedAt: { difficulty: "hard", level: 20 },
+      tiles: sfTiles,
+    },
+    {
+      setName: "Steampunk",
+      id: 10,
+      isUnlocked: true,
+      isCurrentlyUsed: false,
+      unlockedAt: { difficulty: "hard", level: 30 },
+      tiles: steampunkTiles,
     },
   ],
   purchase: {
@@ -115,7 +180,7 @@ const storeReducer: StoreReducer = (state, action) => {
       };
 
       console.log(state.tilesSets[0].tiles);
-      console.log(tilesClassic);
+      console.log(classicTiles);
 
       saveStateToStorage(STORAGE_STORE_STATE_KEY, newState);
       return newState;

@@ -1,29 +1,72 @@
+import classicTiles from "./classicTiles";
+import treeTiles from "./treeTiles";
+import oceanTiles from "./oceanTiles";
+import transportTiles from "./transportTiles";
+import dogTiles from "./dogTiles";
+import catTiles from "./catTiles";
+import planetTiles from "./planetTiles";
+import fantasyTiles from "./fantasyTiles";
+import sfTiles from "./sfTiles";
+import steampunkTiles from "./steampunkTiles";
+
+export {
+  classicTiles,
+  treeTiles,
+  oceanTiles,
+  transportTiles,
+  dogTiles,
+  catTiles,
+  planetTiles,
+  fantasyTiles,
+  sfTiles,
+  steampunkTiles,
+};
+
 export default [
   {
     id: 1,
-    tiles: [
-      require("./tilesClassic/classicTile1.png"),
-      require("./tilesClassic/classicTile2.png"),
-      require("./tilesClassic/classicTile3.png"),
-      require("./tilesClassic/classicTile4.png"),
-    ],
+    tiles: classicTiles,
   },
+
+  // Easy
   {
     id: 2,
-    trees: [
-      require("./tilesTrees/treeTile1.jpg"),
-      require("./tilesTrees/treeTile2.jpg"),
-      require("./tilesTrees/treeTile3.jpg"),
-      require("./tilesTrees/treeTile4.jpg"),
-    ],
+    tiles: treeTiles,
   },
   {
     id: 3,
-    trees: [
-      require("./tilesOcean/oceanTile1.jpg"),
-      require("./tilesOcean/oceanTile2.jpg"),
-      require("./tilesOcean/oceanTile3.jpg"),
-      require("./tilesOcean/oceanTile4.jpg"),
-    ],
+    tiles: oceanTiles,
+  },
+  {
+    id: 4,
+    tiles: transportTiles,
+  },
+
+  // Medium
+  {
+    id: 5,
+    tiles: dogTiles,
+  },
+  {
+    id: 6,
+    tiles: catTiles,
+  },
+  {
+    id: 7,
+    tiles: planetTiles,
+  },
+
+  // Hard
+  {
+    id: 8,
+    tiles: fantasyTiles,
+  },
+  {
+    id: 9,
+    tiles: sfTiles,
+  },
+  {
+    id: 10,
+    tiles: steampunkTiles,
   },
 ];

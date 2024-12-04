@@ -5,9 +5,9 @@ export const DEFAULT_ANIMATION_PACE_MEDIUM = 400;
 export const DEFAULT_ANIMATION_PACE_HARD = 200;
 export const DEFAULT_MAX_LEVELS = 30;
 export const DEFAULT_DIFFICULTIES = {
-  easy: { level: 1 },
-  medium: { level: 1 },
-  hard: { level: 1 },
+  easy: { level: 30 },
+  medium: { level: 30 },
+  hard: { level: 30 },
 };
 export const START_LEVEL_DELAY = 500;
 export const USER_RESPONSE_DELAY = 1000;

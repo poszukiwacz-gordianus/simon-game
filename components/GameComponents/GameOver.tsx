@@ -16,8 +16,15 @@ export default function GameOver() {
 
   if (isInfiniteMode)
     return (
-      <Modal>
-        <FontText style={styles.header}>
+      <Modal isGameOver={!isNewBestScore}>
+        <FontText
+          style={[
+            styles.header,
+            {
+              color: isNewBestScore ? Colors.textPrimary : Colors.textSecondary,
+            },
+          ]}
+        >
           {isNewBestScore ? "New best!" : "Game over"}
         </FontText>
         {isNewBestScore ? (
@@ -71,7 +78,7 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
   best: {
-    fontSize: 40,
+    fontSize: 50,
     marginBottom: 20,
   },
 });
