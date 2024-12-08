@@ -60,11 +60,11 @@ export default function WallpaperAside({ item }: { item: WallpaperProps }) {
 
       {!isUnlocked && (
         <Button
-          title={`Buy now`}
+          title={`Buy for ${WALLPAPER_COST} coins`}
           color={Colors.buttonPrimary}
           onPress={() =>
             storeDispatch({
-              type: "STORE_SET_WALLPAPER_PURCHASE",
+              type: "STORE_BUY_WALLPAPER",
               payload: { setId, wallpaperId },
             })
           }

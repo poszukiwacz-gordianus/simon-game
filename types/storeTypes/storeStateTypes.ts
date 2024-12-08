@@ -34,5 +34,5 @@ export interface WallpaperPurchase {
 export interface StoreStateType {
   tilesSets: TileSet[];
   tileSetPurchase: TileSetPurchase;
-  wallpaperPurchase: WallpaperPurchase;
+  wallpaperModal: boolean;
 }

@@ -31,6 +31,14 @@ export default function RootLayout() {
               name="wallpapers"
               options={{ headerShown: false, animation: "slide_from_right" }}
             />
+            <Stack.Screen
+              name="showWallpaper"
+              options={{
+                headerShown: false,
+                animation: "slide_from_bottom",
+                presentation: "modal",
+              }}
+            />
           </Stack>
         </GameProvider>
       </StoreProvider>

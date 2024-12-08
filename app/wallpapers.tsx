@@ -3,14 +3,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import BackButton from "@/components/Icons/BackButton";
 import BackgroundColor from "@/components/UI/BackgroundColor";
 import WallpapersContainer from "@/components/Features/Wallpapers/WallpapersContainer";
-import Coins from "@/components/UI/Coins";
-import WallpaperBuyModal from "@/components/Features/Wallpapers/WallpaperBuyModal";
 
 export default function wallpapers() {
   return (
     <BackgroundColor>
       <SafeAreaView style={{ flex: 1 }}>
-        <Coins />
         <WallpapersContainer />
 
         <View style={{ height: 150 }} />
@@ -22,8 +19,6 @@ export default function wallpapers() {
             left: 50,
           }}
         />
-
-        <WallpaperBuyModal />
       </SafeAreaView>
     </BackgroundColor>
   );

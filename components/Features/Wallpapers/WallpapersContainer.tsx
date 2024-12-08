@@ -2,13 +2,17 @@ import { FlatList, StyleSheet, View } from "react-native";
 import FontText from "@/components/UI/FontText";
 import WallpaperCard from "./WallpaperCard";
 import { useStoreContext } from "@/context/StoreContext";
+import FilterWallpapers from "./FilterWallpapers";
+import { useState } from "react";
 
 export default function WallpapersContainer() {
+  const [filter, setFilter] = useState<"all" | "unlocked" | "owned">("all");
+
   const {
     state: { tilesSets },
   } = useStoreContext();
 
-  const wallpapers = tilesSets
+  let wallpapers = tilesSets
     .map((set) =>
       set.tiles.map((tile, index) => ({
         setId: set.id,
@@ -19,12 +23,31 @@ export default function WallpapersContainer() {
     )
     .flat();
 
+  switch (filter) {
+    case "unlocked":
+      wallpapers = wallpapers.filter(
+        (wallpaper) => wallpaper.wallpaper.isUnlocked
+      );
+      break;
+
+    case "owned":
+      wallpapers = wallpapers.filter(
+        (wallpaper) => wallpaper.wallpaper.isDownloaded
+      );
+      break;
+
+    default:
+      wallpapers = wallpapers;
+      break;
+  }
+
   return (
     <>
       <FlatList
         ListHeaderComponent={
           <View>
             <FontText style={styles.header}>Wallpapers</FontText>
+            <FilterWallpapers currentFilter={filter} onFilter={setFilter} />
           </View>
         }
         data={wallpapers}
@@ -32,7 +55,7 @@ export default function WallpapersContainer() {
         renderItem={({ item }) => <WallpaperCard item={item} />}
         contentContainerStyle={styles.flatListContainer}
         showsVerticalScrollIndicator={false}
-        numColumns={2}
+        numColumns={4}
         columnWrapperStyle={styles.row}
       />
     </>
@@ -43,7 +66,6 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 40,
     marginTop: 50,
-    marginBottom: 20,
     textAlign: "center",
   },
   sectionHeader: {
@@ -57,6 +79,6 @@ const styles = StyleSheet.create({
   },
   row: {
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: 5,
   },
 });

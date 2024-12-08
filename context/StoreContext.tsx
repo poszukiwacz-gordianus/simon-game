@@ -34,7 +34,12 @@ const initialState: StoreStateType = {
       unlockedAt: { difficulty: "easy", level: 0 },
       tiles: classicTiles,
       wallpapers: [
-        { id: 1, isUnlocked: true, isDownloaded: false, fileUri: "" },
+        {
+          id: 1,
+          isUnlocked: true,
+          isDownloaded: false,
+          fileUri: "",
+        },
         { id: 2, isUnlocked: true, isDownloaded: false, fileUri: "" },
         { id: 3, isUnlocked: true, isDownloaded: false, fileUri: "" },
         { id: 4, isUnlocked: true, isDownloaded: false, fileUri: "" },
@@ -174,11 +179,7 @@ const initialState: StoreStateType = {
     allSetsPrice: 10,
     isModalOpen: false,
   },
-  wallpaperPurchase: {
-    isModalOpen: false,
-    setId: 0,
-    wallpaperId: 0,
-  },
+  wallpaperModal: false,
 };
 
 const storeReducer: StoreReducer = (state, action) => {
@@ -198,10 +199,7 @@ const storeReducer: StoreReducer = (state, action) => {
           ...state.tileSetPurchase,
           isModalOpen: false,
         },
-        wallpaperPurchase: {
-          ...state.wallpaperPurchase,
-          isModalOpen: false,
-        },
+        wallpaperModal: false,
       };
 
     case "STORE_SET_TILESET_PURCHASE": {
@@ -218,16 +216,10 @@ const storeReducer: StoreReducer = (state, action) => {
       };
     }
 
-    case "STORE_SET_WALLPAPER_PURCHASE": {
-      const { setId, wallpaperId } = action.payload;
+    case "STORE_SET_WALLPAPER_MODAL": {
       return {
         ...state,
-        wallpaperPurchase: {
-          ...state.wallpaperPurchase,
-          isModalOpen: !state.wallpaperPurchase.isModalOpen,
-          setId,
-          wallpaperId,
-        },
+        wallpaperModal: true,
       };
     }
 
@@ -297,10 +289,7 @@ const storeReducer: StoreReducer = (state, action) => {
       const { setId, wallpaperId } = action.payload;
       const newState = {
         ...state,
-        wallpaperPurchase: {
-          ...state.wallpaperPurchase,
-          isModalOpen: false,
-        },
+        wallpaperModal: false,
         tilesSets: state.tilesSets.map((tileSet) =>
           tileSet.id === setId
             ? {
@@ -317,8 +306,6 @@ const storeReducer: StoreReducer = (state, action) => {
             : tileSet
         ),
       };
-
-      console.log(newState.tilesSets.find((tileSet) => tileSet.id === setId));
 
       saveStateToStorage(STORAGE_STORE_STATE_KEY, newState);
       return newState;

@@ -6,6 +6,7 @@ import FontText from "@/components/UI/FontText";
 import StoreCard from "@/components/Features/Store/StoreCard";
 import StoreBuyModal from "@/components/Features/Store/StoreBuyModal";
 import BackgroundColor from "@/components/UI/BackgroundColor";
+import Coins from "@/components/UI/Coins";
 
 export default function Store() {
   const {
@@ -37,6 +38,7 @@ export default function Store() {
         />
 
         <StoreBuyModal />
+        <Coins />
       </SafeAreaView>
     </BackgroundColor>
   );

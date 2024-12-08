@@ -8,8 +8,7 @@ export type StoreActionType =
       payload: { id: number; setName: string };
     }
   | {
-      type: "STORE_SET_WALLPAPER_PURCHASE";
-      payload: { setId: number; wallpaperId: number };
+      type: "STORE_SET_WALLPAPER_MODAL";
     }
   | {
       type: "STORE_UNLOCK_SET_TILES";
