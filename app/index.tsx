@@ -10,6 +10,7 @@ import BackButton from "@/components/Icons/BackButton";
 import ScoreboardModal from "@/components/Features/Scoreboard/ScoreboardModal";
 import StoreModal from "@/components/Features/Store/StoreModal";
 import BackgroundColor from "@/components/UI/BackgroundColor";
+import WallpapersIcon from "@/components/Features/Wallpapers/WallpapersIcon";
 
 export default function Index() {
   // console.log("Index");
@@ -39,6 +40,7 @@ export default function Index() {
         />
         <ScoreboardModal />
         <StoreModal />
+        <WallpapersIcon />
       </SafeAreaView>
     </BackgroundColor>
   );

@@ -1,12 +1,20 @@
 import { Difficulty } from "../types";
 
+export interface Wallpapers {
+  id: number;
+  isUnlocked: boolean;
+  isDownloaded: boolean;
+  fileUri: string;
+}
+
 export interface TileSet {
   setName: string;
   id: number;
   isUnlocked: boolean;
   isCurrentlyUsed: boolean;
   unlockedAt: { difficulty: Difficulty; level: number };
-  tiles: string[]; // Paths to the tile images
+  tiles: string[];
+  wallpapers: Wallpapers[];
 }
 
 export interface Purchase {

@@ -27,6 +27,10 @@ export default function RootLayout() {
               name="store"
               options={{ headerShown: false, animation: "slide_from_right" }}
             />
+            <Stack.Screen
+              name="wallpapers"
+              options={{ headerShown: false, animation: "slide_from_right" }}
+            />
           </Stack>
         </GameProvider>
       </StoreProvider>

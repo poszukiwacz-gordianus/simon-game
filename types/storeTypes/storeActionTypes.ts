@@ -1,4 +1,4 @@
-import { Difficulty, StoreStateType } from "../types";
+import { Difficulty, StoreStateType, TileSet } from "../types";
 
 export type StoreActionType =
   | { type: "STORE_LOAD_STATE"; payload: StoreStateType }
@@ -9,4 +9,8 @@ export type StoreActionType =
       payload: { difficulty: Difficulty; level: number };
     }
   | { type: "STORE_SET_CURRENT_TILESET"; payload: number }
+  | {
+      type: "STORE_SET_WALLPAPER";
+      payload: { setId: number; wallpaperId: number; fileUri: string };
+    }
   | { type: "STORE_RESET_STATE" };

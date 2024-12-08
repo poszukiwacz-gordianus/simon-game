@@ -18,3 +18,12 @@ export interface RuleProps {
   rule: string;
   index: number;
 }
+
+export interface WallpaperProps {
+  id: number;
+  category: string;
+  localSource: number;
+  price: number;
+  title: string;
+  wallpaper: string;
+}

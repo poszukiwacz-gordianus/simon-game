@@ -1,4 +1,4 @@
-import {
+import tiles, {
   classicTiles,
   treeTiles,
   oceanTiles,
@@ -32,6 +32,12 @@ const initialState: StoreStateType = {
       isCurrentlyUsed: true,
       unlockedAt: { difficulty: "easy", level: 0 },
       tiles: classicTiles,
+      wallpapers: [
+        { id: 1, isUnlocked: true, isDownloaded: false, fileUri: "" },
+        { id: 2, isUnlocked: true, isDownloaded: false, fileUri: "" },
+        { id: 3, isUnlocked: true, isDownloaded: false, fileUri: "" },
+        { id: 4, isUnlocked: true, isDownloaded: false, fileUri: "" },
+      ],
     },
     {
       setName: "Trees",
@@ -40,6 +46,12 @@ const initialState: StoreStateType = {
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "easy", level: 10 },
       tiles: treeTiles,
+      wallpapers: [
+        { id: 5, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 6, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 7, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 8, isUnlocked: false, isDownloaded: false, fileUri: "" },
+      ],
     },
     {
       setName: "Ocean",
@@ -48,6 +60,12 @@ const initialState: StoreStateType = {
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "easy", level: 20 },
       tiles: oceanTiles,
+      wallpapers: [
+        { id: 9, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 10, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 11, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 12, isUnlocked: false, isDownloaded: false, fileUri: "" },
+      ],
     },
     {
       setName: "Transport",
@@ -56,6 +74,12 @@ const initialState: StoreStateType = {
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "easy", level: 30 },
       tiles: transportTiles,
+      wallpapers: [
+        { id: 13, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 14, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 15, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 16, isUnlocked: false, isDownloaded: false, fileUri: "" },
+      ],
     },
     {
       setName: "Dogs",
@@ -64,6 +88,12 @@ const initialState: StoreStateType = {
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "medium", level: 10 },
       tiles: dogTiles,
+      wallpapers: [
+        { id: 17, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 18, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 19, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 20, isUnlocked: false, isDownloaded: false, fileUri: "" },
+      ],
     },
     {
       setName: "Cats",
@@ -72,6 +102,12 @@ const initialState: StoreStateType = {
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "medium", level: 20 },
       tiles: catTiles,
+      wallpapers: [
+        { id: 21, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 22, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 23, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 24, isUnlocked: false, isDownloaded: false, fileUri: "" },
+      ],
     },
     {
       setName: "Planets",
@@ -80,6 +116,12 @@ const initialState: StoreStateType = {
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "medium", level: 30 },
       tiles: planetTiles,
+      wallpapers: [
+        { id: 25, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 26, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 27, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 28, isUnlocked: false, isDownloaded: false, fileUri: "" },
+      ],
     },
     {
       setName: "Fantasy",
@@ -88,6 +130,12 @@ const initialState: StoreStateType = {
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "hard", level: 10 },
       tiles: fantasyTiles,
+      wallpapers: [
+        { id: 29, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 30, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 31, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 32, isUnlocked: false, isDownloaded: false, fileUri: "" },
+      ],
     },
     {
       setName: "Si-Fi",
@@ -96,6 +144,12 @@ const initialState: StoreStateType = {
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "hard", level: 20 },
       tiles: sfTiles,
+      wallpapers: [
+        { id: 33, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 34, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 35, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 36, isUnlocked: false, isDownloaded: false, fileUri: "" },
+      ],
     },
     {
       setName: "Steampunk",
@@ -104,6 +158,12 @@ const initialState: StoreStateType = {
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "hard", level: 30 },
       tiles: steampunkTiles,
+      wallpapers: [
+        { id: 37, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 38, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 39, isUnlocked: false, isDownloaded: false, fileUri: "" },
+        { id: 40, isUnlocked: false, isDownloaded: false, fileUri: "" },
+      ],
     },
   ],
   purchase: {
@@ -179,8 +239,31 @@ const storeReducer: StoreReducer = (state, action) => {
         }),
       };
 
-      console.log(state.tilesSets[0].tiles);
-      console.log(classicTiles);
+      saveStateToStorage(STORAGE_STORE_STATE_KEY, newState);
+      return newState;
+    }
+
+    case "STORE_SET_WALLPAPER": {
+      console.log("SET_WALLPAPERS");
+      const newState = {
+        ...state,
+        tilesSets: state.tilesSets.map((tileSet) =>
+          tileSet.id === action.payload.setId
+            ? {
+                ...tileSet,
+                wallpapers: tileSet.wallpapers.map((wallpaper) =>
+                  wallpaper.id === action.payload.wallpaperId
+                    ? {
+                        ...wallpaper,
+                        isDownloaded: true,
+                        fileUri: action.payload.fileUri,
+                      }
+                    : wallpaper
+                ),
+              }
+            : tileSet
+        ),
+      };
 
       saveStateToStorage(STORAGE_STORE_STATE_KEY, newState);
       return newState;

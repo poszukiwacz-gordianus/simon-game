@@ -1,6 +1,8 @@
 import { Animated, Platform } from "react-native";
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Directory, File, Paths } from "expo-file-system/next";
+import * as FileSystem from "expo-file-system";
 import {
   type SaveStateToStorageProps,
   type LoadStateFromStorageProps,
@@ -13,6 +15,7 @@ import { DEFAULT_TILE_SOUND_INDEX } from "@/config";
 
 import tilesImages from "@/assets/images/tiles";
 import soundMap from "@/assets/sounds";
+import { singedUrl } from "./data-service";
 
 export const loadTiles: LoadTiles = (storeState, defaultTilesSet) => {
   // Find the used tiles set from data loaded from storage
@@ -197,4 +200,90 @@ export const loadSoundsToMemory = async (): Promise<Audio.Sound[]> => {
 
   // console.log("Sounds loaded to memory");
   return sounds;
+};
+
+export const downloadWallpaper = async (
+  fileName: string,
+  id: number
+): Promise<string | undefined> => {
+  // Generate file path
+  const filePath = `${fileName.toLowerCase()}-wallpaper-${id}.jpg`;
+
+  const signedUrl = await singedUrl(filePath);
+
+  if (!signedUrl) {
+    alert("Failed to get the wallpaper URL.");
+    return;
+  }
+
+  try {
+    const directory = new Directory(Paths.cache, `wallpapers/`);
+    // Create the directory if it doesn't exist
+    if (!directory.exists) directory.create();
+
+    // Define the output file path
+    const outputFile = new File(directory, filePath);
+
+    // Download the file
+    const output = await File.downloadFileAsync(signedUrl, outputFile);
+    console.log("File exists: ", output.exists); // true
+    console.log("File URI: ", output.uri); // path to the downloaded file, e.g. '${cacheDirectory}/wallpapers/classic-wallpaper-1.jpg'
+
+    // Notify the user
+    if (output.exists) alert("File downloaded successfully!");
+    return output.uri;
+  } catch (error) {
+    console.error("Error downloading wallpaper:", error);
+    alert("Failed to download wallpaper.");
+  }
+};
+
+export const clearWallpapersCache = async () => {
+  const directoryPath = `${FileSystem.cacheDirectory}wallpapers`;
+  try {
+    const files = await FileSystem.readDirectoryAsync(directoryPath);
+    for (const file of files) {
+      const filePath = `${directoryPath}/${file}`;
+      await FileSystem.deleteAsync(filePath, { idempotent: true });
+    }
+    console.log("Cache cleared successfully.");
+  } catch (error) {
+    console.error("Error clearing cache:", error);
+  }
+};
+
+import { Alert } from "react-native";
+import * as MediaLibrary from "expo-media-library";
+import { startActivityAsync } from "expo-intent-launcher";
+
+export const setWallpaper = async (uri: string) => {
+  if (Platform.OS === "android") {
+    // Android: Open wallpaper picker
+    const contentUri = await FileSystem.getContentUriAsync(uri);
+    await startActivityAsync("android.intent.action.ATTACH_DATA", {
+      data: contentUri,
+      type: "image/*", // Specifies the MIME type
+      flags: 1, // FLAG_GRANT_READ_URI_PERMISSION
+    });
+  } else if (Platform.OS === "ios") {
+    // iOS: Save to Photos and inform user
+    const permission = await MediaLibrary.requestPermissionsAsync();
+    if (permission.granted) {
+      try {
+        const asset = await MediaLibrary.createAssetAsync(uri);
+        Alert.alert(
+          "Saved!",
+          "Wallpaper saved to your Photos. Open the Photos app to set it as your wallpaper."
+        );
+      } catch (error) {
+        console.error("Error saving to Photos:", error);
+        Alert.alert("Error", "Failed to save wallpaper.");
+      }
+    } else {
+      Alert.alert(
+        "Permission Required",
+        "Permission to access Photos is required."
+      );
+    }
+  }
 };

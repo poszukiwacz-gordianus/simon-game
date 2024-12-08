@@ -7,6 +7,7 @@ import FontText from "@/components/UI/FontText";
 import Modal from "@/components/UI/Modal";
 import { classicTiles } from "@/assets/images/tiles";
 import { Colors } from "@/constants/Colors";
+import { clearWallpapersCache } from "@/utils/helpers";
 
 export default function ResetAppSettings() {
   const [isVisible, setIsVisible] = useState(false);
@@ -23,6 +24,7 @@ export default function ResetAppSettings() {
     gameDispatch({ type: "GAME_RESET_STATE" });
     storeDispatch({ type: "STORE_RESET_STATE" });
     gameDispatch({ type: "GAME_SET_TILES", payload: defaultTiles });
+    clearWallpapersCache();
   };
 
   return (
