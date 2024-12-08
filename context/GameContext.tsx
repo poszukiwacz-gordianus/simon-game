@@ -4,6 +4,7 @@ import {
   DEFAULT_ANIMATION_PACE_HARD,
   DEFAULT_ANIMATION_PACE_MEDIUM,
   DEFAULT_BEST_SCORE,
+  DEFAULT_COINS,
   DEFAULT_DIFFICULTIES,
   DEFAULT_DIFFICULTY,
   DEFAULT_HINTS,
@@ -36,6 +37,7 @@ const initialState: GameState = {
   tilesRemaining: 1,
   userGuess: 0,
   hints: DEFAULT_HINTS,
+  coins: DEFAULT_COINS,
   tileSoundIndex: DEFAULT_TILE_SOUND_INDEX,
   bestScore: DEFAULT_BEST_SCORE,
   isAppActive: false,
@@ -103,6 +105,7 @@ const gameReducer: GameReducer = (state, action) => {
       saveStateToStorage(STORAGE_GAME_STATE_KEY, {
         difficulties: state.difficulties,
         bestScore: state.bestScore,
+        coins: state.coins,
         tileSoundIndex: action.payload,
       });
       return {
@@ -199,12 +202,18 @@ const gameReducer: GameReducer = (state, action) => {
 
           // If its infinite mode level starts at 0 so we need to add 1
           const infinitiLevel = state.level + 1;
+
           // Check if user has new best score
           const isNewBestScore =
             state.isInfiniteMode && infinitiLevel > state.bestScore;
 
           // If it's new best score than update best score otherwise not
           const bestScore = isNewBestScore ? infinitiLevel : state.bestScore;
+
+          // Check if level is beat first time on infinity mode or normal mode
+          const isLevelBeatFirstTime = state.isInfiniteMode
+            ? isNewBestScore
+            : newLevel > state.difficulties[state.difficulty].level;
 
           // Update difficulties state if newLevel is higher than current max difficulty level else return current state difficulties
           const difficulties = isMaxLevelExceeded
@@ -222,6 +231,7 @@ const gameReducer: GameReducer = (state, action) => {
             saveStateToStorage(STORAGE_GAME_STATE_KEY, {
               difficulties,
               bestScore,
+              coins: isLevelBeatFirstTime ? state.coins + 1 : state.coins,
               tileSoundIndex: state.tileSoundIndex,
             });
           }
@@ -232,6 +242,7 @@ const gameReducer: GameReducer = (state, action) => {
             difficulties,
             bestScore,
             isNewBestScore,
+            coins: isLevelBeatFirstTime ? state.coins + 1 : state.coins,
           };
         }
 
@@ -261,6 +272,7 @@ const gameReducer: GameReducer = (state, action) => {
       saveStateToStorage(STORAGE_GAME_STATE_KEY, {
         difficulties: DEFAULT_DIFFICULTIES,
         bestScore: DEFAULT_BEST_SCORE,
+        coins: DEFAULT_COINS,
         tileSoundIndex: DEFAULT_TILE_SOUND_INDEX,
       });
 
@@ -269,6 +281,7 @@ const gameReducer: GameReducer = (state, action) => {
         difficulties: DEFAULT_DIFFICULTIES,
         bestScore: DEFAULT_BEST_SCORE,
         tileSoundIndex: DEFAULT_TILE_SOUND_INDEX,
+        coins: DEFAULT_COINS,
         isSoundOn: true,
       };
     }

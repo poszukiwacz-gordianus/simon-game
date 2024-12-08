@@ -4,9 +4,9 @@ import { Wallpapers } from "@/types/types";
 import WallpaperAside from "./WallpaperAside";
 
 export default function WallpaperCard({
-  item: { tile, wallpaper },
+  item: { setName, tile, wallpaper },
 }: {
-  item: { tile: string; wallpaper: Wallpapers };
+  item: { setName: string; tile: string; wallpaper: Wallpapers };
 }) {
   return (
     <View style={styles.tileContainer}>
@@ -16,7 +16,7 @@ export default function WallpaperCard({
         contentFit="fill"
         transition={1000}
       />
-      <WallpaperAside wallpaper={wallpaper} />
+      <WallpaperAside wallpaper={wallpaper} setName={setName} />
     </View>
   );
 }

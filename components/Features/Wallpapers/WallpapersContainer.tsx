@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import FontText from "@/components/UI/FontText";
 import WallpaperCard from "./WallpaperCard";
 import { useStoreContext } from "@/context/StoreContext";
@@ -11,6 +11,7 @@ export default function WallpapersContainer() {
   const wallpapers = tilesSets
     .map((set) =>
       set.tiles.map((tile, index) => ({
+        setName: set.setName,
         tile: tile,
         wallpaper: set.wallpapers[index],
       }))
@@ -21,7 +22,9 @@ export default function WallpapersContainer() {
     <>
       <FlatList
         ListHeaderComponent={
-          <FontText style={styles.header}>Wallpapers</FontText>
+          <View>
+            <FontText style={styles.header}>Wallpapers</FontText>
+          </View>
         }
         data={wallpapers}
         keyExtractor={(item) => String(item.tile)}

@@ -24,6 +24,7 @@ export interface Difficulties {
 export interface LoadGameState {
   difficulties: Difficulties;
   bestScore: number;
+  coins: number;
   tileSoundIndex: number;
 }
 
@@ -68,6 +69,7 @@ export interface GameState {
   tilesRemaining: number;
   userGuess: number;
   hints: number;
+  coins: number;
   tileSoundIndex: number;
   bestScore: number;
   isAppActive: boolean;

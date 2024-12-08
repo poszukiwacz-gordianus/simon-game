@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 10, // Ensure it overlays other elements
+    zIndex: 20, // Ensure it overlays other elements
     borderRadius: 20,
   },
   modalView: {

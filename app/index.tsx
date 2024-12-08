@@ -11,6 +11,7 @@ import ScoreboardModal from "@/components/Features/Scoreboard/ScoreboardModal";
 import StoreModal from "@/components/Features/Store/StoreModal";
 import BackgroundColor from "@/components/UI/BackgroundColor";
 import WallpapersIcon from "@/components/Features/Wallpapers/WallpapersIcon";
+import Coins from "@/components/UI/Coins";
 
 export default function Index() {
   // console.log("Index");
@@ -41,6 +42,7 @@ export default function Index() {
         <ScoreboardModal />
         <StoreModal />
         <WallpapersIcon />
+        <Coins />
       </SafeAreaView>
     </BackgroundColor>
   );

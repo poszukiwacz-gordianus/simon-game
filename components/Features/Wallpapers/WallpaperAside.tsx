@@ -11,8 +11,10 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function WallpaperAside({
   wallpaper,
+  setName,
 }: {
   wallpaper: Wallpapers;
+  setName: string;
 }) {
   const {
     state: { tilesSets },
@@ -53,7 +55,7 @@ export default function WallpaperAside({
 
   return (
     <View style={[styles.aside]}>
-      <FontText style={styles.cardHeader}>{setInformation.setName}</FontText>
+      <FontText style={styles.cardHeader}>{setName}</FontText>
       {!isUnlocked && (
         <FontText style={styles.cardAside}>
           {/* Set is unlocked at level {unlockedAt.level} difficulty{" "} */}

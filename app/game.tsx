@@ -8,6 +8,7 @@ import GameTilesContainer from "@/components/GameComponents/GameTilesContainer";
 import GameFooter from "@/components/GameComponents/GameFooter";
 import SoundModal from "@/components/Icons/SoundModal";
 import BackgroundColor from "@/components/UI/BackgroundColor";
+import Coins from "@/components/UI/Coins";
 
 export default function Game() {
   const {
@@ -25,6 +26,7 @@ export default function Game() {
         <GameTilesContainer />
         <GameFooter />
         <SoundModal />
+        <Coins />
       </SafeAreaView>
     </BackgroundColor>
   );
