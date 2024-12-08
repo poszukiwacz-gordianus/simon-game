@@ -24,4 +24,5 @@ export type GameActionType =
   | { type: "GAME_ENABLE_USER_RESPONSE" }
   | { type: "GAME_SHOW_HINT" }
   | { type: "GAME_VERIFY_USER_RESPONSE"; payload: number }
+  | { type: "GAME_USE_COINS"; payload: number }
   | { type: "GAME_RESET_STATE" };

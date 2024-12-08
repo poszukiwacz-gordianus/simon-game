@@ -1,3 +1,4 @@
+///// GAME STATE DEFAULTS
 export const DEFAULT_DIFFICULTY = "easy";
 export const DEFAULT_HINTS = 3;
 export const DEFAULT_COINS = 0;
@@ -10,13 +11,19 @@ export const DEFAULT_DIFFICULTIES = {
   medium: { level: 1 },
   hard: { level: 1 },
 };
+export const DEFAULT_TILE_SOUND_INDEX = 2;
+export const DEFAULT_BEST_SCORE = 0;
+
+///// SOUND DEFAULTS
+export const WINNING_SOUND = 0;
+export const GAME_OVER_SOUND = 1;
+
+///// GAME DELAYS
 export const START_GAME_DELAY = 1200;
 export const START_LEVEL_DELAY = 500;
 export const USER_RESPONSE_DELAY = 900;
-export const WINNING_SOUND = 0;
-export const GAME_OVER_SOUND = 1;
-export const DEFAULT_TILE_SOUND_INDEX = 2;
-export const DEFAULT_BEST_SCORE = 0;
+
+///// STORAGE
 export const DEFAULT_GAME_STATE_FROM_STORAGE = {
   bestScore: DEFAULT_BEST_SCORE,
   difficulties: DEFAULT_DIFFICULTIES,
@@ -27,3 +34,6 @@ export const STORAGE_GAME_STATE_KEY = "gameState";
 export const STORAGE_STORE_STATE_KEY = "storeState";
 export const STORAGE_GAME_ACTION = "GAME_LOAD_STATE";
 export const STORAGE_STORE_ACTION = "STORE_LOAD_STATE";
+
+///// WALLPAPER COST
+export const WALLPAPER_COST = 5;

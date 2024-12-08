@@ -267,6 +267,20 @@ const gameReducer: GameReducer = (state, action) => {
       };
     }
 
+    case "GAME_USE_COINS": {
+      saveStateToStorage(STORAGE_GAME_STATE_KEY, {
+        difficulties: state.difficulties,
+        bestScore: state.bestScore,
+        coins: state.coins - action.payload,
+        tileSoundIndex: state.tileSoundIndex,
+      });
+
+      return {
+        ...state,
+        coins: state.coins - action.payload,
+      };
+    }
+
     case "GAME_RESET_STATE": {
       // console.log("RESET_APP_STATE");
       saveStateToStorage(STORAGE_GAME_STATE_KEY, {

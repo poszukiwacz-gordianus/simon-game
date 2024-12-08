@@ -1,4 +1,4 @@
-import tiles, {
+import {
   classicTiles,
   treeTiles,
   oceanTiles,
@@ -11,15 +11,16 @@ import tiles, {
   steampunkTiles,
 } from "@/assets/images/tiles";
 
-import {
-  StoreContextProviderProps,
-  StoreContextType,
-  StoreReducer,
-  StoreStateType,
-} from "@/types/types";
 import { saveStateToStorage } from "@/utils/helpers";
 import { createContext, useContext, useReducer } from "react";
 import { STORAGE_STORE_STATE_KEY } from "@/config";
+
+import {
+  type StoreContextProviderProps,
+  type StoreContextType,
+  type StoreReducer,
+  type StoreStateType,
+} from "@/types/types";
 
 const StoreContext = createContext<StoreContextType | null>(null);
 
@@ -166,12 +167,17 @@ const initialState: StoreStateType = {
       ],
     },
   ],
-  purchase: {
+  tileSetPurchase: {
     setName: "",
     id: 0,
     setPrice: 1,
     allSetsPrice: 10,
     isModalOpen: false,
+  },
+  wallpaperPurchase: {
+    isModalOpen: false,
+    setId: 0,
+    wallpaperId: 0,
   },
 };
 
@@ -183,26 +189,44 @@ const storeReducer: StoreReducer = (state, action) => {
       if (action.payload) return action.payload;
       return state;
     }
+
     case "STORE_TOGGLE_MODAL":
       // console.log("TOGGLE_MODAL");
       return {
         ...state,
-        purchase: {
-          ...state.purchase,
-          isModalOpen: !state.purchase.isModalOpen,
+        tileSetPurchase: {
+          ...state.tileSetPurchase,
+          isModalOpen: false,
+        },
+        wallpaperPurchase: {
+          ...state.wallpaperPurchase,
+          isModalOpen: false,
         },
       };
 
-    case "STORE_SET_PURCHASE": {
+    case "STORE_SET_TILESET_PURCHASE": {
       // console.log("SET_PURCHASE");
       const { id, setName } = action.payload;
       return {
         ...state,
-        purchase: {
-          ...state.purchase,
-          isModalOpen: !state.purchase.isModalOpen,
+        tileSetPurchase: {
+          ...state.tileSetPurchase,
+          isModalOpen: !state.tileSetPurchase.isModalOpen,
           id,
           setName,
+        },
+      };
+    }
+
+    case "STORE_SET_WALLPAPER_PURCHASE": {
+      const { setId, wallpaperId } = action.payload;
+      return {
+        ...state,
+        wallpaperPurchase: {
+          ...state.wallpaperPurchase,
+          isModalOpen: !state.wallpaperPurchase.isModalOpen,
+          setId,
+          wallpaperId,
         },
       };
     }
@@ -264,6 +288,37 @@ const storeReducer: StoreReducer = (state, action) => {
             : tileSet
         ),
       };
+
+      saveStateToStorage(STORAGE_STORE_STATE_KEY, newState);
+      return newState;
+    }
+
+    case "STORE_BUY_WALLPAPER": {
+      const { setId, wallpaperId } = action.payload;
+      const newState = {
+        ...state,
+        wallpaperPurchase: {
+          ...state.wallpaperPurchase,
+          isModalOpen: false,
+        },
+        tilesSets: state.tilesSets.map((tileSet) =>
+          tileSet.id === setId
+            ? {
+                ...tileSet,
+                wallpapers: tileSet.wallpapers.map((wallpaper) =>
+                  wallpaper.id === wallpaperId
+                    ? {
+                        ...wallpaper,
+                        isUnlocked: true,
+                      }
+                    : wallpaper
+                ),
+              }
+            : tileSet
+        ),
+      };
+
+      console.log(newState.tilesSets.find((tileSet) => tileSet.id === setId));
 
       saveStateToStorage(STORAGE_STORE_STATE_KEY, newState);
       return newState;

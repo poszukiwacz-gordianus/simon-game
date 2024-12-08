@@ -17,7 +17,7 @@ export interface TileSet {
   wallpapers: Wallpapers[];
 }
 
-export interface Purchase {
+export interface TileSetPurchase {
   setName: string;
   id: number;
   setPrice: number;
@@ -25,7 +25,14 @@ export interface Purchase {
   isModalOpen: boolean;
 }
 
+export interface WallpaperPurchase {
+  isModalOpen: boolean;
+  setId: number;
+  wallpaperId: number;
+}
+
 export interface StoreStateType {
   tilesSets: TileSet[];
-  purchase: Purchase;
+  tileSetPurchase: TileSetPurchase;
+  wallpaperPurchase: WallpaperPurchase;
 }

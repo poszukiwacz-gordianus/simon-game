@@ -1,36 +1,21 @@
 import FontText from "@/components/UI/FontText";
 import { Button, StyleSheet, View } from "react-native";
-import { type Wallpapers } from "@/types/types";
+import { WallpaperProps } from "@/types/types";
 import { useStoreContext } from "@/context/StoreContext";
-import { useGameContext } from "@/context/GameContext";
 import { Colors } from "@/constants/Colors";
 import { downloadWallpaper, setWallpaper } from "@/utils/helpers";
 import * as MediaLibrary from "expo-media-library";
 import { useEffect } from "react";
-import { Ionicons } from "@expo/vector-icons";
+import ButtonBuyWallpaper from "./ButtonBuyWallpaper";
+import { WALLPAPER_COST } from "@/config";
 
-export default function WallpaperAside({
-  wallpaper,
-  setName,
-}: {
-  wallpaper: Wallpapers;
-  setName: string;
-}) {
+export default function WallpaperAside({ item }: { item: WallpaperProps }) {
+  const { dispatch: storeDispatch } = useStoreContext();
   const {
-    state: { tilesSets },
-    dispatch: storeDispatch,
-  } = useStoreContext();
-  const { dispatch: gameDispatch } = useGameContext();
-
-  const setInformation = tilesSets.find((set) =>
-    set.wallpapers.map((item) => item.id === set.id)
-  );
-
-  if (!setInformation) return;
-
-  // console.log(setInformation);
-
-  const { id, isUnlocked, isDownloaded, fileUri } = wallpaper;
+    setId,
+    setName,
+    wallpaper: { id: wallpaperId, isUnlocked, isDownloaded, fileUri },
+  } = item;
 
   const getMediaLibraryPermissions = async () => {
     const { status } = await MediaLibrary.requestPermissionsAsync();
@@ -44,11 +29,11 @@ export default function WallpaperAside({
   }, []);
 
   const handleDownload = async () => {
-    const fileUri = await downloadWallpaper(setInformation.setName, id);
+    const fileUri = await downloadWallpaper(setName, wallpaperId);
     if (fileUri !== "" && fileUri !== undefined) {
       storeDispatch({
         type: "STORE_SET_WALLPAPER",
-        payload: { setId: setInformation.id, wallpaperId: id, fileUri },
+        payload: { setId, wallpaperId, fileUri },
       });
     }
   };
@@ -56,12 +41,6 @@ export default function WallpaperAside({
   return (
     <View style={[styles.aside]}>
       <FontText style={styles.cardHeader}>{setName}</FontText>
-      {!isUnlocked && (
-        <FontText style={styles.cardAside}>
-          {/* Set is unlocked at level {unlockedAt.level} difficulty{" "} */}
-          {/* {unlockedAt.difficulty} */}
-        </FontText>
-      )}
 
       {isUnlocked && !isDownloaded && (
         <Button
@@ -79,7 +58,18 @@ export default function WallpaperAside({
         />
       )}
 
-      {!isUnlocked && <Button title="Buy now" color={Colors.buttonPrimary} />}
+      {!isUnlocked && (
+        <Button
+          title={`Buy now`}
+          color={Colors.buttonPrimary}
+          onPress={() =>
+            storeDispatch({
+              type: "STORE_SET_WALLPAPER_PURCHASE",
+              payload: { setId, wallpaperId },
+            })
+          }
+        />
+      )}
     </View>
   );
 }

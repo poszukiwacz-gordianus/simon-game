@@ -1,5 +1,6 @@
 import { LinkProps } from "expo-router";
 import { type Animated } from "react-native";
+import { TileSet, Wallpapers } from "./types";
 
 export type RulesContent = Array<string>;
 
@@ -20,10 +21,8 @@ export interface RuleProps {
 }
 
 export interface WallpaperProps {
-  id: number;
-  category: string;
-  localSource: number;
-  price: number;
-  title: string;
-  wallpaper: string;
+  setId: number;
+  setName: string;
+  tile: string;
+  wallpaper: Wallpapers;
 }

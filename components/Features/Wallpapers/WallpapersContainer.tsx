@@ -11,9 +11,10 @@ export default function WallpapersContainer() {
   const wallpapers = tilesSets
     .map((set) =>
       set.tiles.map((tile, index) => ({
+        setId: set.id,
         setName: set.setName,
-        tile: tile,
         wallpaper: set.wallpapers[index],
+        tile: tile,
       }))
     )
     .flat();
