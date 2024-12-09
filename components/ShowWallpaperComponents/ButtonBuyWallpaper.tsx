@@ -1,8 +1,8 @@
-import { WALLPAPER_COST } from "@/config";
-import { Colors } from "@/constants/Colors";
 import { useGameContext } from "@/context/GameContext";
 import { useStoreContext } from "@/context/StoreContext";
-import { Button } from "react-native";
+import { WALLPAPER_COST } from "@/config";
+import { Colors } from "@/constants/Colors";
+import Button from "../UI/Button";
 
 export default function ButtonBuyWallpaper({
   setId,
@@ -17,23 +17,25 @@ export default function ButtonBuyWallpaper({
   } = useGameContext();
   const { dispatch: dispatchStore } = useStoreContext();
 
-  const isEnoughCoins = coins >= WALLPAPER_COST;
+  const hasSufficientCoins = coins >= WALLPAPER_COST;
 
-  const handleBuy = () => {
-    console.log("Buying wallpaper");
-    if (isEnoughCoins) {
+  const handlePurchase = () => {
+    if (hasSufficientCoins) {
       dispatchStore({
         type: "STORE_BUY_WALLPAPER",
         payload: { setId, wallpaperId },
       });
       dispatchGame({ type: "GAME_USE_COINS", payload: WALLPAPER_COST });
-    } else dispatchStore({ type: "STORE_SET_WALLPAPER_MODAL" });
+    } else {
+      dispatchStore({ type: "STORE_SET_WALLPAPER_MODAL" });
+    }
   };
+
   return (
     <Button
-      title={`Buy now for ${WALLPAPER_COST} coins`}
-      color={Colors.buttonPrimary}
-      onPress={handleBuy}
+      title={`${WALLPAPER_COST} coins`}
+      style={{ backgroundColor: Colors.buttonPrimary }}
+      onPress={handlePurchase}
     />
   );
 }

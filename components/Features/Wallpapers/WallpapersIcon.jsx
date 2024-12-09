@@ -9,7 +9,7 @@ export default function WallpapersIcon() {
       <View style={styles.centerIcon}>
         <Ionicons
           name="diamond"
-          size={24}
+          size={42}
           color={Colors.buttonPrimary}
           style={{ alignSelf: "center", alignItems: "center" }}
         />
@@ -21,11 +21,11 @@ export default function WallpapersIcon() {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    backgroundColor: Colors.primary,
-    width: 50,
-    height: 50,
-    top: 280,
-    right: 20,
+    backgroundColor: Colors.backgroundAccent,
+    width: 100,
+    height: 100,
+    bottom: 50,
+    right: 40,
     borderRadius: 10,
     overflow: "hidden",
   },

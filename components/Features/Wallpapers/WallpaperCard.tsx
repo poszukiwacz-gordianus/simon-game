@@ -1,22 +1,26 @@
 import { StyleSheet, View } from "react-native";
-import { Image } from "expo-image";
-import { type WallpaperProps } from "@/types/types";
-import WallpaperAside from "./WallpaperAside";
 import { Link } from "expo-router";
+import { Image } from "expo-image";
 
-export default function WallpaperCard({ item }: { item: WallpaperProps }) {
+export default function WallpaperCard({
+  imageUrl,
+  id,
+}: {
+  imageUrl: string;
+  id: number;
+}) {
   return (
     <Link
       href={{
         pathname: "/showWallpaper",
-        params: { id: item.wallpaper.id },
+        params: { id },
       }}
-      style={{ width: "24%", height: 150 }}
+      style={styles.link}
     >
       <View style={styles.container}>
         <Image
           style={styles.image}
-          source={item.tile}
+          source={imageUrl}
           contentFit="cover"
           transition={1000}
         />
@@ -26,6 +30,10 @@ export default function WallpaperCard({ item }: { item: WallpaperProps }) {
 }
 
 const styles = StyleSheet.create({
+  link: {
+    width: "24%",
+    height: 150,
+  },
   container: {
     borderColor: "white",
     borderWidth: 1,

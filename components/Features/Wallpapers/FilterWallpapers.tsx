@@ -10,26 +10,26 @@ const FILTERS = [
 
 export default function FilterWallpapers({
   currentFilter,
-  onFilter,
+  onFilterChange,
 }: {
   currentFilter: "all" | "unlocked" | "owned";
-  onFilter: (filter: "all" | "unlocked" | "owned") => void;
+  onFilterChange: (filter: "all" | "unlocked" | "owned") => void;
 }) {
   return (
     <View style={styles.container}>
-      {FILTERS.map(({ label, value }) => (
+      {FILTERS.map(({ label, value: filterValue }) => (
         <Pressable
-          key={value}
+          key={filterValue}
           style={[
             styles.button,
             {
               backgroundColor:
-                currentFilter === value
+                currentFilter === filterValue
                   ? Colors.buttonPrimary
                   : Colors.buttonSecondary,
             },
           ]}
-          onPress={() => onFilter(value)}
+          onPress={() => onFilterChange(filterValue)}
         >
           <FontText style={styles.label}>{label}</FontText>
         </Pressable>

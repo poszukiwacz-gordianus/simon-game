@@ -1,45 +1,41 @@
+import { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
+import { useStoreContext } from "@/context/StoreContext";
+
 import FontText from "@/components/UI/FontText";
 import WallpaperCard from "./WallpaperCard";
-import { useStoreContext } from "@/context/StoreContext";
 import FilterWallpapers from "./FilterWallpapers";
-import { useState } from "react";
 
 export default function WallpapersContainer() {
-  const [filter, setFilter] = useState<"all" | "unlocked" | "owned">("all");
+  const [currentFilter, setCurrentFilter] = useState<
+    "all" | "unlocked" | "owned"
+  >("all");
 
   const {
     state: { tilesSets },
   } = useStoreContext();
 
-  let wallpapers = tilesSets
-    .map((set) =>
-      set.tiles.map((tile, index) => ({
-        setId: set.id,
-        setName: set.setName,
-        wallpaper: set.wallpapers[index],
-        tile: tile,
-      }))
-    )
-    .flat();
+  // Get all available wallpapers
+  const wallpapers = tilesSets.flatMap((set) =>
+    set.tiles.map((tile, index) => ({
+      wallpaper: set.wallpapers[index],
+      imageUrl: tile,
+    }))
+  );
 
-  switch (filter) {
-    case "unlocked":
-      wallpapers = wallpapers.filter(
-        (wallpaper) => wallpaper.wallpaper.isUnlocked
-      );
-      break;
+  // Filter wallpapers
+  const filteredWallpapers = (() => {
+    switch (currentFilter) {
+      case "unlocked":
+        return wallpapers.filter(({ wallpaper }) => wallpaper.isUnlocked);
 
-    case "owned":
-      wallpapers = wallpapers.filter(
-        (wallpaper) => wallpaper.wallpaper.isDownloaded
-      );
-      break;
+      case "owned":
+        return wallpapers.filter(({ wallpaper }) => wallpaper.isDownloaded);
 
-    default:
-      wallpapers = wallpapers;
-      break;
-  }
+      default:
+        return wallpapers;
+    }
+  })();
 
   return (
     <>
@@ -47,12 +43,17 @@ export default function WallpapersContainer() {
         ListHeaderComponent={
           <View>
             <FontText style={styles.header}>Wallpapers</FontText>
-            <FilterWallpapers currentFilter={filter} onFilter={setFilter} />
+            <FilterWallpapers
+              currentFilter={currentFilter}
+              onFilterChange={setCurrentFilter}
+            />
           </View>
         }
-        data={wallpapers}
-        keyExtractor={(item) => String(item.tile)}
-        renderItem={({ item }) => <WallpaperCard item={item} />}
+        data={filteredWallpapers}
+        keyExtractor={({ wallpaper }) => String(wallpaper.id)}
+        renderItem={({ item: { wallpaper, imageUrl } }) => (
+          <WallpaperCard imageUrl={imageUrl} id={wallpaper.id} />
+        )}
         contentContainerStyle={styles.flatListContainer}
         showsVerticalScrollIndicator={false}
         numColumns={4}

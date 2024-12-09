@@ -1,3 +1,4 @@
+import { ImageSourcePropType } from "react-native";
 import { Difficulty } from "../types";
 
 export interface Wallpapers {
@@ -13,7 +14,7 @@ export interface TileSet {
   isUnlocked: boolean;
   isCurrentlyUsed: boolean;
   unlockedAt: { difficulty: Difficulty; level: number };
-  tiles: string[];
+  tiles: ImageSourcePropType[];
   wallpapers: Wallpapers[];
 }
 
@@ -23,12 +24,6 @@ export interface TileSetPurchase {
   setPrice: number;
   allSetsPrice: number;
   isModalOpen: boolean;
-}
-
-export interface WallpaperPurchase {
-  isModalOpen: boolean;
-  setId: number;
-  wallpaperId: number;
 }
 
 export interface StoreStateType {
