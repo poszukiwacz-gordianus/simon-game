@@ -48,7 +48,7 @@ const initialState: StoreStateType = {
     {
       setName: "Trees",
       id: 2,
-      isUnlocked: true,
+      isUnlocked: false,
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "easy", level: 10 },
       tiles: treeTiles,
@@ -62,7 +62,7 @@ const initialState: StoreStateType = {
     {
       setName: "Ocean",
       id: 3,
-      isUnlocked: true,
+      isUnlocked: false,
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "easy", level: 20 },
       tiles: oceanTiles,
@@ -76,7 +76,7 @@ const initialState: StoreStateType = {
     {
       setName: "Transport",
       id: 4,
-      isUnlocked: true,
+      isUnlocked: false,
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "easy", level: 30 },
       tiles: transportTiles,
@@ -90,7 +90,7 @@ const initialState: StoreStateType = {
     {
       setName: "Dogs",
       id: 5,
-      isUnlocked: true,
+      isUnlocked: false,
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "medium", level: 10 },
       tiles: dogTiles,
@@ -104,7 +104,7 @@ const initialState: StoreStateType = {
     {
       setName: "Cats",
       id: 6,
-      isUnlocked: true,
+      isUnlocked: false,
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "medium", level: 20 },
       tiles: catTiles,
@@ -118,7 +118,7 @@ const initialState: StoreStateType = {
     {
       setName: "Planets",
       id: 7,
-      isUnlocked: true,
+      isUnlocked: false,
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "medium", level: 30 },
       tiles: planetTiles,
@@ -132,7 +132,7 @@ const initialState: StoreStateType = {
     {
       setName: "Fantasy",
       id: 8,
-      isUnlocked: true,
+      isUnlocked: false,
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "hard", level: 10 },
       tiles: fantasyTiles,
@@ -146,7 +146,7 @@ const initialState: StoreStateType = {
     {
       setName: "Si-Fi",
       id: 9,
-      isUnlocked: true,
+      isUnlocked: false,
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "hard", level: 20 },
       tiles: sfTiles,
@@ -160,7 +160,7 @@ const initialState: StoreStateType = {
     {
       setName: "Steampunk",
       id: 10,
-      isUnlocked: true,
+      isUnlocked: false,
       isCurrentlyUsed: false,
       unlockedAt: { difficulty: "hard", level: 30 },
       tiles: steampunkTiles,
